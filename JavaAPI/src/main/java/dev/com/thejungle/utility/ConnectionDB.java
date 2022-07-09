@@ -8,14 +8,15 @@ public class ConnectionDB {
 
     public static Connection createConnection() {
         try {
-            String dbURL = String.format(
-                    "jdbc:postgresql://%s:%s/%s?user=%s&password=%s",
-                    "revatureproject3.c3f2ribjt3t3.us-east-1.rds.amazonaws.com",// System.getenv("HOST"),
-                    5432,// System.getenv("PORT"),
-                    "postgres",// System.getenv("DB"),
-                    "thebatch",// System.getenv("USER"),
-                    "revaturePythonJava"// System.getenv("PASSWORD")
-            );
+//            String dbURL = String.format(
+//                    "jdbc:postgresql://%s:%s/%s?user=%s&password=%s",
+//                    System.getenv("HOST"),
+//                    System.getenv("PORT"),
+//                    System.getenv("DB"),
+//                    System.getenv("USER"),
+//                    System.getenv("PASSWORD")
+//            );
+            String dbURL="jdbc:postgresql://revatureproject3.c3f2ribjt3t3.us-east-1.rds.amazonaws.com:5432/postgres?user=thebatch&password=revaturePythonJava";
             return DriverManager.getConnection(dbURL);
         } catch (SQLException e) {
             e.printStackTrace();

@@ -1,7 +1,10 @@
 package dev.com.thejungle.entity;
 
+import lombok.Generated;
+
 import java.util.Objects;
 
+@Generated
 public class User {
 
     // PRIVATE VARIABLES
