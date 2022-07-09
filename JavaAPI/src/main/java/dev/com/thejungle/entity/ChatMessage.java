@@ -1,7 +1,11 @@
 package dev.com.thejungle.entity;
 
+import lombok.Generated;
+
 import java.util.Objects;
 
+
+@Generated
 public class ChatMessage {
 
     private int chatId;

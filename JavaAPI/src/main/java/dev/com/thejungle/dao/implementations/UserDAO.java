@@ -44,6 +44,23 @@ public class UserDAO implements UserDAOInt {
                     rs.getString("username"),
                     rs.getDate("user_birth_date").getTime()
             );
+        } catch (SQLException q) {q.printStackTrace();
+                return null;
+        }
+    }
+
+    /**
+     * connects to database to create a new User
+     * @param user Object that contains information of the user
+     * @return User that was created in the database
+     */
+    @Override
+    public void deleteUser(User user) {
+        try (Connection connection = ConnectionDB.createConnection()) {
+            String sql = "delete from user_table where user_id = ?;";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setInt(1, user.getUserId());
+            preparedStatement.execute();
         } catch (SQLException q) {
             if (q.getMessage().contains("username")) {
                 throw new DuplicateUsername("This username is already taken");
@@ -51,7 +68,6 @@ public class UserDAO implements UserDAOInt {
                 throw new DuplicateEmail("Email is already in use");
             } else {
                 q.printStackTrace();
-                return null;
             }
         }
     }
