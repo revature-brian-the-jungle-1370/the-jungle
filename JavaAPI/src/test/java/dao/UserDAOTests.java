@@ -22,6 +22,7 @@ public class UserDAOTests {
                 "imagesourcefile");
         User createdUser = userDAO.createNewUser(newJungleUser);
         Assert.assertEquals(createdUser.getFirstName(), "Test");
+        userDAO.deleteUser(createdUser);
     }
 
     // SAD PATH TEST DUPLICATE USERNAME

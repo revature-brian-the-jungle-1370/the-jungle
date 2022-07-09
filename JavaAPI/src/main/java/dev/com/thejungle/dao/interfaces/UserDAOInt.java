@@ -12,6 +12,8 @@ public interface UserDAOInt {
 
     User createNewUser(User user);
 
+    void deleteUser(User user);
+
     User requestLogin(String username, String password);
 
     User getUserById(int userId);
