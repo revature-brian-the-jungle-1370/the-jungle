@@ -110,6 +110,10 @@
       <scope>test</scope>
       <exclusions>
         <exclusion>
+          <artifactId>junit</artifactId>
+          <groupId>junit</groupId>
+        </exclusion>
+        <exclusion>
           <artifactId>apiguardian-api</artifactId>
           <groupId>org.apiguardian</groupId>
         </exclusion>
@@ -130,6 +134,12 @@
           <groupId>org.mockito</groupId>
         </exclusion>
       </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.18.22</version>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
   <properties>
