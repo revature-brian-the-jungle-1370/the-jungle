@@ -70,8 +70,8 @@ public class UserDAOTests {
 
     @Test
     void testGetUserByIdSuccess() {
-        User user = userDAO.getUserById(9000);
-        Assert.assertTrue(user.getUserId() == 9000);
+        User user = userDAO.getUserById(13);
+        Assert.assertTrue(user.getUserId() == 13);
     }
 
     //  GET ALL USERS
@@ -94,7 +94,7 @@ public class UserDAOTests {
     // GET GROUPS
     @Test
     void testGetGroups() {
-        ArrayList<Integer> arrayList = userDAO.getGroups(9000);
+        ArrayList<Integer> arrayList = userDAO.getGroups(10000);
         Assert.assertTrue(arrayList.size() >= 1);
     }
 
