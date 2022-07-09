@@ -68,6 +68,7 @@
         <configuration>
           <excludes>
             <exclude>**/config/*</exclude>
+            <exclude>dev/com/thejungle/app/</exclude>
           </excludes>
         </configuration>
       </plugin>
