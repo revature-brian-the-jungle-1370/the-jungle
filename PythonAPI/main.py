@@ -3,6 +3,7 @@ import logging
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
+from custom_exceptions.comment_not_found import CommentNotFound
 from custom_exceptions.birth_date_is_null import BirthDateIsNull
 from custom_exceptions.connection_error import ConnectionErrorr
 from custom_exceptions.follower_not_found import FollowerNotFound
@@ -366,8 +367,11 @@ def add_likes_to_comment():
 def delete_comment():
     data = request.get_json()
     comment_id = data["commentId"]
-    jsonify(comment_service.service_delete_comment(comment_id))
-    return "Comment with id {} was deleted successfully".format(comment_id)
+    try:
+        jsonify(comment_service.service_delete_comment(comment_id))
+        return "Comment with id {} was deleted successfully".format(comment_id)
+    except CommentNotFound:
+        return "Comment not found", 400
 
 
 @app.get("/postfeed/<post_id>")
@@ -379,8 +383,8 @@ def get_comments_by_post_id(post_id: str):
             dictionary_comment = comments.make_dictionary()
             post_comments_as_dictionary.append(dictionary_comment)
         return jsonify(post_comments_as_dictionary), 200
-    except Exception:
-        return "something went wrong"
+    except PostNotFound:
+        return "something went wrong", 400
 
 
 @app.post("/createComment")
@@ -391,8 +395,11 @@ def create_comment():
     group_id = body["groupId"]
     reply_user = body["replyUser"]
     comment_text = body["commentText"]
-    comment_id = comment_service.service_create_comment(post_id, user_id, comment_text, group_id, reply_user)
-    return jsonify(comment_id)
+    try:
+        comment = comment_service.service_create_comment(post_id, user_id, comment_text, group_id, reply_user)
+        return jsonify(comment.comment_id)
+    except PostNotFound as e:
+        return "Post not found", 400
 
 
 """Get Creator for Group HomePage"""
@@ -542,4 +549,4 @@ def unfollow_user(user_follower_id: int, user_being_followed_id: int):
         return exception_json, 400
 
 
-app.run()
+app.run(debug=True)
