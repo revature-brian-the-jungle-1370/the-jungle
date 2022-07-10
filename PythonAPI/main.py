@@ -202,7 +202,18 @@ def update_profile_info(user_id):
         exception_json = jsonify(exception_dictionary)
         return exception_json, 400
 
+@app.post("/user/reset-password")
+def reset_password():
+    try:
+        email = request.json()["email"]
+        user_to_update = user_profile_dao.get_user_profile_by_email(email)
+        return user_profile_dao.update_password(user_to_update.user_id,user_to_update.passcode), 200
+    except UserNotFound as e:
+        exception_dictionary = {"message":str(e)}
+        exception_json = jsonify(exception_dictionary)
+        return exception_json, 400
 
+    
 # -----------------------------------------------------------------------------------------------------
 
 # CREATE GROUP

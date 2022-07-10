@@ -21,6 +21,18 @@ class UserProfileDAOImp(UserProfileDAO):
             return user
         else:
             raise UserNotFound(user_not_found_string)
+        
+    def get_user_profile_by_email(self, email: str) -> User:
+        """Grabs data from the user profile by email"""
+        sql = 'select * from user_table where email = %(email)s'
+        cursor = connection.cursor()
+        cursor.execute(sql, {"email": email})
+        profile_record = cursor.fetchone()
+        if profile_record:
+            user = User(*profile_record)
+            return user
+        else:
+            raise UserNotFound(user_not_found_string)
 
     def update_user_profile(self, user: User) -> User:
         """ A method used to update information for the profile besides the image"""
@@ -113,7 +125,21 @@ class UserProfileDAOImp(UserProfileDAO):
 
     def update_password(self, user_id: int, password: str) -> User:
         """Stretch"""
-        pass
+        cursor = connection.cursor()
+        sql = f"Select * from user_table where user_id = %(user_id)s"
+        if not cursor.fetchone():
+            raise UserNotFound(user_not_found_string)
+
+        sql = f"UPDATE user_table set passcode = %(password)s where user_id = %(user_id)s"
+        cursor.execute(sql,{"user_id": user_id,"password":password})
+        connection.commit()
+        
+        sql = f"Select * from user_table where user_id = %(user_id)s"
+        cursor.execute(sql,{"user_id":user_id})
+        connection.commit()
+        updated_profile = cursor.fetchone()
+        user = User(*updated_profile)
+        return user
 
     def get_user_followers(self, user_id: int) -> dict[str:int]:
         """Returns a dictionary with username as key and their userId as the value of the followers of userID"""
