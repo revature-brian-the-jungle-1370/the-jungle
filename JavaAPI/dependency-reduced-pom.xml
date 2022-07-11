@@ -31,6 +31,7 @@
         <configuration>
           <suiteXmlFiles>
             <suiteXmlFile>testng.xml</suiteXmlFile>
+            <suiteXmlFile>selenium_test_suite.xml</suiteXmlFile>
           </suiteXmlFiles>
         </configuration>
       </plugin>
