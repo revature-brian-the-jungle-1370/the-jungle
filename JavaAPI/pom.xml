@@ -142,6 +142,7 @@
                     <suiteXmlFiles>
                         <!-- put your testng.xml file here -->
                         <suiteXmlFile>testng.xml</suiteXmlFile>
+                        <suiteXmlFile>selenium_test_suite.xml</suiteXmlFile>
                     </suiteXmlFiles>
                 </configuration>
             </plugin>

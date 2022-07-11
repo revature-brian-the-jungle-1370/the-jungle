@@ -7,7 +7,6 @@
             <class name="dao.UserDAOTests"/>
 <!--            <class name="service.ChatServiceTests"/>-->
             <class name="service.UserServiceTests"/>
-            <class name="runner.TestRunner"/>
         </classes>
     </test>
 
