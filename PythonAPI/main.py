@@ -1,6 +1,6 @@
 import logging
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify,redirect,url_for,flash
 from flask_cors import CORS
 
 from custom_exceptions.birth_date_is_null import BirthDateIsNull
@@ -205,15 +205,28 @@ def update_profile_info(user_id):
 @app.post("/user/reset-password")
 def reset_password():
     try:
-        email = request.json()["email"]
-        user_to_update = user_profile_dao.get_user_profile_by_email(email)
-        return user_profile_dao.update_password(user_to_update.user_id,user_to_update.passcode), 200
+        user_profile_email = request.get_json()
+        if user_profile_dao.get_user_profile_by_email(user_profile_email["email"]) is not None:
+            user_profile = user_profile_dao.get_user_profile_by_email(user_profile_email["email"])
+            user_id = user_profile.user_id
+            return redirect(url_for("reset-password",user_id = user_id)), 200
+        else:
+            flash('Invalid Email')
     except UserNotFound as e:
         exception_dictionary = {"message":str(e)}
         exception_json = jsonify(exception_dictionary)
         return exception_json, 400
 
-    
+@app.post("/user/<user_id>/reset-password")
+def input_new_password(user_id: int):
+    try:
+        user = user_profile_service.service_get_user_profile_service(user_id)
+        user_profile_service.update_password_service(user.user_id,user.passcode)
+        user_as_dictionary = user.make_dictionary()
+        return jsonify(user_as_dictionary), 200
+    except UserNotFound as e:
+        return str(e), 400
+
 # -----------------------------------------------------------------------------------------------------
 
 # CREATE GROUP
