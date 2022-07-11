@@ -11,7 +11,7 @@ from custom_exceptions.group_exceptions import NullValues, InputTooShort, InputT
 from custom_exceptions.group_member_junction_exceptions import WrongId
 from custom_exceptions.image_format_must_be_a_string import ImageFormatMustBeAString
 from custom_exceptions.image_must_be_a_string import ImageMustBeAString
-from custom_exceptions.post_exceptions import InvalidInput
+from custom_exceptions.post_exceptions import InvalidInput, InputTooLong, NoInputGiven, WrongTypeInput
 from custom_exceptions.post_id_must_be_an_integer import PostIdMustBeAnInteger
 from custom_exceptions.post_image_not_found import PostImageNotFound
 from custom_exceptions.post_not_found import PostNotFound
@@ -439,13 +439,30 @@ def create_group_post():
         exception_dictionary = {"message": str(e)}
         exception_json = jsonify(exception_dictionary)
         return exception_json, 400
+    except ValueError as e:
+        exception_dictionary = {"message": str(e)}
+        exception_json = jsonify(exception_dictionary)
+        return exception_json, 400
+    except NoInputGiven as e:
+        exception_dictionary = {"message": str(e)}
+        exception_json = jsonify(exception_dictionary)
+        return exception_json, 400
+    except InputTooLong as e:
+        exception_dictionary = {"message": str(e)}
+        exception_json = jsonify(exception_dictionary)
+        return exception_json, 400
 
 
 @app.get("/group_post/<post_id>")
 def get_group_post_by_id(post_id: str):
-    result = group_post_service.service_get_post_by_id(int(post_id))
-    dictionary_request = result.make_dictionary()
-    return jsonify(dictionary_request), 200
+    try:
+        result = group_post_service.service_get_post_by_id(int(post_id))
+        dictionary_request = result.make_dictionary()
+        return jsonify(dictionary_request), 200
+    except PostNotFound as e:
+        exception_dictionary = {"message": str(e)}
+        exception_json = jsonify(exception_dictionary)
+        return exception_json, 400
 
 
 @app.get("/group_post")
@@ -470,11 +487,11 @@ def get_all_group_posts_by_group_id(group_id: str):
 
 @app.delete("/group_post/<post_id>")
 def delete_group_post(post_id: int):
-    result = group_post_service.service_delete_post_by_post_id(int(post_id))
-    if result:
-        return "Post with ID {} was deleted successfully".format(post_id)
-    else:
-        return "Something went wrong: Post with ID {} was not deleted".format(post_id)
+    try:
+        result = group_post_service.service_delete_post_by_post_id(int(post_id))
+        return "Post with ID {} was deleted successfully".format(post_id), 200
+    except PostNotFound:
+        return "Something went wrong: Post with ID {} was not deleted".format(post_id), 400
 
 
 @app.get("/user/followers/<user_id>")
