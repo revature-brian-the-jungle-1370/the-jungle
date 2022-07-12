@@ -15,7 +15,7 @@ public class App {
 
     public static void main(String[] args) {
 
-        int port = Integer.parseInt(System.getProperty("PORT", "8080"))
+        int port = Integer.parseInt(System.getProperty("PORT", "8080"));
         org.eclipse.jetty.server.Server server = new org.eclipse.jetty.server.Server();
         ServerConnector connector = new ServerConnector(server);
         connector.setHost(System.getProperty("HOST", "0.0.0.0"));
