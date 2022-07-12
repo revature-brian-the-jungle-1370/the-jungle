@@ -67,6 +67,22 @@ public class UserDAOTests {
         Assert.assertTrue(actual.size() == 0);
     }
 
+    @Test
+    void testSearchForUserSuccess() {
+        String testUsername = "test";
+        ArrayList<User> results = userDAO.searchForUser(testUsername);
+        for(User u: results){
+            Assert.assertTrue(u.getUsername().contains(testUsername));
+        }
+    }
+
+    @Test
+    void testSearchForUserNoResults(){
+        String testUsername = "testusernotfound";
+        ArrayList<User> results = userDAO.searchForUser(testUsername);
+        Assert.assertTrue(results.size()==0);
+    }
+
     // TEST REQUEST LOGIN
     @Test
     public void testRequestLoginSuccess() {
