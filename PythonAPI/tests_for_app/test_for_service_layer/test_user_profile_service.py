@@ -31,7 +31,7 @@ def test_get_user_profile_failure_not_int():
 
 def test_update_user_profile_service_success():
     updated_user_service: User = User(1, "test_first_name", "test_last_name", "test@test.com", "test_username",
-                                      "test_passcode", "About me test", "2022-01-22", "Test image")
+                                    "test_passcode", "About me test", "2022-01-22", "Test image")
     user_profile_dao.update_user_profile = MagicMock(return_value=updated_user_service)
     assert user_profile_service.update_user_profile_service(updated_user_service)
 
@@ -50,7 +50,7 @@ def test_update_user_profile_service_failure_too_many_chars():
 
 def test_update_user_profile_service_failure_birth_date_is_null():
     updated_user_fail_birth_date: User = User(1, "test_first_name", "test_last_name", "test@test.com", "test_username",
-                                              "test_passcode", "About me test", None, "Test image")
+                                            "test_passcode", "About me test", None, "Test image")
     try:
         user_profile_service.update_user_profile_service(updated_user_fail_birth_date)
         assert False
@@ -105,9 +105,9 @@ def test_update_user_image_format_service_failure_():
         assert str(e) == "The image format must be a string."
 
 
-def test_update_password_service_failure():
-    """Stretch goal"""
-    pass
+# def test_update_password_service_failure():
+#     """Stretch goal"""
+#     user_profile_dao.update_password = MagicMock(return_value= "new_")
 
 
 def test_get_user_followers_success():

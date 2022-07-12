@@ -1,3 +1,4 @@
+import base64
 from typing import List
 
 from custom_exceptions.post_exceptions import PostNotFound
@@ -39,7 +40,8 @@ class GroupPostDAO(GroupPostDAOAbs):
         cursor.execute(sql, {"post_id": post_id})
         connection.commit()
         image = cursor.fetchone()[0]
-        image_decoded = image.decode('utf-8')
+        encoded = base64.b64encode(image)
+        image_decoded = encoded.decode('utf-8')
         return image_decoded
 
     def get_post_by_id(self, post_id: int) -> GroupPost:
