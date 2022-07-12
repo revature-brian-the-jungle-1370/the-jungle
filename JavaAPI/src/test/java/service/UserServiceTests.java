@@ -32,6 +32,10 @@ public class UserServiceTests {
     static User blankSpaces;
     static User duplicateEmailUser;
 
+ public static void main(String[] args) {
+     UserServiceTests obj = new UserServiceTests();
+     obj.testSearchForUserByProperUsername();
+    }
 
     @BeforeClass
     public void setup() {
@@ -51,6 +55,7 @@ public class UserServiceTests {
         anotherList.add(userProfile2);
         blankSpaces = new User(0, "Test", "", "email@testemail.com", "", "", "Social media is fun.", date, "imagesrc");
         duplicateEmailUser = new User(0, "Dup", "Testing", "testingemail@gmail.com", "avoihoih", "password", "I like social media.", date, "imagesrc");
+
     }
 
 
@@ -130,6 +135,7 @@ public class UserServiceTests {
         userService.getUserByIdService(0);
     }
 
+
     // TEST SEARCH BY USER SERVICE
     @Test(expectedExceptions = InvalidInputException.class, expectedExceptionsMessageRegExp = "Invalid Input: Empty Username")
     public void testSearchForUserServiceFailBlankUsername(){
@@ -141,4 +147,12 @@ public class UserServiceTests {
     public void testSearchForUserServiceFailLongUsername(){
         userService.searchForUserService("baaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa123");
     }
+
+    @Test
+    public void testSearchForUserByProperUsername(){
+        Mockito.when(userDAO.searchForUser("BornOnMonday")).thenReturn(anotherList);
+        ArrayList<User>users= userService.searchForUserService("BornOnMonday");
+        Assert.assertTrue(users!=null && !users.isEmpty());
+    }
+
 }
