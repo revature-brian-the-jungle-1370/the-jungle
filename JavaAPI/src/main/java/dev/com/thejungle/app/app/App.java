@@ -27,7 +27,7 @@ public class App {
             config.server(() -> server);
             config.enableCorsForAllOrigins();
             config.enableDevLogging();
-        }).start(port);
+        });
 
         // Chat Controller
         ChatDAO chatDAO = new ChatDAO();
@@ -45,7 +45,7 @@ public class App {
         appController.createChatRoutes();
         appController.createUserRoutes();
 
-        app.start();
+        app.start(port);
     }
 
 }
