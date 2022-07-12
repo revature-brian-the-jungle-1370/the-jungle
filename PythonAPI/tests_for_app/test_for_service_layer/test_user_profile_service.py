@@ -105,11 +105,14 @@ def test_update_user_image_format_service_failure_():
         assert str(e) == "The image format must be a string."
 
 
-# def test_update_password_service_failure():
-#     """Stretch goal"""
-#     user_profile_dao.update_password = MagicMock(return_value= "new_")
-
-
+def test_update_password_service_failure():
+    """Stretch goal"""
+    try:
+        user_profile_service.update_password_service(-1,"new_password")
+        assert False
+    except UserNotFound as e:
+        assert str(e) == "The user could not be found."
+    
 def test_get_user_followers_success():
     user_profile_dao.get_user_followers = MagicMock(return_value="{'username': 1}")
     assert user_profile_service.get_user_followers_service(2)
