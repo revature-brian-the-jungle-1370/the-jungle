@@ -129,4 +129,16 @@ public class UserServiceTests {
     public void getUserByIdServiceFailInvalidUserId() {
         userService.getUserByIdService(0);
     }
+
+    // TEST SEARCH BY USER SERVICE
+    @Test(expectedExceptions = InvalidInputException.class, expectedExceptionsMessageRegExp = "Invalid Input: Empty Username")
+    public void testSearchForUserServiceFailBlankUsername(){
+        userService.searchForUserService("");
+    }
+    
+    // TEST SEARCH BY USER SERVICE
+    @Test(expectedExceptions = InvalidInputException.class, expectedExceptionsMessageRegExp = "Invalid Input: UserName Exceeds 50 Characters")
+    public void testSearchForUserServiceFailLongUsername(){
+        userService.searchForUserService("baaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa123");
+    }
 }
