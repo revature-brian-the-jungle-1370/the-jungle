@@ -21,7 +21,7 @@ function createChatConnection(groupId) {
 
     ws.onmessage = (msg) => updateChat(msg, ws);
     ws.onclose = () => alert("Connecting to new chat");
-  
+
 }
 
 function sendAndClear(message) {
