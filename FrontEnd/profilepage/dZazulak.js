@@ -9,7 +9,7 @@ const groupSectionDiv = document.getElementById("groups-div");
 */
 async function updateUserProfileData(){
     // Will need to update this to use the current user's ID
-    let url = "http://127.0.0.1:5000/user/profile/update/9000"
+    let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/user/profile/update/9000"
 
     let updateUserProfileJSON = JSON.stringify({"firstName": "Shouldn't change",
     "lastName": "Shouldn't change",
