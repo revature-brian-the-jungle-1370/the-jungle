@@ -4,7 +4,7 @@ console.log("JS is connected to HTML");
 likeButton.onclick = async function(e){
     e.preventDefault(); 
 
-    let response = await fetch(`http://127.0.0.1:5000/postfeed`, {
+    let response = await fetch(`http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/postfeed`, {
         method : "POST",
         body : JSON.stringify({
         postId: 2 //need to be changed when integrated!
@@ -25,7 +25,7 @@ commentButton.onclick = async function(e){
 
  
 
-    let response = await fetch(`http://127.0.0.1:5000/postfeed/comment`, {
+    let response = await fetch(`http://ec2-52-200-53-62.compute-1.amazonaws.com:8080/postfeed/comment`, {
         method : "POST",
         body : JSON.stringify({
             commentId: 2

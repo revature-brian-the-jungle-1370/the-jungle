@@ -88,5 +88,17 @@ public class UserService implements UserServiceInt {
             throw new UserNotFound("User not found");
         }
     }
+
+    public User getUserByEmailService(String email) {
+        try{
+            if ((email.length() > 50))
+                throw new TooManyCharacters("You are exceeding your character limit");
+            if ((email.length() == 0))
+                throw new NoValuePasscode("You must enter username and password");
+            return this.userDAO.getUserByEmail(email);
+        } catch (UserNotFound e) {
+            throw new UserNotFound("User not found");
+        }   
+    }
 }
 
