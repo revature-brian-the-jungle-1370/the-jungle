@@ -1,4 +1,4 @@
-const url = "http://127.0.0.1:5000/";
+const url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/";
 
 /** -----------------------------------------------------Create Group------------------------------------------------------------ */
 async function createGroup() {
@@ -11,7 +11,7 @@ async function createGroup() {
         const groupNameNull = document.getElementById("groupNameNull");
         const groupAboutNull = document.getElementById("groupAboutNull");
         groupAboutNull.style.display = "block";
-        groupNameNull.style.display = "block"; 
+        groupNameNull.style.display = "block";
     }
 
     if (groupName.length === 0) {
@@ -48,7 +48,7 @@ async function createGroup() {
         body: JSON.stringify(groupCreated)});
 
     let groupObject = await response.json();
-    
+
     if (groupObject.message) {
         let groupNameException = document.getElementById("duplicateGroupNameMessage");
         groupNameException.textContent = groupObject.message;
@@ -56,7 +56,7 @@ async function createGroup() {
     }
     else {
         let messageGroupCreated = document.getElementById("messageGroupCreated");
-        messageGroupCreated.style.display = "block";   
+        messageGroupCreated.style.display = "block";
     }
 }
 
