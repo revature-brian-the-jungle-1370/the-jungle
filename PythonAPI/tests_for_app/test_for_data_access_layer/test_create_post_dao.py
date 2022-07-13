@@ -5,12 +5,12 @@ from data_access_layer.implementation_classes.create_post_dao import CreatePostD
 from entities.post import Post
 from util.database_connection import connection
 from pytest import fixture
-
 create_post_dao: CreatePostDAO = CreatePostDAOImp()
 
 
 @fixture
 def create_fake_user():
+    
     """For putting a fake user into the database for testing then removing the fake user."""
     # this is the setup
     sql = "Delete from user_table where user_id >= 100000000;" \
@@ -20,7 +20,7 @@ def create_fake_user():
     cursor.execute(sql)
     connection.commit()
     yield  # everything after the yield is the teardown and called after each test
-    sql = "delete from user_table where user_id = 100000000;"
+    sql = "delete from user_table where user_id >= 100000000;"
     cursor = connection.cursor()
     cursor.execute(sql)
     connection.commit()
