@@ -11,20 +11,21 @@ user_profile_dao: UserProfileDAO = UserProfileDAOImp()
 
 user_about_me_for_tests = "Updating Profile About me"
 user_email_for_tests = "test@email.com"
+user_passcode_for_tests = "test_passcode"
 user_not_found_message = "The user could not be found."
+
 
 
 @fixture
 def create_fake_user():
     """Creates two new users for testing and deletes them once the tests are done"""
-
     sql = "Delete from user_table where user_id >= 100000000;" \
-          "Insert into user_table values(100000000, 'first10000', 'last10000', 'email@email.com', 'username1000000', " \
-          "'passcode100000', 'about', '1991-08-06', 'gif');" \
-          "Insert into user_table values(100000001, 'first10000', 'last10000', 'email1@email.com', 'username100000001'," \
-          "'passcode100000', 'about', '1991-08-06', 'gif');" \
-          "Insert into user_table values(100000002, 'first10000', 'last10000', 'email2@email.com', 'username100000002'," \
-          "'passcode100000', 'about', '1991-08-06', 'gif');"
+        "Insert into user_table values(100000000, 'first10000', 'last10000', 'email@email.com', 'username1000000', " \
+        "'passcode100000', 'about', '1991-08-06', 'gif');" \
+        "Insert into user_table values(100000001, 'first10000', 'last10000', 'email1@email.com', 'username100000001'," \
+        "'passcode100000', 'about', '1991-08-06', 'gif');"\
+        "Insert into user_table values(100000002, 'first10000', 'last10000', 'email2@email.com', 'username100000002'," \
+        "'passcode100000', 'about', '1991-08-06', 'gif');"
     cursor = connection.cursor()
     cursor.execute(sql)
     connection.commit()
@@ -40,7 +41,7 @@ def create_fake_image(create_fake_user):
     """Creates a fake images for the test users"""
 
     sql = "Insert into user_picture_table values(100000000, 100000000, 'test_image');" \
-          "Insert into user_picture_table values(100000001, 100000001, 'test_image');"
+        "Insert into user_picture_table values(100000001, 100000001, 'test_image');"
     cursor = connection.cursor()
     cursor.execute(sql)
     connection.commit()
@@ -57,6 +58,7 @@ def create_fake_followers(create_fake_user):
     cursor = connection.cursor()
     cursor.execute(sql)
     connection.commit()
+
 
 
 def test_get_user_profile_success(create_fake_user):
@@ -89,7 +91,7 @@ def test_update_user_profile_birth_date_success(create_fake_user):
 def test_update_user_profile_failure_no_user():
     """Sad test to see if there is no user found by the ID"""
     updated_user_fail = User(100000000, "test_first_name", "test_last_name", user_email_for_tests, "test_username",
-                             "test_passcode", user_about_me_for_tests, "2022-01-21", "test_image")
+                            "test_passcode", user_about_me_for_tests, "2022-01-21", "test_image")
     try:
         user_profile_dao.update_user_profile(updated_user_fail)
         assert False
@@ -100,14 +102,14 @@ def test_update_user_profile_failure_no_user():
 def test_update_user_profile_failure_sql_injection(create_fake_user):
     """Tests to see if an sql injection will occur when updating the about me"""
 
-    updated_user_fail_sql_injection: User = User(100000000, "test_first_name", "test_last_name", user_email_for_tests,
-                                                 "test_username",
-                                                 "test_passcode",
-                                                 "'; update user_table set passcode = 'sqlinjection' where user_id = 10000; --",
-                                                 "2016-01-01", "Test image")
+    updated_user_fail_sql_injection = User(100000000, "test_first_name", "test_last_name", user_email_for_tests,
+                                                "test_username",
+                                                "test_passcode",
+                                                "'; update user_table set passcode = 'sqlinjection' where user_id = 10000; --",
+                                                "2016-01-01", "Test image")
     if user_profile_dao.update_user_profile(updated_user_fail_sql_injection):
         assert updated_user_fail_sql_injection.user_about == "'; update user_table set passcode = 'sqlinjection' " \
-                                                             "where user_id = 10000; --"
+                                                            "where user_id = 10000; --"
     else:
         assert updated_user_fail_sql_injection.passcode != "test_passcode"
 
@@ -162,9 +164,14 @@ def test_update_image_format_failure_no_user():
         assert str(e) == user_not_found_message
 
 
-def test_update_password():
-    """stretch"""
-    pass
+# def test_update_password(create_fake_user):
+#     """Test to see if password is changed"""
+#     try:
+#         test_user = user_profile_dao.get_user_profile(100000000)
+#         user_profile_dao.update_password(test_user.user_id,user_passcode_for_tests)
+#     except UserNotFound as e:
+#         assert str(e) == user_not_found_message
+#     assert test_user.passcode == user_passcode_for_tests
 
 
 def test_user_followers_success(create_fake_followers):
@@ -183,6 +190,7 @@ def test_user_following_success(create_fake_followers):
 def test_user_followers_failure_no_user():
     try:
         user_profile_dao.get_user_followers(-1)
+    except KeyError as ke:
         assert False
     except UserNotFound as e:
         assert str(e) == user_not_found_message
@@ -191,7 +199,6 @@ def test_user_followers_failure_no_user():
 def test_user_following_failure_no_user():
     try:
         user_profile_dao.get_users_following_user(-1)
-        assert False
     except UserNotFound as e:
         assert str(e) == user_not_found_message
 
