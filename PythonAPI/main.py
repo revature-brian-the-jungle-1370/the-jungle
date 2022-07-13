@@ -542,4 +542,4 @@ def unfollow_user(user_follower_id: int, user_being_followed_id: int):
         return exception_json, 400
 
 
-app.run()
+app.run(debug=True)
