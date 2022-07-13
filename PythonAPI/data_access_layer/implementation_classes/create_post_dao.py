@@ -1,3 +1,4 @@
+import base64
 from custom_exceptions.post_image_not_found import PostImageNotFound
 from custom_exceptions.post_not_found import PostNotFound
 from custom_exceptions.user_not_found import UserNotFound
@@ -58,7 +59,8 @@ class CreatePostDAOImp(CreatePostDAO):
         cursor.execute(sql, {"post_id": post_id})
         connection.commit()
         image = cursor.fetchone()[0]
-        image_decoded = image.decode('utf-8')
+        encoded = base64.b64encode(image)
+        image_decoded = encoded.decode('utf-8')
         return image_decoded
 
     def get_post_image(self, post_id: int) -> str:
@@ -76,5 +78,6 @@ class CreatePostDAOImp(CreatePostDAO):
         cursor.execute(sql, {"post_id": post_id})
         connection.commit()
         image = cursor.fetchone()[0]
-        image_decoded = image.decode('utf-8')
+        encoded = base64.b64encode(image)
+        image_decoded = encoded.decode('utf-8')
         return image_decoded

@@ -36,7 +36,7 @@ def fake_join_group(create_fake_user):
 
 
 def test_get_all_users_in_a_group():
-    result = group_member_junction_dao.get_all_users_in_a_group(9000)
+    result = group_member_junction_dao.get_all_users_in_a_group(10000)
     assert len(result) >= 1
 
 

@@ -6,10 +6,10 @@ from util.database_connection import connection
 
 class GroupViewPostgresDao(GroupViewDao):
 
-    def get_group_by_id(self, group_id) -> [Group]:
+    def get_group_by_id(self, group_id) -> Group:
         sql = "select * from group_table where group_id = %s"
         cursor = connection.cursor()
-        cursor.execute(sql, [group_id])
+        cursor.execute(sql,[group_id])
         group_records = cursor.fetchone()
         group = Group(*group_records)
         return group
