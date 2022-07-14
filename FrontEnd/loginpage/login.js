@@ -14,7 +14,7 @@ const div = document.getElementById("errorMessageGoesHere");
 div.textContent = "";
 
 async function login() {
-  let response = await fetch("http://ec2-52-200-53-62.compute-1.amazonaws.com:8080/user/login", {
+  let response = await fetch("localhost:8080/user/login", {
     method: "POST",
     mode: "cors",
     headers: { "Content-Type": "application/json" },

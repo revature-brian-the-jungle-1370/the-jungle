@@ -118,7 +118,7 @@ class UserProfileDAOImp(UserProfileDAO):
         connection.commit()
 
         # Grab the user from the database and send it back.
-        sql = f"select * from user_table where user_id = %(user_id)s"
+        sql = f"select * from user_table where user_id = {user_id}"
         cursor = connection.cursor()
         cursor.execute(sql, {"user_id": user_id})
         connection.commit()
@@ -129,17 +129,18 @@ class UserProfileDAOImp(UserProfileDAO):
     def update_password(self, user_id: int, password: str) -> User:
         """Stretch"""
         cursor = connection.cursor()
-        sql = f"Select * from user_table where user_id = %(user_id)s"
-        user = cursor.fetchone
-        if not cursor.fetchone():
+        sql = f"Select * from user_table where user_id = {user_id}"
+        cursor.execute(sql)
+        user = cursor.fetchone()
+        if user is None:
             raise UserNotFound(user_not_found_string)
 
-        sql = f"UPDATE user_table set passcode = %(password)s where user_id = %(user_id)s"
-        cursor.execute(sql,{"user_id": user_id,"password":password})
+        sql = "UPDATE user_table set passcode = %(password)s where user_id = %(user_id)s;"
+        cursor.execute(sql,{"password":password,"user_id":user_id})
         
         connection.commit()
         
-        sql = f"Select * from user_table where user_id = %(user_id)s"
+        sql = "Select * from user_table where user_id = %(user_id)s"
         cursor.execute(sql,{"user_id":user_id})
         connection.commit()
         updated_profile = cursor.fetchone()
