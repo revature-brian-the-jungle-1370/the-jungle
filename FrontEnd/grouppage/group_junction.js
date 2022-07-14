@@ -1,6 +1,10 @@
 async function getUserInGroups() {
     groupId = localStorage.getItem("groupId")
+<<<<<<< HEAD
     url = `http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/GroupJunction/UserList/${groupId}`
+=======
+    url = `http://ec2-52-200-53-62.compute-1.amazonaws.com:8080/GroupJunction/UserList/${groupId}`
+>>>>>>> d603ff48dc661befde936ac77d3be9a185e7ecad
     let response = await fetch(url)
 
     if(response.status === 200){
@@ -63,7 +67,7 @@ async function creatorOf() {
         username.innerHTML = `<div id="creatorUserName"
         class="creator-username valign-text-middle poppins-medium-dove-gray-18px">
         @${body[0][2]}
-      </div>`
+        </div>`
     }
 
 
@@ -105,8 +109,7 @@ function buttonCheck(response) {
 
         }
     }
-
-
+    
 }
 getUserInGroups()
 creatorOf()

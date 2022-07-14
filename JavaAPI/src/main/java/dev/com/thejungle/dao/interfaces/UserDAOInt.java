@@ -26,5 +26,7 @@ public interface UserDAOInt {
 
     ArrayList<Integer> getGroups(int userId);
 
+    User getUserByEmail(String email);
+
 
 }
