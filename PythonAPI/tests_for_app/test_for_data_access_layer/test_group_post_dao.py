@@ -10,14 +10,14 @@ post_dao = GroupPostDAO()
 # ------------------------------ TEST CREATE POST ------------------------------
 # Test create post
 def test_create_post_success():
-    post_to_be_created: GroupPost = GroupPost(9000, 9000, 9000, "test create post", "", 0, "")
+    post_to_be_created: GroupPost = GroupPost(9000, 13, 10000, "test create post", "", 0, "")
     created_post = post_dao.create_post(post_to_be_created)
     assert created_post.post_id != 0
 
 
 # Test create post with string input
 def test_create_another_post_success():
-    post_to_be_created: GroupPost = GroupPost("9001", 9000, 9000, "test create post", "", 0, "")
+    post_to_be_created: GroupPost = GroupPost("9001", 13, 10000, "test create post", "", 0, "")
     created_post = post_dao.create_post(post_to_be_created)
     assert created_post.post_id != 0
 
@@ -25,7 +25,7 @@ def test_create_another_post_success():
 # Test create post failed too many arguments entered
 def test_create_post_fail_too_many_arguments():
     with pytest.raises(TypeError) as e:
-        failed_create_post: GroupPost = GroupPost(9000, 9000, 9000, "test create post", "", 0, "", "hi")
+        failed_create_post: GroupPost = GroupPost(9000, 13, 10000, "test create post", "", 0, "", "hi")
         post_dao.create_post(failed_create_post)
         assert "too many arguments" in str(e.value)
 
@@ -38,20 +38,20 @@ def test_create_post_fail_long_string():
 # ------------------------------ TEST GET POST BY ID ------------------------------
 # Test get post by ID
 def test_get_post_by_id():
-    get_post = post_dao.get_post_by_id(9002)
-    assert get_post.post_id == 9002
+    get_post = post_dao.get_post_by_id(10000)
+    assert get_post.post_id == 10000
 
 
 # Test get another post by ID
 def test_get_another_post_by_id():
-    get_post = post_dao.get_post_by_id(9003)
-    assert get_post.post_id == 9003
+    get_post = post_dao.get_post_by_id(7)
+    assert get_post.post_id == 7
 
 
 # Test get post by ID failed
 def test_get_post_by_id_fail():
     with pytest.raises(TypeError) as e:
-        post_dao.get_post_by_id(9002, "hi")
+        post_dao.get_post_by_id(10000, "hi")
         assert "too many arguments" in str(e.value)
 
 
@@ -65,14 +65,14 @@ def test_get_all_posts():
 # ------------------------------ TEST GET ALL POST BY GROUP ID ------------------------------
 # Test get all post by group ID
 def test_get_all_posts_by_group_id():
-    get_posts = post_dao.get_all_posts_by_group_id(9000)
+    get_posts = post_dao.get_all_posts_by_group_id(10000)
     assert len(get_posts) >= 1
 
 
 # Test get all posts by group ID failed
 def test_get_all_posts_by_group_id_fails():
     try:
-        post_dao.get_all_posts_by_group_id(90000)
+        post_dao.get_all_posts_by_group_id(9000)
     except PostNotFound as e:
         assert str(e) == "Post Not Found!"
 
@@ -87,6 +87,6 @@ def test_delete_post_by_id():
 # Test delete post failed
 def test_delete_post_by_id_fail_post_not_found():
     try:
-        post_dao.delete_post_by_post_id(90000)
+        post_dao.delete_post_by_post_id(9000)
     except PostNotFound as e:
         assert str(e) == "Post Not Found!"

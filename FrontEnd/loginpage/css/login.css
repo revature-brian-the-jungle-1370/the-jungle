@@ -1,3 +1,7 @@
+@import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-login/2.0/login.min.css");
+
+@import url("https://fonts.googleapis.com/css?family=Poppins:700,500");
+
 /* screen - login */
 
 .login {
@@ -124,7 +128,7 @@
   margin-left: 6px;
 }
 
-.login .span0 {
+.login .span0 .reset-password{
   color: #434343;
   letter-spacing: -0.05px;
 }
@@ -281,6 +285,7 @@
 .login .span0-1 {
   color: #b1b1b1;
   letter-spacing: -0.05px;
+  margin-bottom: 3px;
 }
 
 .login .span1-1 {
@@ -304,7 +309,7 @@
   border-radius: 10px;
   min-width: 391px;
   padding: 0px 121px;
-  margin: 23px 0 0 16px;
+  margin: 15px 0 0 16px;
   color: var(--white);
   font-family: var(--font-family-poppins);
   font-size: var(--font-size-m);

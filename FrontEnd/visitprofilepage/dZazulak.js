@@ -218,8 +218,7 @@ async function getFollowerImage(followerBody){
             const image_text = await response.text();
             image_Element.src = image_text;
         }
-
-}
+    }
 }
 
 async function getGroupsForUser(){

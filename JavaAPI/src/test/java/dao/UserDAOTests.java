@@ -54,7 +54,34 @@ public class UserDAOTests {
         }
     }
 
-    // TEST GET USER BY ID
+    // TEST GET USER BY USERNAME
+    @Test
+    public void testSearchForUserAndExists(){
+        ArrayList<User> actual = userDAO.searchForUser("test");
+        Assert.assertTrue(actual.size() > 0);
+    }
+
+    @Test
+    public void testSearchForUserAndNotExists(){
+        ArrayList<User> actual = userDAO.searchForUser("bugalsmfoaisejfase");
+        Assert.assertTrue(actual.size() == 0);
+    }
+
+    @Test
+    void testSearchForUserSuccess() {
+        String testUsername = "test";
+        ArrayList<User> results = userDAO.searchForUser(testUsername);
+        for(User u: results){
+            Assert.assertTrue(u.getUsername().contains(testUsername));
+        }
+    }
+
+    @Test
+    void testSearchForUserNoResults(){
+        String testUsername = "testusernotfound";
+        ArrayList<User> results = userDAO.searchForUser(testUsername);
+        Assert.assertTrue(results.size()==0);
+    }
 
     // TEST REQUEST LOGIN
     @Test
