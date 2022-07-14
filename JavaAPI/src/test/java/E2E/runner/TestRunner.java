@@ -13,6 +13,8 @@ import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
@@ -38,7 +40,12 @@ public class TestRunner {
    public static void setup() {
        File file = new File("src/test/resources/chromedriver.exe");
        System.setProperty("webdriver.chrome.driver", file.getAbsolutePath());
-       driver = new ChromeDriver();
+
+       ChromeOptions options = new ChromeOptions();
+       options.addArguments("test-type");
+       options.addArguments("--allow-running-insecure-content");
+
+       driver = new ChromeDriver(options);
        driver.manage().window().maximize();
 
        // POMs
