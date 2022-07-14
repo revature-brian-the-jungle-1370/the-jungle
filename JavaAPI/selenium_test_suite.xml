@@ -1,0 +1,7 @@
+<suite name="Selenium Test Suite">
+    <test name="placeholder">
+        <classes>
+            <class name="E2E.runner.TestRunner"/>
+        </classes>
+    </test>
+</suite>

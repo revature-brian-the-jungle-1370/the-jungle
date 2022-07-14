@@ -1,5 +1,7 @@
 package dev.com.thejungle.app.app;
 
+import org.eclipse.jetty.server.ServerConnector;
+
 import dev.com.thejungle.app.appcontroller.appcontroller.AppController;
 import dev.com.thejungle.app.appcontroller.controllers.ChatController;
 import dev.com.thejungle.app.appcontroller.controllers.UserController;
@@ -12,7 +14,17 @@ import io.javalin.Javalin;
 public class App {
 
     public static void main(String[] args) {
+
+        int port = Integer.parseInt(System.getProperty("PORT", "8080"));
+        org.eclipse.jetty.server.Server server = new org.eclipse.jetty.server.Server();
+        ServerConnector connector = new ServerConnector(server);
+        connector.setHost(System.getProperty("HOST", "0.0.0.0"));
+        connector.setPort(port);
+        server.setConnectors(new ServerConnector[] { connector });
+
+
         Javalin app = Javalin.create(config -> {
+            config.server(() -> server);
             config.enableCorsForAllOrigins();
             config.enableDevLogging();
         });
@@ -33,7 +45,7 @@ public class App {
         appController.createChatRoutes();
         appController.createUserRoutes();
 
-        app.start();
+        app.start(port);
     }
 
 }

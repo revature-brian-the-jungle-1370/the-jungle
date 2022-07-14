@@ -1,3 +1,4 @@
+from distutils.log import debug
 import logging
 
 from flask import Flask, request, jsonify
@@ -565,5 +566,4 @@ def unfollow_user(user_follower_id: int, user_being_followed_id: int):
         exception_json = jsonify(exception_dictionary)
         return exception_json, 400
 
-
-app.run(debug=True)
+app.run(host="0.0.0.0", port=5000,debug=True)
