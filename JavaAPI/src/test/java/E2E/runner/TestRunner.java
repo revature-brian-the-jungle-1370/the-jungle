@@ -50,7 +50,7 @@ public class TestRunner {
        groupJunctionPOM = new GroupJunctionPOM(driver);
 
        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
-       explicitWait = new WebDriverWait(driver, Duration.ofSeconds(2));
+       explicitWait = new WebDriverWait(driver, Duration.ofSeconds(5));
        System.out.println("Set up complete!");
    }
 
