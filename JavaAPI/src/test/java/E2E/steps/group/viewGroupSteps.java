@@ -10,7 +10,7 @@ public class viewGroupSteps {
    @Given("the user is on the main group page")
    public void the_user_is_on_the_main_group_page() {
        // Write code here that turns the phrase above into concrete actions
-       TestRunner.driver.get("file:///C:/Users/Dearce/Desktop/Project3/The-Jungle/FrontEnd/grouppage/group-page.html");
+       TestRunner.driver.get("https://s3.amazonaws.com/dans-code.net/FrontEnd/grouppage/group-page.html");
 
    }
    @When("the user clicks on a group name")

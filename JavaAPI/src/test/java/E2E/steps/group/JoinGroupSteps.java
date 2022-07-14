@@ -21,7 +21,7 @@ public class JoinGroupSteps {
 
    @When("the user is on the individual group page")
    public void the_user_is_on_the_individual_group_page() {
-       TestRunner.driver.get("File:///Users/dlanderos/Desktop/Project 3/The-Jungle/FrontEnd/grouppage/individualgrouppage/individual-group-page.html");
+       TestRunner.driver.get("https://s3.amazonaws.com/dans-code.net/FrontEnd/grouppage/individualgrouppage/individual-group-page.html");
    }
 
    @When("the user clicks on the join group button")

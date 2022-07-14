@@ -12,7 +12,7 @@ public class CreateGroupSteps {
    // Create Group
    @Given("the user is on the group page")
    public void the_user_is_on_the_group_page() {
-       TestRunner.driver.get("http://127.0.0.1:5500/FrontEnd/grouppage/group-page.html");
+       TestRunner.driver.get("https://s3.amazonaws.com/dans-code.net/FrontEnd/grouppage/group-page.html");
    }
 
    @When("the user enters the group name")

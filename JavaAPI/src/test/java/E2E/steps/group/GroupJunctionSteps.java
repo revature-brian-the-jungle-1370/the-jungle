@@ -41,7 +41,7 @@ public class GroupJunctionSteps {
 
    @Given("User is on the group page")
    public void userIsOnTheGroupPage() {
-       TestRunner.driver.get("http://127.0.0.1:5500/FrontEnd/grouppage/group-page.html");
+       TestRunner.driver.get("https://s3.amazonaws.com/dans-code.net/FrontEnd/grouppage/group-page.html");
    }
 
    @When("the user selects the group")
@@ -62,7 +62,7 @@ public class GroupJunctionSteps {
 
    @Given("the user is on the login page")
    public void theUserIsOnTheLoginPage() {
-       TestRunner.driver.get("file:///C:/Users/chris/OneDrive/Desktop/Revature/The-Jungle/FrontEnd/loginpage/login.html");
+       TestRunner.driver.get("https://s3.amazonaws.com/dans-code.net/FrontEnd/loginpage/login.html");
    }
 
    @When("the user enter the username")
