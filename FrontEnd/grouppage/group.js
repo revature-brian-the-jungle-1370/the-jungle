@@ -2,7 +2,7 @@ const url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/";
 
 /** -----------------------------------------------------Create Group------------------------------------------------------------ */
 async function createGroup() {
-    const userId = localStorage.getItem("userId").value;
+    const userId = localStorage.getItem("userId");
     const groupName = document.getElementById("groupName").value.trim();
     const groupAbout = document.getElementById("groupAbout").value.trim();
     let groupCreated = {"groupId": 0, "userId": userId, "groupName": groupName, "groupAbout": groupAbout, "imageFormat": "imageFormat"};
