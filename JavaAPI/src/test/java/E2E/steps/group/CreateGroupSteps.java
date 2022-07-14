@@ -7,6 +7,8 @@ import io.cucumber.java.en.When;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 
+import static E2E.runner.TestRunner.driver;
+
 
 public class CreateGroupSteps {
    // Create Group
@@ -64,6 +66,11 @@ public class CreateGroupSteps {
 
    @Then("a group name too short message will appear")
    public void a_group_name_too_short_message_will_appear() {
+        try{
+            java.lang.Thread.sleep(20000);
+        } catch(Exception e){
+            e.printStackTrace();
+        }
        Assert.assertEquals(TestRunner.userHomePage.groupNameThreeChar.getText(), "Group name must be at least three characters long!");
    }
 

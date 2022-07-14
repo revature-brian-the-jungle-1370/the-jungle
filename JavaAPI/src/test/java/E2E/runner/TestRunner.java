@@ -49,8 +49,8 @@ public class TestRunner {
        groupPage = new GroupPage(driver);
        groupJunctionPOM = new GroupJunctionPOM(driver);
 
-       driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
-       explicitWait = new WebDriverWait(driver, Duration.ofSeconds(2));
+       driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(4));
+       explicitWait = new WebDriverWait(driver, Duration.ofSeconds(4));
        System.out.println("Set up complete!");
    }
 
