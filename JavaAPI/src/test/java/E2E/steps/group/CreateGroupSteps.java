@@ -7,6 +7,8 @@ import io.cucumber.java.en.When;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 
+import static E2E.runner.TestRunner.driver;
+
 
 public class CreateGroupSteps {
    // Create Group
