@@ -48,7 +48,7 @@ logging.basicConfig(filename="records.log", level=logging.DEBUG,
 
 # Setup flask
 app: Flask = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/.*": {"origins": "*"}})
 
 @app.get("/")  # basic check for app running
 def on():
