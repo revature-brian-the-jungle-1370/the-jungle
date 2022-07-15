@@ -36,7 +36,7 @@ public class FollowSteps {
         //TestRunner.driver.get("")
     }
 
-    @When("the user clicks on the follow button")
+    @When("the user clicks on the unfollow button")
     public void the_user_clicks_on_the_unfollow_button(){
         //TestRunner.rlsPom.unfollowButton.click();
     }
