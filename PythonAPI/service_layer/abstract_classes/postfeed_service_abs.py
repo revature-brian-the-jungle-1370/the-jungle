@@ -14,3 +14,11 @@ class PostfeedService(ABC):
     @abstractmethod
     def delete_a_post_service(self, postid: int):
         pass
+
+    @abstractmethod
+    def get_all_bookmarkded_posts_service(self,userid: int):
+        pass
+
+    @abstractmethod
+    def bookmark_post_service(self, userid:int, postid:int):
+        pass
