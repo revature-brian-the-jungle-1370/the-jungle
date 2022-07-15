@@ -10,9 +10,9 @@ async function createGroupPost() {
   let post_text = document.getElementById("postInput").value;
   let data = {
     "post_id": "0",
-    // "user_id": Number(sessionStorage.getItem("user_id")),
+    "user_id": Number(localStorage.getItem("userId")), //was sessionStorage.getItem("user_id")
     // "group_id": Number(sessionStorage.getItem("group_id")),
-    "user_id": 9000,
+    //"user_id": 9000,
     "group_id": 9000,
     "post_text": post_text,
     "image_data": "",
