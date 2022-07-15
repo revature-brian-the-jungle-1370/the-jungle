@@ -147,6 +147,28 @@ public class UserController {
         }
     };
 
+    public Handler resetToNewPassword = ctx -> {
+        Gson gson = new Gson();
+        try {
+            User credentials = gson.fromJson(ctx.body(), User.class);
+            User passcode = this.userService.getUserByEmailService(credentials.getPasscode());
+            if (passcode == null) {
+                HashMap<String, String> message = new HashMap<>();
+                message.put("errorMessage", "Error processing request");
+                ctx.result(gson.toJson(message));
+                ctx.status(400);
+            }
+            String userPasscodeJSON = gson.toJson(passcode);
+            ctx.result(userPasscodeJSON);
+            ctx.status(200);
+        } catch (Exception e) {
+            HashMap<String, String> message = new HashMap<>();
+            message.put("errorMessage", e.getMessage());
+            ctx.result(gson.toJson(message));
+            ctx.status(400);
+        }
+    };
+
     // Get Groups
     public Handler getGroups = ctx -> {
         int userId = Integer.parseInt(ctx.pathParam("userId"));
