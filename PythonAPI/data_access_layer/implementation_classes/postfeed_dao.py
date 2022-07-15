@@ -1,4 +1,4 @@
-from asyncio.windows_events import NULL
+#from asyncio.windows_events import NULL
 from typing import List
 
 import psycopg
@@ -51,7 +51,7 @@ class PostFeedDaoImp(PostFeedDao):
         cursor.execute(sql,[user_id])
         post_ids= cursor.fetchall()
         post_list=[]
-        if(post_ids!=NULL):
+        if(post_ids!=None): #originally NULL from the line 1 import
             for post_id in post_ids:
                 (post_id_int)=post_id
                 cursor.execute("select * from post_table where post_id = %s;",post_id_int)
@@ -62,7 +62,7 @@ class PostFeedDaoImp(PostFeedDao):
             return  "No Data Found"
 
     def bookmark_post(self,user_id: int,post_id:int):
-        if(user_id!=NULL and post_id!=NULL):
+        if(user_id!=None and post_id!=None): #None was originally NULL from the line 1 import
             sql = "select * from bookmark_table where user_id = %s and post_id = %s;"
             cursor = connection.cursor()
             cursor.execute(sql, (user_id,post_id))
