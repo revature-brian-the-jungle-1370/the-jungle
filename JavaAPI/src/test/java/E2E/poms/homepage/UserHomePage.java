@@ -45,4 +45,7 @@ public class UserHomePage {
 
     @FindBy(xpath = "/html/body/div/div/div[2]/div/div[3]/div[2]/div[5]/div")
     public WebElement groupToJoin;
+
+    @FindBy(className = "linkChat")
+    public WebElement chatLink;
 }
