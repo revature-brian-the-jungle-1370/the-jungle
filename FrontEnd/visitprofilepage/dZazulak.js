@@ -11,7 +11,11 @@ visitedUserId = localStorage.getItem("visitUserIdPage");
 
 
 async function getUserByUserId(){
+<<<<<<< HEAD
     let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/user/" + visitedUserId;
+=======
+    let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:8080/user/" + visitedUserId;
+>>>>>>> origin/group4Implementation
     let response = await fetch(url);
 
     if(response.status === 200){
@@ -103,7 +107,11 @@ function populateAboutMeForVisitedUser(){
 */
 async function updateUserProfileData(){
 
+<<<<<<< HEAD
     let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/user/profile/update/" + userId;
+=======
+    let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:8080/user/profile/update/" + userId;
+>>>>>>> origin/group4Implementation
     
     let updateUserProfileJSON = JSON.stringify({"firstName": "Shouldn't change",
         "lastName": "Shouldn't change",
@@ -167,7 +175,11 @@ function successMessageForProfileModal(){
     Grabs all the users followers from the database
 */
 async function getUserFollowers(){
+<<<<<<< HEAD
     let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/user/followers/" + visitedUserId;
+=======
+    let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:8080/user/followers/" + visitedUserId;
+>>>>>>> origin/group4Implementation
 
     let response = await fetch(url);
 
@@ -211,19 +223,26 @@ function populateUserFollowers(followerBody){
 async function getFollowerImage(followerBody){
     for(follower in followerBody){
         let image_Element = document.getElementById(`${follower}-image`);
+<<<<<<< HEAD
         let url = `http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/user/image/${followerBody[follower]}`;
+=======
+        let url = `http://ec2-52-200-53-62.compute-1.amazonaws.com:8080/user/image/${followerBody[follower]}`;
+>>>>>>> origin/group4Implementation
         console.log(url);
         let response = await fetch(url);
         if(response.status === 200){
             const image_text = await response.text();
             image_Element.src = image_text;
         }
-
-}
+    }
 }
 
 async function getGroupsForUser(){
+<<<<<<< HEAD
     let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/group/user/" + visitedUserId;
+=======
+    let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:8080/group/user/" + visitedUserId;
+>>>>>>> origin/group4Implementation
 
     let response = await fetch(url);
 

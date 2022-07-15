@@ -10,7 +10,7 @@ public class JoinGroupSteps {
    // Join Group
    @When("the user clicks on the group they want to join")
    public void the_user_clicks_on_the_group_they_want_to_join() {
-       TestRunner.userHomePage.groupToJoin.click();
+        TestRunner.userHomePage.groupToJoin.click();
    }
 
    @When("the user is redirected to the group page")

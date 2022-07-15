@@ -25,7 +25,11 @@ commentButton.onclick = async function(e){
 
  
 
+<<<<<<< HEAD
     let response = await fetch(`http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/postfeed/comment`, {
+=======
+    let response = await fetch(`http://ec2-52-200-53-62.compute-1.amazonaws.com:8080/postfeed/comment`, {
+>>>>>>> origin/group4Implementation
         method : "POST",
         body : JSON.stringify({
             commentId: 2

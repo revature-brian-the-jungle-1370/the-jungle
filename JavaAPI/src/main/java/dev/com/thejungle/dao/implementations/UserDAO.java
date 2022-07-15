@@ -240,4 +240,28 @@ public class UserDAO implements UserDAOInt {
         }
     }
 
+    public User getUserByEmail(String email) {
+        try (Connection connection = ConnectionDB.createConnection()) {
+            String sql = "select * from user_table where user_id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, email);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()){
+                return new User(
+                        resultSet.getInt("user_id"),
+                        resultSet.getString("first_name"),
+                        resultSet.getString("last_name"),
+                        resultSet.getString("email"),
+                        resultSet.getString("username"),
+                        resultSet.getDate("user_birth_date").getTime()
+                );
+            } else {
+                throw new UserNotFound("User Not Found");
+            }
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+            return null;
+        }
+    }
+
 }
