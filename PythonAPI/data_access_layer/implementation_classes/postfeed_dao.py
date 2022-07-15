@@ -32,7 +32,7 @@ class PostFeedDaoImp(PostFeedDao):
             return False
 
     def get_all_posts_with_user_id(self, user_id: int) -> List[Post]:
-        sql = "select * from post_table where user_id = %s and group_id is Null order by date_time_of_creation desc"
+        sql = "select * from post_table where user_id = %s  order by date_time_of_creation desc"
         cursor = connection.cursor()
         cursor.execute(sql, [user_id])
         post_records = cursor.fetchall()

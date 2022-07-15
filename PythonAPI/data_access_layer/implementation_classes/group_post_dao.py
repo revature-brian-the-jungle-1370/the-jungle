@@ -1,7 +1,7 @@
 import base64
 from typing import List
 
-from custom_exceptions.post_exceptions import PostNotFound
+from custom_exceptions.post_not_found import PostNotFound
 from data_access_layer.abstract_classes.group_post_dao_abs import GroupPostDAOAbs
 from entities.group_post import GroupPost
 from util.database_connection import connection
@@ -49,8 +49,11 @@ class GroupPostDAO(GroupPostDAOAbs):
         cursor = connection.cursor()
         cursor.execute(sql, [post_id])
         post_record = cursor.fetchone()
-        post = GroupPost(*post_record)
-        return post
+        if not post_record:
+            raise PostNotFound('The post could not be found.')
+        else:
+            post = GroupPost(*post_record)
+            return post
 
     def get_all_posts(self) -> List[GroupPost]:
         try:
@@ -76,11 +79,11 @@ class GroupPostDAO(GroupPostDAOAbs):
         return post_list
 
     def delete_post_by_post_id(self, post_id: int) -> bool:
-        try:
-            sql = "delete from post_table where post_id = %s"
-            cursor = connection.cursor()
-            cursor.execute(sql, [post_id])
-            connection.commit()
-            return True
-        except PostNotFound as e:
-            raise str(e) == "Post Not Found!"
+        sql = "delete from post_table where post_id = %s"
+        cursor = connection.cursor()
+        cursor.execute(sql, [post_id])
+        if cursor.rowcount == 0:
+            raise PostNotFound("Post Not Found!")
+        
+        connection.commit()
+        return True

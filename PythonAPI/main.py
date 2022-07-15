@@ -4,6 +4,7 @@ import logging
 from flask import Flask, request, jsonify,redirect,url_for,flash
 from flask_cors import CORS
 
+from custom_exceptions.comment_not_found import CommentNotFound
 from custom_exceptions.birth_date_is_null import BirthDateIsNull
 from custom_exceptions.connection_error import ConnectionErrorr
 from custom_exceptions.follower_not_found import FollowerNotFound
@@ -11,7 +12,7 @@ from custom_exceptions.group_exceptions import NullValues, InputTooShort, InputT
 from custom_exceptions.group_member_junction_exceptions import WrongId
 from custom_exceptions.image_format_must_be_a_string import ImageFormatMustBeAString
 from custom_exceptions.image_must_be_a_string import ImageMustBeAString
-from custom_exceptions.post_exceptions import InvalidInput
+from custom_exceptions.post_exceptions import InvalidInput, InputTooLong, NoInputGiven, WrongTypeInput
 from custom_exceptions.post_id_must_be_an_integer import PostIdMustBeAnInteger
 from custom_exceptions.post_image_not_found import PostImageNotFound
 from custom_exceptions.post_not_found import PostNotFound
@@ -397,8 +398,11 @@ def add_likes_to_comment():
 def delete_comment():
     data = request.get_json()
     comment_id = data["commentId"]
-    jsonify(comment_service.service_delete_comment(comment_id))
-    return "Comment with id {} was deleted successfully".format(comment_id)
+    try:
+        jsonify(comment_service.service_delete_comment(comment_id))
+        return "Comment with id {} was deleted successfully".format(comment_id)
+    except CommentNotFound:
+        return "Comment not found", 400
 
 
 @app.get("/postfeed/<post_id>")
@@ -410,8 +414,8 @@ def get_comments_by_post_id(post_id: str):
             dictionary_comment = comments.make_dictionary()
             post_comments_as_dictionary.append(dictionary_comment)
         return jsonify(post_comments_as_dictionary), 200
-    except Exception:
-        return "something went wrong"
+    except PostNotFound:
+        return "something went wrong", 400
 
 
 @app.post("/createComment")
@@ -422,8 +426,11 @@ def create_comment():
     group_id = body["groupId"]
     reply_user = body["replyUser"]
     comment_text = body["commentText"]
-    comment_id = comment_service.service_create_comment(post_id, user_id, comment_text, group_id, reply_user)
-    return jsonify(comment_id)
+    try:
+        comment = comment_service.service_create_comment(post_id, user_id, comment_text, group_id, reply_user)
+        return jsonify(comment.comment_id)
+    except PostNotFound as e:
+        return "Post not found", 400
 
 
 """Get Creator for Group HomePage"""
@@ -463,13 +470,30 @@ def create_group_post():
         exception_dictionary = {"message": str(e)}
         exception_json = jsonify(exception_dictionary)
         return exception_json, 400
+    except ValueError as e:
+        exception_dictionary = {"message": str(e)}
+        exception_json = jsonify(exception_dictionary)
+        return exception_json, 400
+    except NoInputGiven as e:
+        exception_dictionary = {"message": str(e)}
+        exception_json = jsonify(exception_dictionary)
+        return exception_json, 400
+    except InputTooLong as e:
+        exception_dictionary = {"message": str(e)}
+        exception_json = jsonify(exception_dictionary)
+        return exception_json, 400
 
 
 @app.get("/group_post/<post_id>")
 def get_group_post_by_id(post_id: str):
-    result = group_post_service.service_get_post_by_id(int(post_id))
-    dictionary_request = result.make_dictionary()
-    return jsonify(dictionary_request), 200
+    try:
+        result = group_post_service.service_get_post_by_id(int(post_id))
+        dictionary_request = result.make_dictionary()
+        return jsonify(dictionary_request), 200
+    except PostNotFound as e:
+        exception_dictionary = {"message": str(e)}
+        exception_json = jsonify(exception_dictionary)
+        return exception_json, 400
 
 
 @app.get("/group_post")
@@ -494,11 +518,11 @@ def get_all_group_posts_by_group_id(group_id: str):
 
 @app.delete("/group_post/<post_id>")
 def delete_group_post(post_id: int):
-    result = group_post_service.service_delete_post_by_post_id(int(post_id))
-    if result:
-        return "Post with ID {} was deleted successfully".format(post_id)
-    else:
-        return "Something went wrong: Post with ID {} was not deleted".format(post_id)
+    try:
+        result = group_post_service.service_delete_post_by_post_id(int(post_id))
+        return "Post with ID {} was deleted successfully".format(post_id), 200
+    except PostNotFound:
+        return "Something went wrong: Post with ID {} was not deleted".format(post_id), 400
 
 
 @app.get("/user/followers/<user_id>")
@@ -573,8 +597,5 @@ def unfollow_user(user_follower_id: int, user_being_followed_id: int):
         return exception_json, 400
 
 
-<<<<<<< HEAD
 app.run(host="0.0.0.0", port=5000,debug=True)
-=======
-app.run(debug=True,port=5000)
->>>>>>> origin/group4Implementation
+
