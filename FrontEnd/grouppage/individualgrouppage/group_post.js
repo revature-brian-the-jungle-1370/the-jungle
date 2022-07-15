@@ -1,4 +1,4 @@
-let url = "http://127.0.0.1:5000";
+let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/";
 
 let tableBody = document.getElementById("postBody");
 
@@ -10,9 +10,9 @@ async function createGroupPost() {
   let post_text = document.getElementById("postInput").value;
   let data = {
     "post_id": "0",
-    // "user_id": Number(sessionStorage.getItem("user_id")),
+    "user_id": Number(localStorage.getItem("userId")), //was sessionStorage.getItem("user_id")
     // "group_id": Number(sessionStorage.getItem("group_id")),
-    "user_id": 9000,
+    //"user_id": 9000,
     "group_id": 9000,
     "post_text": post_text,
     "image_data": "",
@@ -40,7 +40,7 @@ async function createGroupPost() {
       <div class="overlap-group1" id="headingNew${post.post_id}">
       <p> ` + post_id + `</p>
       <p> ` + user_id + `</p>
-      <p> ` + post_text + `</p> 
+      <p> ` + post_text + `</p>
       <p> Likes: ` + likes + `</p>
       <p> ` + date_time_of_creation + `</p>
       <button id="deletePost${post.post_id}" onclick="deletePost(${post.post_id})">Delete</button>

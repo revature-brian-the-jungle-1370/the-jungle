@@ -51,7 +51,7 @@ async function createGroup() {
 
     if (groupObject.message) {
         let groupNameException = document.getElementById("duplicateGroupNameMessage");
-        groupNameException.textContent = groupObject.message;
+        //groupNameException.textContent = groupObject.message; //wrong message for testing
         duplicateGroupNameMessage.style.display = "block";
     }
     else {
