@@ -15,9 +15,7 @@ const div = document.getElementById("errorMessageGoesHere");
 div.textContent = "";
 
 async function login() {
-
-  let response = await fetch(url + "/user/login", {
-
+  let response = await fetch(url+"/user/login", {
     method: "POST",
     mode: "cors",
     headers: { "Content-Type": "application/json" },
