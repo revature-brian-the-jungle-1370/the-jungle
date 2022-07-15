@@ -1,4 +1,7 @@
+from asyncio.windows_events import NULL
 from typing import List
+
+import psycopg
 
 from custom_exceptions.connection_error import ConnectionErrorr
 from data_access_layer.abstract_classes.postfeed_dao_abs import PostFeedDao
@@ -41,3 +44,45 @@ class PostFeedDaoImp(PostFeedDao):
         for post in post_records:
             post_list.append(Post(*post))
         return post_list
+
+    def get_all_bookmarkded_posts(self, user_id: int) -> List[Post]:
+        sql = "select post_id from bookmark_table where user_id = %s"
+        cursor =connection.cursor()
+        cursor.execute(sql,[user_id])
+        post_ids= cursor.fetchall()
+        post_list=[]
+        if(post_ids!=NULL):
+            for post_id in post_ids:
+                (post_id_int)=post_id
+                cursor.execute("select * from post_table where post_id = %s;",post_id_int)
+                post=cursor.fetchone()
+                post_list.append(Post(*post))
+            return post_list 
+        else:
+            return  "No Data Found"
+
+    def bookmark_post(self,user_id: int,post_id:int):
+        if(user_id!=NULL and post_id!=NULL):
+            sql = "select * from bookmark_table where user_id = %s and post_id = %s;"
+            cursor = connection.cursor()
+            cursor.execute(sql, (user_id,post_id))
+            if not cursor.fetchone():
+                try:
+                    sql = "insert into bookmark_table values( %s, %s)"
+                    cursor = connection.cursor()
+                    cursor.execute(sql, (user_id,post_id))
+                    connection.commit()
+                    return "Bookmark added"
+                except psycopg.errors.ForeignKeyViolation as e:
+                    connection.rollback()
+                    return"Invalid Post Id or User Id"
+            else:
+                sql = "delete from bookmark_table where user_id= %s and post_id = %s"
+                cursor = connection.cursor()
+                cursor.execute(sql, (user_id,post_id))
+                connection.commit()
+                return "Bookmark Deleted"
+        else:
+            return "Invalid userId or postId"
+
+    

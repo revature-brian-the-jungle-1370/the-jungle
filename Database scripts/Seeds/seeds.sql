@@ -6,5 +6,6 @@ insert into jungle_user values(default, 'John', 'Winchester', 'werewolfhunter', 
 // chat
 insert into user_table values(10000, 'first name', 'last name', 'email', 'username', 'passcode', null, now(), null);
 insert into group_table values(10000, 10000, 'group name');
+insert into group_table values(10, 10000, 'group 10');
 insert into chat_log_table values(10000, now(), 10000, 10000,'hello world');
 insert into chat_log_table values(10001, now() - interval '3 minutes', 10000, 10000, 'hello world');
