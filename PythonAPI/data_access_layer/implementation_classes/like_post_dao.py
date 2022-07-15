@@ -14,6 +14,7 @@ class LikePostDaoImp(LikePostDAO):
                      return generated_likes_number
 
             else:
+                connection.rollback()
                 raise ConnectionErrorr('post not found')
 
     def like_comment(self, comment_id: int):
@@ -26,4 +27,5 @@ class LikePostDaoImp(LikePostDAO):
                 return generated_likes_number
 
             else:
+                connection.rollback()
                 raise ConnectionErrorr('comment not found')

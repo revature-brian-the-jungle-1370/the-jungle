@@ -2,11 +2,9 @@
 // let userId = 9000;
 
 async function getUserImage(){
-<<<<<<< HEAD
+
   let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/user/image/" + userId;
-=======
-  let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:8080/user/image/" + userId;
->>>>>>> origin/group4Implementation
+
   console.log(url);
   let response = await fetch(url);
   console.log(response);
@@ -37,22 +35,12 @@ async function createUserWithImage() {
       if (base64gif.length < 1_000_000 && base64gif.startsWith("data:image/")){
         // let userText = document.getElementById("userText");
         // let userJson = JSON.stringify({"user_id":userId, "user_text": userText.value, "image_format": "true"});
-<<<<<<< HEAD
-        // let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/post"
-=======
-        // let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:8080/post"
->>>>>>> origin/group4Implementation
-        
         //ADJUSTING
         // console.log(theUser["user_id"]);
         let response = await fetch(
-<<<<<<< HEAD
-            //"http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/user/image/" + theUser["user_id"], 
-            "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/user/image/" + userId, { 
-=======
-            //"http://ec2-52-200-53-62.compute-1.amazonaws.com:8080/user/image/" + theUser["user_id"], 
+         //"http://ec2-52-200-53-62.compute-1.amazonaws.com:8080/user/image/" + theUser["user_id"], 
             "http://ec2-52-200-53-62.compute-1.amazonaws.com:8080/user/image/" + userId, { 
->>>>>>> origin/group4Implementation
+
               method: "POST",
               headers: {"Content-Type": "application/json"},
               body: String(base64gif)
@@ -76,11 +64,8 @@ async function createUserWithImage() {
 
 
   async function getUserInfoOnProfile(){
-<<<<<<< HEAD
-    let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/user/" + userId;
-=======
+
     let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:8080/user/" + userId;
->>>>>>> origin/group4Implementation
     let response = await fetch(url);
     console.log(url);
 

@@ -6,11 +6,9 @@ let postId = 273; // temporary
 //rough method to get the post image from database, needs to be updated to get the image format
 //please refactor and modify as needed
 async function getPostImage(){// the postId and imageFormat will probably have to be passed as parameters
-<<<<<<< HEAD
+
   let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/post/image/" + postId;//post_id parameter
-=======
-  let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:8080/post/image/" + postId;//post_id parameter
->>>>>>> origin/group4Implementation
+
   console.log(url);
   let response = await fetch(url);
   console.log(response);
@@ -32,11 +30,7 @@ async function createPost(){
     let postText = document.getElementById("postText");
     console.log(postText.value)
     let postJson = JSON.stringify({"user_id":userId, "post_text": postText.value, "image_format": "false"});
-<<<<<<< HEAD
     let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/post"
-=======
-    let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:8080/post"
->>>>>>> origin/group4Implementation
     let thePost = await fetch(url, {
         method:"POST",
         headers:{'Content-Type': 'application/json'}, 
@@ -60,11 +54,8 @@ async function createPostWithImage() {
       if (base64gif.length < 1_000_000 && base64gif.startsWith("data:image/")){
         let postText = document.getElementById("postText");
         let postJson = JSON.stringify({"user_id":userId, "post_text": postText.value, "image_format": "true"});
-<<<<<<< HEAD
         let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/post"
-=======
-        let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:8080/post"
->>>>>>> origin/group4Implementation
+
         
         //Inserts the post into the post table
         let thePost = await fetch(url, {
@@ -75,11 +66,8 @@ async function createPostWithImage() {
         //Inserts the image into the post_image_table
         console.log(thePost["post_id"]);
         let response = await fetch(
-<<<<<<< HEAD
             "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/post/image/" + thePost["post_id"], {
-=======
-            "http://ec2-52-200-53-62.compute-1.amazonaws.com:8080/post/image/" + thePost["post_id"], {
->>>>>>> origin/group4Implementation
+
               method: "POST",
               headers: {"Content-Type": "application/json"},
               body: String(base64gif)

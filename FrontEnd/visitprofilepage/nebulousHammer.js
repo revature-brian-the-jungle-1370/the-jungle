@@ -2,11 +2,8 @@ let userId = JSON.parse(localStorage.getItem("userInfo")).userId;
 
 
 // async function getPostImage(){// the postId and imageFormat will probably have to be passed as parameters
-<<<<<<< HEAD
 //   let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/post/image/" + postId;//post_id parameter
-=======
-//   let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:8080/post/image/" + postId;//post_id parameter
->>>>>>> origin/group4Implementation
+
 //   console.log(url);
 //   let response = await fetch(url);
 //   console.log(response);
@@ -27,11 +24,7 @@ let userId = JSON.parse(localStorage.getItem("userInfo")).userId;
 async function createPost(){
     let postText = document.getElementById("postText");
     let postJson = JSON.stringify({"user_id":userId, "post_text": postText.value, "image_format": "false"});
-<<<<<<< HEAD
-    let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/post"
-=======
     let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:8080/post"
->>>>>>> origin/group4Implementation
     let thePost = await fetch(url, {
         method:"POST",
         headers:{'Content-Type': 'application/json'}, 
@@ -49,7 +42,7 @@ async function createPostWithImage() {
     const postText = document.getElementById("postText").value;
     console.log(postText.value);
     let base64gif;
-  
+
     reader.addEventListener("load", async function () {
       base64gif = reader.result;
       console.log(base64gif.slice(11, 14));
@@ -57,12 +50,9 @@ async function createPostWithImage() {
 
       if (base64gif.length < 1_000_000 && base64gif.startsWith("data:image/")){
         let postJson = JSON.stringify({"user_id":userId, "post_text": postText, "image_format": "true"});
-<<<<<<< HEAD
+
         let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/post"
-=======
-        let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:8080/post"
->>>>>>> origin/group4Implementation
-        
+
         //Inserts the post into the post table
         let thePost = await fetch(url, {
             method:"POST",
@@ -71,11 +61,8 @@ async function createPostWithImage() {
 
         //Inserts the image into the post_image_table
         let response = await fetch(
-<<<<<<< HEAD
             "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/post/image/" + thePost["post_id"], {
-=======
-            "http://ec2-52-200-53-62.compute-1.amazonaws.com:8080/post/image/" + thePost["post_id"], {
->>>>>>> origin/group4Implementation
+
               method: "POST",
               headers: {"Content-Type": "application/json"},
               body: String(base64gif)
@@ -102,11 +89,7 @@ async function createPostWithImage() {
 
 
   async function getPost() {
-<<<<<<< HEAD
     let response = await fetch("http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/user/post/" + userId, {
-=======
-    let response = await fetch("http://ec2-52-200-53-62.compute-1.amazonaws.com:8080/user/post/" + userId, {
->>>>>>> origin/group4Implementation
       method: "GET",
       mode: "cors",
     });
@@ -116,18 +99,15 @@ async function createPostWithImage() {
     }
   }
   getPost()
-  
+
   async function populateData(responseBody) {
     const allpost = document.getElementById("post column");
     for (let post of responseBody) {
       let postBox = document.createElement('div');
-      
+
       //add the poster image
-<<<<<<< HEAD
       let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/user/image/" + post.user_id;
-=======
-      let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:8080/user/image/" + post.user_id;
->>>>>>> origin/group4Implementation
+
       let response = await fetch(url);
       let user_image_text;
       if(response.status === 200){
@@ -135,20 +115,17 @@ async function createPostWithImage() {
         }
   
       //get the post image
-<<<<<<< HEAD
       url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/post/image/" + post.post_id;
-=======
-      url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:8080/post/image/" + post.post_id;
->>>>>>> origin/group4Implementation
+
       console.log(url);
       response = await fetch(url);
       console.log(response);
       let date_time = new Date(post.date_time_of_creation)
       let date = date_time.toDateString();
-  
+
       if(response.status === 200){//if there is an image then this one, else the other one
         const image_text = await response.text();
-        postBox.innerHTML = 
+        postBox.innerHTML =
         `<div class = "post`+ post.post_id +`" id = "post`+ post.post_id + `">
         <div class="flex-row">
           <div class="overlap-group2">
@@ -197,11 +174,8 @@ async function createPostWithImage() {
   }
 
   async function deletePost(post_id) {
-<<<<<<< HEAD
     let deleteResponse = await fetch("http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/group_post/" + post_id, {
-=======
-    let deleteResponse = await fetch("http://ec2-52-200-53-62.compute-1.amazonaws.com:8080/group_post/" + post_id, {
->>>>>>> origin/group4Implementation
+
       method: "DELETE"
     })
     console.log(deleteResponse)
@@ -229,11 +203,7 @@ async function createPostWithImage() {
     let postBox = document.createElement('div');
       
       //add the poster image
-<<<<<<< HEAD
       let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/user/image/" + post.user_id;
-=======
-      let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:8080/user/image/" + post.user_id;
->>>>>>> origin/group4Implementation
       let response = await fetch(url);
       let user_image_text;
       if(response.status === 200){
@@ -241,11 +211,7 @@ async function createPostWithImage() {
         }
   
       //get the post image
-<<<<<<< HEAD
       url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/post/image/" + post.post_id;
-=======
-      url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:8080/post/image/" + post.post_id;
->>>>>>> origin/group4Implementation
       console.log(url);
       response = await fetch(url);
       console.log(response);

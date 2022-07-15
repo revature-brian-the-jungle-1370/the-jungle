@@ -4,12 +4,8 @@ const userGroupSectionDiv = document.getElementById("userGroups-div");
 
 
 async function getGroupsForUser(){
-<<<<<<< HEAD
     const userId = localStorage.getItem("userId"); //added this line
     let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000" //"http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/group/user/10" - original line
-=======
-    let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/group/user/10"
->>>>>>> origin/group4Implementation
 
     let response = await fetch(url + `/group/user/${userId}`); // await fetch(url); - combined with the url in the comments above
 

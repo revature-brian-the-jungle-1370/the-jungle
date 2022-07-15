@@ -168,6 +168,7 @@ class UserProfileDAOImp(UserProfileDAO):
                 follower_dict.update({follower[0]: follower[1]})
             return follower_dict
         except KeyError as ke:
+            connection.rollback()
             return False
 
     def get_users_following_user(self, user_id: int) -> dict[str:int]:

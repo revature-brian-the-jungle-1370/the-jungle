@@ -1,10 +1,7 @@
 async function getUserInGroups() {
     groupId = localStorage.getItem("groupId")
-<<<<<<< HEAD
     url = `http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/GroupJunction/UserList/${groupId}`
-=======
-    url = `http://ec2-52-200-53-62.compute-1.amazonaws.com:8080/GroupJunction/UserList/${groupId}`
->>>>>>> origin/group4Implementation
+
     let response = await fetch(url)
 
     if(response.status === 200){
@@ -109,12 +106,6 @@ function buttonCheck(response) {
 
         }
     }
-<<<<<<< HEAD
-
-
-=======
-    
->>>>>>> origin/group4Implementation
 }
 getUserInGroups()
 creatorOf()
