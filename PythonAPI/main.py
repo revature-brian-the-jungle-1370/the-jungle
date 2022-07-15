@@ -208,7 +208,7 @@ def input_new_password(user_id):
         user_new_passcode = request.get_json()
         print(user_new_passcode)
         user = user_profile_service.service_get_user_profile_service(user_id)
-        user_profile_service.update_password_service(user.user_id,f"{user_new_passcode['passcode']}")
+        user_profile_service.update_password_service(user.user_id,str(user_new_passcode["passcode"]))
         user = user_profile_service.service_get_user_profile_service(user_id)
         user_as_dictionary = user.make_dictionary()
         return jsonify(user_as_dictionary), 200

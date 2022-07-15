@@ -7,7 +7,7 @@ Feature: User who go onto the Login Page should be able to click on the Forget P
         When I enter the email associated to the User
         When I am taken to the new password page
         When I input a new password
-        And I will have a new password
+        And click the reset password button
         Then I will login with my new password
 
     # Scenario: User enters wrong email when trying to change password
