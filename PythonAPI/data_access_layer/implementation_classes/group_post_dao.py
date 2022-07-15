@@ -18,6 +18,7 @@ class GroupPostDAO(GroupPostDAOAbs):
             post.post_id = generated_id
             return post
         except TypeError:
+            connection.rollback()
             raise TypeError("Too many arguments")
 
     def create_post_image(self, post_id: int, image: str) -> str:
@@ -83,6 +84,7 @@ class GroupPostDAO(GroupPostDAOAbs):
         cursor = connection.cursor()
         cursor.execute(sql, [post_id])
         if cursor.rowcount == 0:
+            connection.rollback()
             raise PostNotFound("Post Not Found!")
         
         connection.commit()

@@ -39,5 +39,6 @@ class GroupMemberJunctionDao(GroupMemberJunctionAbs):
                     connection.commit()
                     return True
                 except TypeError:
+                    connection.rollback()
                     raise TypeError("too many arguments")
         raise WrongId("Incorrect ID")

@@ -29,6 +29,7 @@ class PostFeedDaoImp(PostFeedDao):
             connection.commit()
             return True
         except ConnectionErrorr:
+            connection.rollback()
             return False
 
     def get_all_posts_with_user_id(self, user_id: int) -> List[Post]:
