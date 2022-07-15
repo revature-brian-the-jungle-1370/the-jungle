@@ -7,22 +7,18 @@ const specialChar2 = /[ `^*()+=\[\]{};':"\\|,<>\/~]/;
 const invalidIcon = document.querySelectorAll("[id='invalid-icon']");
 let invalidMessage = document.querySelectorAll("[id='signup-invalid-message']");
 let infoIcon = document.querySelectorAll(".info-icon");
-<<<<<<< HEAD
+
 const url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:8080";
-=======
-const url = "localhost:5000";
->>>>>>> origin/group4Implementation
+
 let validateCounter = 0;
 
 const div = document.getElementById("errorMessageGoesHere");
 div.textContent = "";
 
 async function login() {
-<<<<<<< HEAD
+
   let response = await fetch("http://ec2-52-200-53-62.compute-1.amazonaws.com:8080/user/login", {
-=======
-  let response = await fetch("localhost:5000/user/login", {
->>>>>>> origin/group4Implementation
+
     method: "POST",
     mode: "cors",
     headers: { "Content-Type": "application/json" },
