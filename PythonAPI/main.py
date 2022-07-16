@@ -600,13 +600,19 @@ app.run(host="0.0.0.0", port=5000,debug=True)
 
 @app.get("/bookmark/<user_id>")
 def get_bookmark_post_by_user_id(user_id):
-    post_as_post = post_feed_service.get_all_bookmarkded_posts_service(int(user_id))
-    posts_as_dictionary = []
-    for post in post_as_post:
-        dictionary_posts = post.make_dictionary()
-        posts_as_dictionary.append(dictionary_posts)
-    return jsonify(posts_as_dictionary),200
-
+    if(user_id.isdigit()):
+        post_as_post = post_feed_service.get_all_bookmarkded_posts_service(int(user_id))
+        posts_as_dictionary = []
+        for post in post_as_post:
+            dictionary_posts = post.make_dictionary()
+            posts_as_dictionary.append(dictionary_posts)
+        return jsonify(posts_as_dictionary),200
+    else:
+        exception_dictionary = {"message": "Invalid Url"}
+        exception_json = jsonify(exception_dictionary)
+        return exception_json,400
+        
+    
 
 @app.post("/bookmark/<user_id>/<post_id>")
 def save_post_as_bookmark(user_id,post_id):
