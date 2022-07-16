@@ -66,13 +66,13 @@ public class RegLoginSearchPOM {
     @FindBy(id = "signup-password")
     public WebElement signUpPassword;
 
-    @FindBy(xpath = "/html/body/div/div/div[2]/div/div[6]/div/p")
+    @FindBy(id = "invalidUserName")
     public WebElement usernameErrorMessage;
 
     @FindBy(id = "signup-submit")
     public WebElement signUpSubmitButton;
 
-    @FindBy(xpath = "/html/body/div/div/div[2]/div/div[9]/p")
+    @FindBy(id = "errorSubmitMessage")
     public WebElement regErrorMessage;
 
 }
