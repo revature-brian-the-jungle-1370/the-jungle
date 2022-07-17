@@ -16,4 +16,9 @@ Feature: Sending chat message
         Given I am on the chat page
         When I input a very long chat message
         Then I shouldn't see the message
-        
+
+    Scenario: Change ChatRoom
+        Given I am on the chat page
+        When I input a chat message
+        And I change chat rooms
+        Then I should not see the message I posted

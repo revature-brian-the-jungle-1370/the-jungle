@@ -5,7 +5,6 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import E2E.runner.TestRunner;
 import org.openqa.selenium.*;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -70,6 +69,23 @@ public class sendChatMessageSteps {
         String longMessage = "This is a long message This is a long message This is a long message This is a long message This is a long message This is a long message This is a long message This is a long message This is a long message This is a long message This is a long message This is a long message This is a long message This is a long message This is a long message This is a long message This is a long message This is a long message This is a long message This is a long message This is a long message This is a long message This is a long message This is a long message This is a long message This is a long message This is a long message";
         List<WebElement> chats = TestRunner.driver.findElements(By.className("check-the-documentation"));
         Assert.assertNotEquals(chats.get(chats.size()-1).getText(), longMessage);
+    }
+
+    @When("I change chat rooms")
+    public void i_change_chat_rooms() {
+        TestRunner.driver.findElement(By.id("10000")).click();
+        //maybe add alert
+    }
+
+    @Then("I should not see the message I posted")
+    public void i_should_not_see_the_message_i_posted() {
+        List<WebElement> chats = TestRunner.driver.findElements(By.className("check-the-documentation"));
+        if (chats.size() > 0) {
+            Assert.assertNotEquals(chats.get(chats.size()-1).getText(), "Hello from selenium");
+        }
+        else {
+            Assert.assertTrue(true);
+        }
     }
 
 }
