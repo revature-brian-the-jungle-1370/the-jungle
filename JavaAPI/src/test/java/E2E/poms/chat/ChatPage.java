@@ -9,11 +9,11 @@ import org.openqa.selenium.support.PageFactory;
 public class ChatPage {
     private WebDriver webDriver;
 
-    @FindBy(id = "messageInputBox")
-    WebElement messageBoxInput;
+    @FindBy(id = "message")
+    public WebElement messageBoxInput;
 
     @FindBy(id = "send")
-    WebElement sendMessageButton;
+    public WebElement sendMessageButton;
 
     public ChatPage(WebDriver webDriver) {
         this.webDriver = webDriver;
