@@ -35,7 +35,7 @@ async function updateUserProfileData(){
         }
 }
 
-/* 
+/*
     Reset the modal data when you close it
 */
 function resetProfileModalData(){
@@ -167,7 +167,7 @@ async function getGroupImage(groupBody){
 function goToGroupPage(groupId){
     let groupLink = getElementById("groupLink-" + groupId);
     // groupLink.setAttribute("href", "")
-    localStorage.setItem("groupId") = groupId;
+    localStorage.setItem("groupId", groupId);
     localStorage.getItem("groupId");
 }
 
