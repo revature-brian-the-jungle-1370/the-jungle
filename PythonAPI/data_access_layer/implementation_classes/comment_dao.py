@@ -36,7 +36,7 @@ class CommentDAOImp(CommentDAO):
         sql = f"select * from post_table where post_id = %(post_id)s;"
         cursor = connection.cursor()
         cursor.execute(sql, {"post_id": post_id})
-        if not cursor.fetchone():
+        if not cursor.fetchone(): 
             raise PostNotFound('The post could not be found.')
 
         sql = "select ct.comment_id, ct.post_id, ct.user_id , ct.group_id, ct.comment_text, ct.likes, " \
