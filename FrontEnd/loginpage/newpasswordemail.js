@@ -13,18 +13,19 @@ const div = document.getElementById("errorMessageGoesHere")
 div.textContent = ""
 
 async function checkEmailForResetPassword() {
-    let response = await fetch(url+"/user/reset-password", {
+    let response = fetch(url+"/user/reset-password", {
         method: "POST",
         mode: "cors",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json"},
         body: JSON.stringify({
         email: email.value
         }),
     });
-    console.log(response)
+    console.log(response) //try grabbing response body with attribute for body
     if (response.status === 200) {
-        let body = response.json();
-        
+        console.log("200")
+        let body = await response.json();
+        console.log(body)
         //  Storing information for later
         localStorage.setItem("emailInput", JSON.stringify(body));
         window.location.href = "../loginpage/newpassword.html"; //  Redirect to Here????

@@ -75,4 +75,7 @@ public class RegLoginSearchPOM {
     @FindBy(xpath = "/html/body/div/div/div[2]/div/div[9]/p")
     public WebElement regErrorMessage;
 
+    @FindBy(className = "reset-password-link")
+    public WebElement resetPasswordLink;
+
 }
