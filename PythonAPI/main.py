@@ -1,6 +1,7 @@
+import json
 import logging
 
-from flask import Flask, request, jsonify,redirect,url_for,flash
+from flask import Flask, render_template, request, jsonify,redirect,url_for,flash
 from flask_cors import CORS
 
 from custom_exceptions.comment_not_found import CommentNotFound
@@ -206,21 +207,26 @@ def update_profile_info(user_id):
 @app.post("/user/reset-password")
 def reset_password():
     try:
+        print(request)
         user_profile_email = request.get_json()
+        print(user_profile_email)
         if user_profile_dao.get_user_profile_by_email(user_profile_email["email"]) is not None:
-            print(user_profile_email["email"])
             user_profile = user_profile_dao.get_user_profile_by_email(f"{user_profile_email['email']}")
+            print(user_profile)
             user_id = user_profile.user_id
-            return redirect(f"/user/{user_id}/new-password"), 200
+            print(user_id,flush=True)
+            print("Redirecting...")
+            #return redirect(f"/user/{user_id}/new-password"), 200
+            return json.dumps(user_id), 200
         else:
             flash('Invalid Email')
     except UserNotFound as e:
-        print("ERROR MESSAGE"+str(user_profile_email["email"]),flush=True)
+        print("ERROR MESSAGE"+str(user_profile_email),flush=True)
         exception_dictionary = {"message":str(e)}
         exception_json = jsonify(exception_dictionary)
         return exception_json, 400
 
-@app.post("/user/new-password")
+@app.post("/user/<user_id>/new-password")
 def input_new_password(user_id):
     try:
         user_new_passcode = request.get_json()
