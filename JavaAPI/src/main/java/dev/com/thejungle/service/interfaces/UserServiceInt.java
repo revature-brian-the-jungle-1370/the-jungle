@@ -22,5 +22,4 @@ public interface UserServiceInt {
 
     ArrayList<Integer> getGroups(int userId);
 
-    void verifyNoExistingUsernameAndEmail(String username, String email);
 }

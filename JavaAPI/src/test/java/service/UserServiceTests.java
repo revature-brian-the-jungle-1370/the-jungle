@@ -60,50 +60,48 @@ public class UserServiceTests {
     // DUPLICATE USERNAME
     @Test(expectedExceptions = DuplicateUsername.class, expectedExceptionsMessageRegExp = "This username is already taken")
     public void cannotHaveDuplicateUsernameSuccess() {
-        Mockito.when(userDAO.checkForDuplicateUsername(duplicateUsername.getUsername())).thenReturn(true);
-        Mockito.when(userDAO.checkForDuplicateEmail(duplicateUsername.getEmail())).thenReturn(false);
-        userService.verifyNoExistingUsernameAndEmail(duplicateUsername.getUsername(), duplicateUsername.getEmail());
+        Mockito.when(userDAO.createNewUser(duplicateUsername)).thenThrow(new DuplicateUsername("This username is already taken"));
+        userService.createNewUserService(duplicateUsername);
     }
 
     // DUPLICATE EMAIL
     @Test(expectedExceptions = DuplicateEmail.class, expectedExceptionsMessageRegExp = "Email is already in use")
     public void cannotHaveDuplicateEmailSuccess() {
-        Mockito.when(userDAO.checkForDuplicateUsername(duplicateEmailUser.getUsername())).thenReturn(false);
-        Mockito.when(userDAO.checkForDuplicateEmail(duplicateEmailUser.getEmail())).thenReturn(true);
-        userService.verifyNoExistingUsernameAndEmail(duplicateEmailUser.getUsername(), duplicateEmailUser.getEmail());
+        Mockito.when(userDAO.createNewUser(duplicateEmailUser)).thenThrow(new DuplicateEmail("Email is already in use"));
+        userService.createNewUserService(duplicateEmailUser);
     }
 
     // SPACES IN USERNAME
     @Test(expectedExceptions = UnallowedSpaces.class, expectedExceptionsMessageRegExp = "No spaces allowed in username or password")
     public void cannotHaveSpacesInUsernameSuccess() {
-        Mockito.when(userDAO.createNewUser(usernameSpaces)).thenReturn(Mockito.any());
+        Mockito.when(userDAO.createNewUser(usernameSpaces)).thenThrow(new UnallowedSpaces("No spaces allowed in username or password"));
         userService.createNewUserService(usernameSpaces);
     }
 
     // SPACES IN PASSWORD
     @Test(expectedExceptions = UnallowedSpaces.class, expectedExceptionsMessageRegExp = "No spaces allowed in username or password")
     public void cannotHaveSpacesInPasswordSuccess() {
-        Mockito.when(userDAO.createNewUser(passwordSpaces)).thenReturn(Mockito.any());
+        Mockito.when(userDAO.createNewUser(passwordSpaces)).thenThrow(new UnallowedSpaces("No spaces allowed in username or password"));
         userService.createNewUserService(passwordSpaces);
     }
 
     // BLANK INPUTS
     @Test(expectedExceptions = BlankInputs.class, expectedExceptionsMessageRegExp = "Please fill in the blanks")
     public void missingInputsForUserRegistrationSuccess() {
-        Mockito.when(userDAO.createNewUser(blankSpaces)).thenReturn(Mockito.any());
+        Mockito.when(userDAO.createNewUser(blankSpaces)).thenThrow(new BlankInputs("Please fill in the blanks"));
         userService.createNewUserService(blankSpaces);
     }
 
     // Get GroupId
-    @Test(expectedExceptions = InvalidInputException.class, expectedExceptionsMessageRegExp = "User Id needs to be positive and in range")
+    @Test(expectedExceptions = InvalidInputException.class)
     public void getGroupMockito() {
-        Mockito.when(userDAO.getGroups(-2)).thenReturn(Mockito.any());
+        Mockito.when(userDAO.getGroups(-2)).thenThrow(InvalidInputException.class);
         userService.getGroups(-2);
     }
 
-    @Test(expectedExceptions = InvalidInputException.class, expectedExceptionsMessageRegExp = "User Id needs to be positive and in range")
+    @Test(expectedExceptions = InvalidInputException.class)
     public void getGroupNoIdMockito() {
-        Mockito.when(userDAO.getGroups(0)).thenReturn(Mockito.any());
+        Mockito.when(userDAO.getGroups(0)).thenThrow(InvalidInputException.class);
         userService.getGroups(0);
     }
 
