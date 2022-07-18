@@ -193,6 +193,7 @@ public class UserController {
         Gson gson = new Gson();
         try {
             User newUser = gson.fromJson(ctx.body(), User.class);
+            this.userService.verifyNoExistingUsernameAndEmail(newUser.getUsername(), newUser.getEmail());
             User createdUser = this.userService.createNewUserService(newUser);
             if (createdUser == null) {
                 HashMap<String, String> message = new HashMap<>();
@@ -203,22 +204,7 @@ public class UserController {
             String createdUserJson = gson.toJson(createdUser);
             ctx.result(createdUserJson);
             ctx.status(201);
-        } catch (UnallowedSpaces e) {
-            HashMap<String, String> message = new HashMap<>();
-            message.put("errorMessage", e.getMessage());
-            ctx.result(gson.toJson(message));
-            ctx.status(400);
-        } catch (DuplicateEmail e) {
-            HashMap<String, String> message = new HashMap<>();
-            message.put("errorMessage", e.getMessage());
-            ctx.result(gson.toJson(message));
-            ctx.status(400);
-        } catch (DuplicateUsername e) {
-            HashMap<String, String> message = new HashMap<>();
-            message.put("errorMessage", e.getMessage());
-            ctx.result(gson.toJson(message));
-            ctx.status(400);
-        } catch (BlankInputs e) {
+        } catch (UnallowedSpaces | DuplicateEmail | DuplicateUsername | BlankInputs e) {
             HashMap<String, String> message = new HashMap<>();
             message.put("errorMessage", e.getMessage());
             ctx.result(gson.toJson(message));
