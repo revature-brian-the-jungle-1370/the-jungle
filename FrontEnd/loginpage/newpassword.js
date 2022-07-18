@@ -14,7 +14,7 @@ div.textContent = "";
 
 async function resetPassword() {
     let path = window.location.href;
-    let userId = getUserId("http://localhost:5000/user/",path)
+    let userId = getUserId("http://127.0.0.1:5000",path)
     console.log(userId)
     let response = await fetch(url+`/user/${userId}/reset-password`, {
         method: "POST",
@@ -24,10 +24,10 @@ async function resetPassword() {
         passcode: passcode.value
         }),
     });
-
+    console.log(response)
     if (response.status === 200) {
         let body = await response.json();
-        console.log(response)
+        //console.log(response)
         //  Storing information for later
         localStorage.setItem("passcodeInput", JSON.stringify(body));
         window.location.href = "../loginpage/login.html"; //  Redirect to Here????
