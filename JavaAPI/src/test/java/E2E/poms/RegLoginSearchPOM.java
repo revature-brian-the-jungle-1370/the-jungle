@@ -75,4 +75,7 @@ public class RegLoginSearchPOM {
     @FindBy(id = "errorSubmitMessage")
     public WebElement regErrorMessage;
 
+    @FindBy(className = "reset-password-link")
+    public WebElement resetPasswordLink;
+
 }

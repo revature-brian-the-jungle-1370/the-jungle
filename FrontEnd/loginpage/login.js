@@ -24,13 +24,13 @@ async function login() {
       passcode: passcodes.value,
     }),
   });
-
+  
   if (response.status === 200) {
+    console.log("received response")
     let body = await response.json();
     //  Storing information for later
     localStorage.setItem("userInfo", JSON.stringify(body));
-    localStorage.setItem("userId", body.userId);
-    window.location.href = frontendUrl+"/profilepage/profile-page.html?userId="+body.userId; //  Redirect to Here????
+    window.location.href = "../profilepage/profile-page.html"; //  Redirect to Here????
   } else {
     div.textContent = "Incorrect Username or Password";
   }

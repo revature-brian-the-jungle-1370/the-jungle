@@ -1,16 +1,16 @@
-const email = document.getElementById("emailInput");
-const submitEmail = document.getElementById("submitEmail");
-submitEmail.disabled = true;
-let loginStatus = false;
-const specialChar2 = /[ `^*()+=\[\]{};':"\\|,<>\/~]/;
-const invalidIcon = document.querySelectorAll("[id='invalid-icon']");
-let invalidMessage = document.querySelectorAll("[id='email-invalid-message']");
-let infoIcon = document.querySelectorAll(".info-icon");
-const url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000";
-let validateCounter = 0;
+const email = document.getElementById("emailInput")
+const submitEmail = document.getElementById("submitEmail")
+submitEmail.disabled = true
+let loginStatus = false
+const specialChar2 = /[ `^*()+=\[\]{};':"\\|,<>\/~]/
+const invalidIcon = document.querySelectorAll("[id='invalid-icon']")
+let invalidMessage = document.querySelectorAll("[id='email-invalid-message']")
+let infoIcon = document.querySelectorAll(".info-icon")
+const url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000"
+let validateCounter = 0
 
-const div = document.getElementById("errorMessageGoesHere");
-div.textContent = "";
+const div = document.getElementById("errorMessageGoesHere")
+div.textContent = ""
 
 async function checkEmailForResetPassword() {
     let response = await fetch(url+"/user/reset-password", {
@@ -21,14 +21,16 @@ async function checkEmailForResetPassword() {
         email: email.value
         }),
     });
-
+    console.log(response) //try grabbing response body with attribute for body
     if (response.status === 200) {
+        console.log("200")
         let body = await response.json();
+        console.log(body)
         //  Storing information for later
         localStorage.setItem("emailInput", JSON.stringify(body));
-        window.location.href = "../user/newpassword.html"; //  Redirect to Here????
+        window.location.href = "../loginpage/newpassword.html"; //  Redirect to Here????
     } else {
-        div.textContent = "Incorrect Username or Password";
+        div.textContent = "Invalid email";
     }
 }
 

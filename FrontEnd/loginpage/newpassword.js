@@ -30,9 +30,9 @@ async function resetPassword() {
         console.log(response)
         //  Storing information for later
         localStorage.setItem("passcodeInput", JSON.stringify(body));
-        window.location.href = "../user/login.html"; //  Redirect to Here????
+        window.location.href = "../loginpage/login.html"; //  Redirect to Here????
     } else {
-        div.textContent = "Incorrect Username or Password";
+        div.textContent = "Invalid Password";
     }
 }
 
@@ -51,7 +51,7 @@ function getUserId(prefix,path){
 passcode.addEventListener("focusin", resetPasswordCheck());
 function resetPasswordCheck() {
     passcode.addEventListener("focusout", function () {
-        if (email.value == "") {
+        if (passcode.value == "") {
             invalidIcon[0].style.display = "";
             infoIcon[0].style.display = "block";
             invalidMessage[0].textContent = "Email is incorrect or missing";
