@@ -3,7 +3,7 @@
 
 async function getUserImage(){
 
-  let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/user/image/" + userId;
+  let url = java_url + "/user/image/" + userId;
 
   console.log(url);
   let response = await fetch(url);
@@ -39,8 +39,7 @@ async function createUserWithImage() {
         // console.log(theUser["user_id"]);
         let response = await fetch(
          //"http://ec2-52-200-53-62.compute-1.amazonaws.com:8080/user/image/" + theUser["user_id"], 
-            "http://ec2-52-200-53-62.compute-1.amazonaws.com:8080/user/image/" + userId, { 
-
+          python_url + "/user/image/" + userId, { 
               method: "POST",
               headers: {"Content-Type": "application/json"},
               body: String(base64gif)
@@ -65,7 +64,7 @@ async function createUserWithImage() {
 
   async function getUserInfoOnProfile(){
 
-    let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:8080/user/" + userId;
+    let url = python_url + "/user/" + userId;
     let response = await fetch(url);
     console.log(url);
 

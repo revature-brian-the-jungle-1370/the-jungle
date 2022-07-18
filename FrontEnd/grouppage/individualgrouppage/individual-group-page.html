@@ -18,7 +18,7 @@
     integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
-    <script src="../group_junction.js"></script>
+    <script src="../js/group_junction.js"></script>
     <title>Individual Group Page</title>
   </head>
   <body style="margin: 0; background: #ffffff">
@@ -72,11 +72,15 @@
             </div>
             <div class="group-container">
               <div class="groups valign-text-middle">Groups</div>
+              <a href="../group-page.html">
               <img class="x-icon" src="img/group-icon@2x.svg" />
+              </a>
             </div>
             <div class="logout-container">
               <div class="logout valign-text-middle">Logout</div>
+              <a href="../../loginpage/login.html">
               <img class="x-icon" src="img/logout-icon@2x.svg" />
+              </a>
             </div>
             <div id = "message">
               <button id="tbd" style="background-color: orange;" onclick="deleteRequest();">Leave Group</button>
@@ -98,10 +102,6 @@
           </div>
 
           <div class="feed-section">
-
-            <p id="postInfo"></p>
-            <p id="allpost"></p>
-            
             <!-- -------------------------------------- Post Input Area----------------------------------------------- -->
             <div class="overlap-group3-1">
               <div class="feed-container">
@@ -114,6 +114,10 @@
               <img class="line-under-feed" src="img/line-under-feed@2x.svg" />
               
             </div>
+            <!-- -------------------------------------- Post Feed Area----------------------------------------------- -->
+
+            <p id="postInfo"></p>
+            <p id="allpost"></p>
 
             <!-- <div class="overlap-group1">
               <div class="flex-row">
@@ -200,7 +204,7 @@
     </div>
   </div> -->
   <!-- ------------ICON--------------- -->
-  <div class="icon-container">
+  <!-- <div class="icon-container">
     <img class="heart-icon" src="img/heart-icon@2x.svg" />
     <img
       class="chat-bubble-icon"
@@ -214,7 +218,8 @@
         </div>
       </div>
     </div>
-    <script src="group_post.js"></script>
-    <script src="../individual-group.js"></script>
+    <script src="../js/individual_group_post.js"></script>
+    <script src="../js/individual-group.js"></script>
+    <script src="../js/util_post_feed.js"></script>
   </body>
 </html>

@@ -24,7 +24,7 @@ let userId = JSON.parse(localStorage.getItem("userInfo")).userId;
 async function createPost(){
     let postText = document.getElementById("postText");
     let postJson = JSON.stringify({"user_id":userId, "post_text": postText.value, "image_format": "false"});
-    let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:8080/post"
+    let url = python_url + "/post"
     let thePost = await fetch(url, {
         method:"POST",
         headers:{'Content-Type': 'application/json'}, 
@@ -51,7 +51,7 @@ async function createPostWithImage() {
       if (base64gif.length < 1_000_000 && base64gif.startsWith("data:image/")){
         let postJson = JSON.stringify({"user_id":userId, "post_text": postText, "image_format": "true"});
 
-        let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/post"
+        let url = java_url + "/post"
 
         //Inserts the post into the post table
         let thePost = await fetch(url, {
@@ -60,12 +60,10 @@ async function createPostWithImage() {
             body:postJson}).then(response => {return response.json()});
 
         //Inserts the image into the post_image_table
-        let response = await fetch(
-            "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/post/image/" + thePost["post_id"], {
-
-              method: "POST",
-              headers: {"Content-Type": "application/json"},
-              body: String(base64gif)
+        let response = await fetch( java_url + "/post/image/" + thePost["post_id"], {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: String(base64gif)
           });
           const imageText = await response.text();
         add_post_first(thePost)
@@ -89,7 +87,7 @@ async function createPostWithImage() {
 
 
   async function getPost() {
-    let response = await fetch("http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/user/post/" + userId, {
+    let response = await fetch(java_url + "/user/post/" + userId, {
       method: "GET",
       mode: "cors",
     });
@@ -106,7 +104,7 @@ async function createPostWithImage() {
       let postBox = document.createElement('div');
 
       //add the poster image
-      let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/user/image/" + post.user_id;
+      let url = java_url + "/user/image/" + post.user_id;
 
       let response = await fetch(url);
       let user_image_text;
@@ -115,7 +113,7 @@ async function createPostWithImage() {
         }
   
       //get the post image
-      url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/post/image/" + post.post_id;
+      url = java_url + "/post/image/" + post.post_id;
 
       console.log(url);
       response = await fetch(url);
@@ -174,7 +172,7 @@ async function createPostWithImage() {
   }
 
   async function deletePost(post_id) {
-    let deleteResponse = await fetch("http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/group_post/" + post_id, {
+    let deleteResponse = await fetch(java_url + "/group_post/" + post_id, {
 
       method: "DELETE"
     })
@@ -203,7 +201,7 @@ async function createPostWithImage() {
     let postBox = document.createElement('div');
       
       //add the poster image
-      let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/user/image/" + post.user_id;
+      let url = java_url + "/user/image/" + post.user_id;
       let response = await fetch(url);
       let user_image_text;
       if(response.status === 200){
@@ -211,7 +209,7 @@ async function createPostWithImage() {
         }
   
       //get the post image
-      url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/post/image/" + post.post_id;
+      url = java_url + "/post/image/" + post.post_id;
       console.log(url);
       response = await fetch(url);
       console.log(response);

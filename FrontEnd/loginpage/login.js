@@ -7,8 +7,10 @@ const specialChar2 = /[ `^*()+=\[\]{};':"\\|,<>\/~]/;
 const invalidIcon = document.querySelectorAll("[id='invalid-icon']");
 let invalidMessage = document.querySelectorAll("[id='signup-invalid-message']");
 let infoIcon = document.querySelectorAll(".info-icon");
+localStorage.clear() //Reset localStorage on traversal to home page
 
-const url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:8080";
+//const url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:8080";
+const url = "http://localhost:8080";
 
 let validateCounter = 0;
 
@@ -17,7 +19,7 @@ div.textContent = "";
 
 async function login() {
 
-  let response = await fetch("http://ec2-52-200-53-62.compute-1.amazonaws.com:8080/user/login", {
+  let response = await fetch(url + "/user/login", {
 
     method: "POST",
     mode: "cors",
