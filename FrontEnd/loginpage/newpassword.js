@@ -13,10 +13,10 @@ const div = document.getElementById("errorMessageGoesHere");
 div.textContent = "";
 
 async function resetPassword() {
-    let path = window.location.href;
-    let userId = getUserId("http://127.0.0.1:5000",path)
-    console.log(userId)
-    let response = await fetch(url+`/user/${userId}/reset-password`, {
+    let retrievedUserId = window.localStorage.getItem("user_id")
+    console.log(retrievedUserId)
+    let user_id = JSON.parse(retrievedUserId)
+    let response = await fetch(url+`/user/${user_id}/new-password`, {
         method: "POST",
         mode: "cors",
         headers: { "Content-Type": "application/json" },

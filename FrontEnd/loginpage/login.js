@@ -24,7 +24,7 @@ async function login() {
       passcode: passcodes.value,
     }),
   });
-  
+  console.log(response)
   if (response.status === 200) {
     console.log("received response")
     let body = await response.json();
