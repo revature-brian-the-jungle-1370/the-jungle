@@ -6,16 +6,17 @@ const specialChar2 = /[ `^*()+=\[\]{};':"\\|,<>\/~]/;
 const invalidIcon = document.querySelectorAll("[id='invalid-icon']");
 let invalidMessage = document.querySelectorAll("[id='passcode-invalid-message']");
 let infoIcon = document.querySelectorAll(".info-icon");
-const url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/?userId=0";
+const url = "http://127.0.0.1:5000"
+//const url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000";
 let validateCounter = 0
 const div = document.getElementById("errorMessageGoesHere");
 div.textContent = "";
 
 async function resetPassword() {
-    let path = window.location.href;
-    let userId = getUserId("http://ec2-52-200-53-62.compute-1.amazonaws.com:5000",path)
-    console.log(userId)
-    let response = await fetch(url+`/user/${userId}/reset-password`, {
+    let retrievedUserId = window.localStorage.getItem("user_id")
+    console.log(retrievedUserId)
+    let user_id = JSON.parse(retrievedUserId)
+    let response = await fetch(url+`/user/${user_id}/new-password`, {
         method: "POST",
         mode: "cors",
         headers: { "Content-Type": "application/json" },
@@ -24,16 +25,42 @@ async function resetPassword() {
         }),
     });
     console.log(response)
-    if (response.status === 200) {
+    
+    if (response.status == 200) {
         let body = await response.json();
-        //console.log(response)
+        console.log(response)
         //  Storing information for later
-        localStorage.setItem("passcodeInput", JSON.stringify(body));
-        window.location.href = "../loginpage/login.html"; //  Redirect to Here????
+        //localStorage.setItem("user_id", JSON.stringify(body));
+        window.localStorage.clear()
+        window.location.href = "http://127.0.0.1:5500/FrontEnd/loginpage/login.html"; //  Redirect to Here????
     } else {
         div.textContent = "Invalid Password";
     }
 }
+
+// async function resetPassword(user_id) {
+//     console.log(user_id)
+//     let response = await fetch(url+`/user/${user_id}/new-password`, {
+//         method: "POST",
+//         mode: "cors",
+//         headers: { "Content-Type": "application/json" },
+//         body: JSON.stringify({
+//         passcode: passcode.value
+//         }),
+//     });
+//     console.log(response)
+    
+//     if (response.status == 200) {
+//         let body = await response.json();
+//         console.log(response)
+//         //  Storing information for later
+//         localStorage.setItem("user_id", JSON.stringify(body));
+        
+//         window.location.href = url+"FrontEnd/loginpage/login.html"; //  Redirect to Here????
+//     } else {
+//         div.textContent = "Invalid Password";
+//     }
+// }
 
 let jsonPasscodeObject = {
     passcode: "",

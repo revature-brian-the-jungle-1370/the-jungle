@@ -7,7 +7,8 @@ const specialChar2 = /[ `^*()+=\[\]{};':"\\|,<>\/~]/;
 const invalidIcon = document.querySelectorAll("[id='invalid-icon']");
 let invalidMessage = document.querySelectorAll("[id='signup-invalid-message']");
 let infoIcon = document.querySelectorAll(".info-icon");
-const url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000";
+const url = "http://127.0.0.1:8080";
+//const url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:8080";
 let validateCounter = 0;
 
 const div = document.getElementById("errorMessageGoesHere");
@@ -29,7 +30,7 @@ async function login() {
     let body = await response.json();
     //  Storing information for later
     localStorage.setItem("userInfo", JSON.stringify(body));
-    window.location.href = "../profilepage/profile-page.html"; //  Redirect to Here????
+    window.location.href = "http://127.0.0.1:5500/FrontEnd/profilepage/profile-page.html"; //  Redirect to Here????
   } else {
     div.textContent = "Incorrect Username or Password";
   }
