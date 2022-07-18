@@ -43,6 +43,6 @@ public class UserHomePage {
     @FindBy(id = "duplicateGroupNameMessage")
     public WebElement duplicateGroupNameMessage;
 
-    @FindBy(xpath = "//a[@id='groupLink-10000']")
+    @FindBy(xpath = "//div[@id='groups-div']/div[1]/div")
     public WebElement groupToJoin;
 }
