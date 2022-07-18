@@ -264,36 +264,4 @@ public class UserDAO implements UserDAOInt {
         }
     }
 
-    public boolean checkForDuplicateUsername(String username) {
-        try (Connection connection = ConnectionDB.createConnection()) {
-            String sql = "select * from user_table where username = ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, username);
-            ResultSet results = preparedStatement.executeQuery();
-            if (results.next()) {
-                return true;
-            }
-            return false;
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-            return true;
-        }
-    }
-
-    public boolean checkForDuplicateEmail(String email) {
-        try (Connection connection = ConnectionDB.createConnection()) {
-            String sql = "select * from user_table where email = ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, email);
-            ResultSet results = preparedStatement.executeQuery();
-            if (results.next()) {
-                return true;
-            }
-            return false;
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-            return true;
-        }
-    }
-
 }
