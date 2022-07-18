@@ -97,7 +97,7 @@ function populateUserFollowers(followerBody){
         // Created the username div and set the class name and username
         let followerUsernameDiv = document.createElement("div");
         followerUsernameDiv.setAttribute("class", "name valign-text-middle poppins-bold-astronaut-22px");
-        followerUsernameDiv.innerHTML = `<a class="name valign-text-middle poppins-bold-astronaut-22px" href="profile-page.html">${follower}</a>`;
+        followerUsernameDiv.innerHTML = `<a class="name valign-text-middle poppins-bold-astronaut-22px" href="profile-page.html?userId=${followerBody[follower]}">${follower}</a>`;
 
         // Append the created elements to the page
         followerSectionDiv.appendChild(followerDiv);
@@ -115,7 +115,7 @@ async function getFollowerImage(followerBody){
         let response = await fetch(url);
         if(response.status === 200){
             const image_text = await response.text();
-            image_Element.src = image_text;
+            image_Element.src = "data:image/PNG;base64,"+image_text;
         }
 
 }

@@ -14,7 +14,7 @@ async function getUserImage(){
       // image_Element.src = image_text;
       // document.getElementById("userImage").appendChild(image_Element);
       let image_Element = document.getElementById("userImageFile");
-      image_Element.src = image_text;
+      image_Element.src = "data:image/PNG;base64,"+image_text;
       
   }
 }
@@ -46,7 +46,7 @@ async function createUserWithImage() {
           });
           const imageText = await response.text();
           let image_Element = document.getElementById("userImageFile");
-          image_Element.src = imageText;
+          image_Element.src = "data:image/PNG;base64,"+imageText;
       
       }
       else{
