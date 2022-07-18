@@ -1,5 +1,16 @@
-let userId = 104; // temporary 
-let postId = 273; // temporary
+let params = new URLSearchParams(location.search);
+let userId=params.get('userId');
+let loggedInUserID = JSON.parse(localStorage.getItem("userInfo")).userId; 
+
+(function () {
+  let createPostModal=document.getElementById("createPostModal");
+  if(createPostModal!=null && userId!=loggedInUserID){
+    createPostModal.setAttribute("class","invisible")
+  }
+
+})();
+
+
 
 // this is just a proof of concept and does not contain styling elements of the finished code
 //assuming you are getting all the posts at once, this method will have to be called individually in a for loop for each post
@@ -132,13 +143,13 @@ async function createPostWithImage() {
   
       if(response.status === 200){//if there is an image then this one, else the other one
         const image_text = await response.text();
-        postBox.innerHTML = 
-        `<div class = "post`+ post.post_id +`" id = "post`+ post.post_id + `">
+        postBox.innerHTML =
+        `<div class = "post" id = "post`+ post.post_id + `">
         <div class="flex-row">
           <div class="overlap-group2">
             <div class="new-york-ny valign-text-middle">`+ date +`</div>
             <div class="username-1 valign-text-middle poppins-bold-cape-cod-20px">JostSNL21</div>
-            <img class="feed-avatar-1" src="`+ user_image_text + `" alt="img/ellipse-1@2x.png" />
+            <img class="feed-avatar-1" src="data:image/PNG;base64,`+ user_image_text + `" alt="img/ellipse-1@2x.png" />
           </div>
           <input type="image" class="three-dots-icon-1" src="img/bi-three-dots@2x.svg" id="deletePost${post.post_id}" onclick="deletePost(${post.post_id})"/>
         </div>
@@ -149,8 +160,8 @@ async function createPostWithImage() {
           <input type="image" class="chat-bubble-icon" src="img/chat-bubble-icon@2x.svg"/>
           <img class="share-icon" src="img/share-icon@2x.svg" />
         </div>
-        <div class="overlap-group-1">
-          <div class="feed-text-2 valign-text-middle poppins-medium-black-18px">`+ post.post_text + `</div>
+        <div class="overlap-group-1 text-overflow">
+          <p class="feed-text-2 valign-text-middle poppins-medium-black-18px">`+ post.post_text + `</p>
         </div>
       </div>`
       }else{
@@ -160,7 +171,7 @@ async function createPostWithImage() {
         <div class="overlap-group2">
           <div class="new-york-ny valign-text-middle">`+ date +`</div>
           <div class="username-1 valign-text-middle poppins-bold-cape-cod-20px">JostSNL21</div>
-          <img class="feed-avatar-1" src="`+ user_image_text + `" alt="img/ellipse-1@2x.png" />
+          <img class="feed-avatar-1" src="data:image/PNG;base64,`+ user_image_text + `" alt="img/ellipse-1@2x.png" />
         </div>
         <input type="image" class="three-dots-icon-1" src="img/bi-three-dots@2x.svg" id="deletePost${post.post_id}" onclick="deletePost(${post.post_id})"/>
       </div>

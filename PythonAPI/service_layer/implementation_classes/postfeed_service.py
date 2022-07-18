@@ -15,3 +15,9 @@ class PostFeedServiceImp(PostfeedService):
 
     def get_all_posts_by_user_id_service(self, user_id: int):
         return self.post_feed_dao.get_all_posts_with_user_id(user_id)
+
+    def get_all_bookmarkded_posts_service(self, userid: int):
+        return self.post_feed_dao.get_all_bookmarkded_posts(userid)
+
+    def bookmark_post_service(self, userid: int, postid: int):
+        return self.post_feed_dao.bookmark_post(userid, postid)

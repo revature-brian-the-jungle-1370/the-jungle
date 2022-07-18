@@ -3,9 +3,11 @@ from custom_exceptions.image_format_must_be_a_string import ImageFormatMustBeASt
 from custom_exceptions.image_must_be_a_string import ImageMustBeAString
 from custom_exceptions.too_many_characters import TooManyCharacters
 from custom_exceptions.user_id_must_be_an_integer import UserIdMustBeAnInteger
+from custom_exceptions.user_not_found import UserNotFound
 from data_access_layer.implementation_classes.user_profile_dao import UserProfileDAOImp
 from entities.user import User
 from service_layer.abstract_classes.user_profile_service_abs import UserProfileService
+from flask import flash
 
 
 class UserProfileServiceImp(UserProfileService):
@@ -60,7 +62,13 @@ class UserProfileServiceImp(UserProfileService):
 
     def update_password_service(self, user_id: int, password: str) -> User:
         """Stretch"""
-        pass
+        email = self.user_profile_dao.get_user_profile(user_id).email
+        if email is None:
+                flash("Invalid Email")
+                raise UserNotFound('Invalid Email')
+        if user_id <= 0:
+            raise UserNotFound('The user could not be found.')
+        return self.user_profile_dao.update_password(user_id,password)
 
     def get_user_followers_service(self, user_id: int) -> dict[str:int]:
         """Stretch"""

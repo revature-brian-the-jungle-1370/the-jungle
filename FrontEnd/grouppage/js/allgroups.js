@@ -1,3 +1,5 @@
+let python_url = "http://localhost:5000/"
+let java_url =    "http://localhost:8080/";
 
 const allGroupSectionDiv = document.getElementById("groups-div");
 
@@ -6,7 +8,7 @@ const allGroupSectionDiv = document.getElementById("groups-div");
 
 
 async function getAllGroupsForUser(){
-    let url = "http://127.0.0.1:5000/group"
+    let url = python_url + "group"
 
     let response = await fetch(url);
 
@@ -40,13 +42,13 @@ function populateAllGroupsForUsers(allGroupBody){
 
 
     }
-   
+
 }
 
 function goToGroupPage(groupId){
     localStorage.setItem("groupId", groupId);
     console.log(localStorage.getItem("groupId"))
-    
+
 }
 // async function getGroup() {
 //     groupId = localStorage.getItem("groupId")
@@ -60,7 +62,7 @@ function goToGroupPage(groupId){
 //         // groupdef.innerHTML = body
 
 //     }
-    
+
 // }
 
 getAllGroupsForUser();

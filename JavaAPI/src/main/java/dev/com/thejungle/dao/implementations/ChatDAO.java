@@ -55,6 +55,23 @@ public class ChatDAO implements ChatDAOInt {
     }
 
     /**
+     * connects to database to delete a ChatMessage
+     * @param chatMessage Object that contains information of the chat sent by the user
+     * @return none
+     */
+    @Override
+    public void deleteMessage(ChatMessage chatMessage) {
+        try (Connection connection = ConnectionDB.createConnection()) {
+            String sql = "delete from chat_log_table where chat_id = ?;";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setInt(1, chatMessage.getChatId());
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * connects to database to retrieve messages from 5 minutes ago in group chat
      * @param groupId id of group
      * @return ArrayList of ChatMessage objects from 5 minutes ago in group chat room

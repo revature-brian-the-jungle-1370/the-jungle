@@ -24,6 +24,7 @@ public class AppController {
         app.get("/user/{userId}", userController.getUserById);
         app.get("/users", userController.getAllUsers);
         app.post("/user/login", userController.loginUser);
+        app.post("/user/reset-password", userController.loginUser);
         app.get("/user/group/{userId}", userController.getGroups);
         app.get("/user/groupNames/{userId}",userController.getGroupsNames);
         app.post("/user/registration", userController.registerUser);

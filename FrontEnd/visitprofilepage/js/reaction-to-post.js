@@ -5,10 +5,9 @@
 async function likePost(e){
 
     let fetchJson = JSON.stringify({"postId": e})
-
-    let url = "http://127.0.0.1:5000/postfeed"
+    let final_url = java_url + "/postfeed"
     
-    let theResponse = await fetch(url, {
+    let theResponse = await fetch(final_url, {
         method:"POST",
         headers:{'Content-Type': 'application/json'}, 
         body:fetchJson}).then(response => {return response.json()});
@@ -23,9 +22,9 @@ async function likePost(e){
 commentButton.onclick = async function(e){
     e.preventDefault();
 
- 
+    let final_url = java_url + "/postfeed/comment"
+    let response = await fetch(final_url, {
 
-    let response = await fetch(`http://127.0.0.1:5000/postfeed/comment`, {
         method : "POST",
         body : JSON.stringify({
             commentId: 2

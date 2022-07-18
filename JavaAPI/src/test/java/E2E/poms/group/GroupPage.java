@@ -29,7 +29,7 @@ public class GroupPage {
     @FindBy(xpath = "/html/body/div/div/div[1]/div[3]/div[2]/a/img")
     public WebElement groupLogoLink;
 
-    @FindBy(xpath = "/html/body/div/div/div[2]/div/div[3]/div[2]/div[5]/div")
+    @FindBy(id="groupLink-10000")//xpath = "/html/body/div/div/div[2]/div/div[3]/div[2]/div[5]/div")
     public WebElement groupToJoin;
 
     @FindBy(xpath = "/html/body/div/div/div[2]/div/div[4]/div[1]/div[3]/div[1]/div")

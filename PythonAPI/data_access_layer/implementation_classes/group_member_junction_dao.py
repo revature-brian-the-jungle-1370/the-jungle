@@ -12,7 +12,7 @@ class GroupMemberJunctionDao(GroupMemberJunctionAbs):
     # grabs all users first name last name user id and group id and puts it in a list
     def get_all_users_in_a_group(self, group_id: int) -> List[GroupMemberJunction]:
         try:
-            sql = "select first_name, last_name, user_table.user_id, group_member_junction_table.group_id from " \
+            sql = "select distinct first_name, last_name, user_table.user_id, group_member_junction_table.group_id from " \
                   "user_table inner join group_member_junction_table on group_member_junction_table.user_id = " \
                   "user_table.user_id where group_id = %s"
             cursor = connection.cursor()
@@ -39,5 +39,6 @@ class GroupMemberJunctionDao(GroupMemberJunctionAbs):
                     connection.commit()
                     return True
                 except TypeError:
+                    connection.rollback()
                     raise TypeError("too many arguments")
         raise WrongId("Incorrect ID")

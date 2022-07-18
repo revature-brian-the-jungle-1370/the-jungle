@@ -7,12 +7,15 @@ const profileUsername = document.getElementById("profileUsername");
 const profileDOB = document.getElementById("profileDOB");
 const profileEmail = document.getElementById("profileEmail");
 visitedUserId = localStorage.getItem("visitUserIdPage");
-
+let python_url =    "http://localhost:8080"
+let java_url =      "http://localhost:5000"
 
 
 async function getUserByUserId(){
-    let url = "http://127.0.0.1:5000/user/" + visitedUserId;
-    let response = await fetch(url);
+
+    let final_url = java_url + "/user/" + visitedUserId;
+
+    let response = await fetch(final_url);
 
     if(response.status === 200){
         let body = await response.json();
@@ -103,7 +106,7 @@ function populateAboutMeForVisitedUser(){
 */
 async function updateUserProfileData(){
 
-    let url = "http://127.0.0.1:5000/user/profile/update/" + userId;
+    let final_url = java_url + "/user/profile/update/" + userId;
     
     let updateUserProfileJSON = JSON.stringify({"firstName": "Shouldn't change",
         "lastName": "Shouldn't change",
@@ -114,7 +117,7 @@ async function updateUserProfileData(){
         "userBirthDate": userBirthDate.value,
         "userImageFormat": "Shouldn't change"});
 
-    let response = await fetch(url, {
+    let response = await fetch(final_url, {
         method: "PATCH",
         headers:{"Content-Type": 'application/json'},
         body:updateUserProfileJSON})
@@ -167,9 +170,10 @@ function successMessageForProfileModal(){
     Grabs all the users followers from the database
 */
 async function getUserFollowers(){
-    let url = "http://127.0.0.1:5000/user/followers/" + visitedUserId;
+    let final_url = java_url + "/user/followers/" + visitedUserId;
 
-    let response = await fetch(url);
+
+    let response = await fetch(final_url);
 
     if(response.status === 200){
         let body = await response.json();
@@ -211,21 +215,22 @@ function populateUserFollowers(followerBody){
 async function getFollowerImage(followerBody){
     for(follower in followerBody){
         let image_Element = document.getElementById(`${follower}-image`);
-        let url = `http://127.0.0.1:5000/user/image/${followerBody[follower]}`;
-        console.log(url);
-        let response = await fetch(url);
+        let final_url = java_url + "/user/image/" + followerBody[follower];
+
+        console.log(final_url);
+        let response = await fetch(final_url);
         if(response.status === 200){
             const image_text = await response.text();
             image_Element.src = image_text;
         }
-
-}
+    }
 }
 
 async function getGroupsForUser(){
-    let url = "http://127.0.0.1:5000/group/user/" + visitedUserId;
 
-    let response = await fetch(url);
+    let final_url = java_url + "/group/user/" + visitedUserId;
+
+    let response = await fetch(final_url);
 
     if(response.status === 200){
         let body = await response.json();
@@ -249,7 +254,9 @@ function populateGroupsForUsers(groupBody){
 
         let groupNameDiv = document.createElement("div");
         groupNameDiv.setAttribute("class", "name valign-text-middle poppins-bold-astronaut-22px");
-        groupNameDiv.innerHTML = `<a id="groupLink-${groupBody[group].groupId}" class="name valign-text-middle poppins-bold-astronaut-22px" onclick=goToGroupPage(${groupBody[group].groupId})>${groupBody[group].groupName}</a>`;
+        groupNameDiv.innerHTML = `<a id="groupLink-${groupBody[group].groupId}"`+
+            ` class="name valign-text-middle poppins-bold-astronaut-22px"`+
+            ` onclick=goToGroupPage(${groupBody[group].groupId})>${groupBody[group].groupName}</a>`;
         groupSectionDiv.appendChild(groupsDiv);
         groupsDiv.appendChild(groupImage);
         groupsDiv.appendChild(groupNameDiv);

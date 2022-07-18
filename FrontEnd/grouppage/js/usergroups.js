@@ -4,9 +4,10 @@ const userGroupSectionDiv = document.getElementById("userGroups-div");
 
 
 async function getGroupsForUser(){
-    let url = "http://127.0.0.1:5000/group/user/10"
+    const userId = localStorage.getItem("userId"); //added this line
+    let url = python_url //"http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/group/user/10" - original line
 
-    let response = await fetch(url);
+    let response = await fetch(url + `/group/user/${userId}`); // await fetch(url); - combined with the url in the comments above
 
     if(response.status === 200){
         let body = await response.json();
@@ -28,7 +29,9 @@ function populateGroupsForUsers(groupBody){
 
         let groupNameDiv = document.createElement("div");
         groupNameDiv.setAttribute("class", "name valign-text-middle poppins-bold-astronaut-22px");
-        groupNameDiv.innerHTML = `<a onclick="goToGroupPages(${groupBody[group].groupId})" id="groupLink-${groupBody[group].groupId}" class="name valign-text-middle poppins-bold-astronaut-22px" href="../grouppage/individualgrouppage/individual-group-page.html">${groupBody[group].groupName}</a>`;
+        groupNameDiv.innerHTML = `<a onclick="goToGroupPages(${groupBody[group].groupId})" id="groupLink-${groupBody[group].groupId}"`+
+            ` class="name valign-text-middle poppins-bold-astronaut-22px"`+
+            ` href="../grouppage/individualgrouppage/individual-group-page.html">${groupBody[group].groupName}</a>`;
 
         userGroupSectionDiv.appendChild(groupsDiv);
         groupsDiv.appendChild(groupImage);
@@ -36,7 +39,7 @@ function populateGroupsForUsers(groupBody){
 
 
     }
-    
+
 }
 function goToGroupPages(groupId){
     localStorage.setItem("groupId", groupId);

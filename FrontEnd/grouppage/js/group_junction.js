@@ -1,58 +1,73 @@
+//let python_url =  "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/";
+//let java_url =    "http://ec2-52-200-53-62.compute-1.amazonaws.com:8080/";
+let python_url = "http://localhost:5000/"
+let java_url =    "http://localhost:8080/";
+localStorage.setItem("user_id", 13)
+localStorage.setItem("group_id", 10000) //Comment this out later. This is to test functionality
+
 async function getUserInGroups() {
-    groupId = localStorage.getItem("groupId")
-    url = `http://127.0.0.1:5000/GroupJunction/UserList/${groupId}`
+    groupId = localStorage.getItem("group_id")
+    url = python_url + `GroupJunction/UserList/${groupId}`
+
     let response = await fetch(url)
 
     if(response.status === 200){
         let body = await response.json()
-        console.log(body)
+         //console.log(body)
          createList(body)
          buttonCheck(body)
 
     }
-    
+
 }
 
 function createList(response) {
         let groupSectionDiv = document.getElementById("member-3")
-        console.log(response)
+        //console.log(response)
         for (let group of response){
             let groupsDiv = document.createElement("div");
             groupsDiv.setAttribute("class", "group-in-list");
-    
+
             let groupImage = document.createElement("img");
             groupImage.setAttribute("class", "friend");
-    
+
             let groupNameDiv = document.createElement("div");
             groupNameDiv.setAttribute("class", "name valign-text-middle poppins-bold-astronaut-22px");
             groupNameDiv.textContent = group.first_name;
-    
+            console.log(group)
+            groupNameDiv.innerHTML = `<a onclick="goToProfilePage(${group.user_id})" id="profileLink-${group.user_id}"`+
+                ` class="name valign-text-middle poppins-bold-astronaut-22px"`+
+                ` href="../../visitprofilepage/visit-profile-page.html">${group.first_name}</a>`;
+
             groupSectionDiv.appendChild(groupsDiv);
             groupsDiv.appendChild(groupImage);
             groupsDiv.appendChild(groupNameDiv);
-    
-    
+
         }
     }
 
+function goToProfilePage(user_id){
+    localStorage.setItem("targetId", user_id);
+}
+
 async function deleteRequest() {
     userId = 9000
-    groupId = localStorage.getItem("groupId")
-    url = `http://127.0.0.1:5000/group/leave/${userId}/${groupId}`
+    groupId = localStorage.getItem("group_id")
+    url = python_url + `group/leave/${userId}/${groupId}`
     let response = await fetch(url, { method: "DELETE", headers: { "Content-Type": "application/json" }});
     if(response.status === 200){
         location.replace("../group-page.html")
-        
+
     }if(response.status === 400){
         let message = document.getElementById("message")
         message.textContent = response.statusText
     }
-    
+
 }
 
 async function creatorOf() {
-    groupId = localStorage.getItem("groupId")
-    url = `http://127.0.0.1:5000/creator/${groupId}`
+    groupId = localStorage.getItem("group_id")
+    url = python_url + `creator/${groupId}`
     let response = await fetch(url)
     if(response.status === 200){
         let body = await response.json()
@@ -63,16 +78,16 @@ async function creatorOf() {
         username.innerHTML = `<div id="creatorUserName"
         class="creator-username valign-text-middle poppins-medium-dove-gray-18px">
         @${body[0][2]}
-      </div>`
+        </div>`
     }
-    
-    
+
+
 }
 
 async function getGroup() {
-    groupId = window.localStorage.getItem("groupId")
+    groupId = window.localStorage.getItem("group_id")
 
-    let url = `http://127.0.0.1:5000/group/${groupId}`
+    let url =  python_url + `group/${groupId}`
 
     let response = await fetch(url)
 
@@ -83,7 +98,7 @@ async function getGroup() {
         groupdef.innerHTML = body.groupName
 
     }
-    
+
 }
 
 function buttonCheck(response) {
@@ -94,7 +109,7 @@ function buttonCheck(response) {
         button.style.display = "none"
     }else{
         for (const users of response) {
-            console.log(response)
+            //console.log(response)
             if (userId == users.user_id) {
                 let button = document.getElementById("tbd")
                 button.style.display = "block"
@@ -102,13 +117,11 @@ function buttonCheck(response) {
                 let button = document.getElementById('tbd')
                 button.style.display = "none"
             }
-            
+
         }
     }
-       
-    
 }
 getUserInGroups()
 creatorOf()
 getGroup();
-buttonCheck();
+//buttonCheck(); This is run in getUserInGroups

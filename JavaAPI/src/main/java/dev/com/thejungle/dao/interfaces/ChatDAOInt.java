@@ -8,6 +8,8 @@ public interface ChatDAOInt {
 
     ChatMessage createMessage(ChatMessage chatMessage);
 
+    void deleteMessage(ChatMessage chatMessage);
+
     ArrayList<ChatMessage> getMessageHistory(int groupId);
 
     ArrayList<ChatMessage> getMessageHistory();
