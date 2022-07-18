@@ -75,6 +75,7 @@ public class sendChatMessageSteps {
     public void i_change_chat_rooms() {
         TestRunner.driver.findElement(By.id("10000")).click();
         //maybe add alert
+        TestRunner.driver.switchTo().alert().dismiss();
     }
 
     @Then("I should not see the message I posted")
