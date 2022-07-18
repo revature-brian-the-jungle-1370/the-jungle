@@ -6,15 +6,14 @@ const specialChar2 = /[ `^*()+=\[\]{};':"\\|,<>\/~]/;
 const invalidIcon = document.querySelectorAll("[id='invalid-icon']");
 let invalidMessage = document.querySelectorAll("[id='passcode-invalid-message']");
 let infoIcon = document.querySelectorAll(".info-icon");
-const url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000";
-let validateCounter = 0;
-
+const url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/?userId=0";
+let validateCounter = 0
 const div = document.getElementById("errorMessageGoesHere");
 div.textContent = "";
 
 async function resetPassword() {
     let path = window.location.href;
-    let userId = getUserId("http://127.0.0.1:5000",path)
+    let userId = getUserId("http://ec2-52-200-53-62.compute-1.amazonaws.com:5000",path)
     console.log(userId)
     let response = await fetch(url+`/user/${userId}/reset-password`, {
         method: "POST",
