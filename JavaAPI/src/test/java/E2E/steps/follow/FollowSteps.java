@@ -31,7 +31,7 @@ public class FollowSteps {
 
 
     //Scenario 2 As a User I want to unfollow a user
-    @Given("the user is on another user's profile")
+    @Given("the user is on followed user's profile")
     public void the_user_is_on_a_followed_users_profile(){
         //TestRunner.driver.get("")
     }
@@ -41,7 +41,7 @@ public class FollowSteps {
         //TestRunner.rlsPom.unfollowButton.click();
     }
 
-    @Then("the user will be redirected to their feed page")
+    @Then("the user will be redirected back to their feed page")
     public void the_user_will_be_redirected_back_to_their_feed_page(){
         //explicit wait for title?
         //String title = new TestRunner.driver.getTitle();
