@@ -22,7 +22,7 @@ public class UserProfile {
     public WebElement updateProfileUserBirthDateInput;
     @FindBy(id="updateProfileModalBtn")
     public WebElement saveChangesModalButton;
-    @FindBy(id="modalProfileSuccessMessage")
+    @FindBy(id="profileModalMsg")
     public WebElement profileSuccessMessage;
     @FindBy(id="profileCreateANewPost")
     public WebElement profileCreateANewPost;

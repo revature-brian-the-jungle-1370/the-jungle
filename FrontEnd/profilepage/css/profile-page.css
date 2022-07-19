@@ -239,24 +239,27 @@
 .post{
   height: auto;
   min-height: 100%;
+  margin: auto 20px auto 20px;
 }
 
 .profile-page .overlap-group-1 {
   align-self: flex-start;
-  height: 36px;
+  height: auto;
   margin-top: 30px;
   position: relative;
   width: 413px;
 }
 
 .profile-page .feed-text-2 {
-  height: 36px;
-  left: 59px;
+  height: auto;
+  padding-left: 59px;
   letter-spacing: -0.27px;
-  position: absolute;
   text-align: center;
-  top: 0;
-  width: 354px;
+}
+
+.individual-post {
+  height: auto;
+  
 }
 
 .profile-page .username-2-1 {
