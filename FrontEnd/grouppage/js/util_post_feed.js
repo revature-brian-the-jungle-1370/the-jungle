@@ -23,12 +23,12 @@ async function create_div_from_post_response(post){
     let date_time = new Date(post.date_time_of_creation)
     let date_2 = date_time.toDateString();
 
-    // //Check if bookmarked
-    // url = python_url + "bookmark/" + localStorage.getItem("user_id") + "/" + post.post_id
-    // let bm_response = await fetch(url);
-    // let post_response = bm_response.json()["message"]
-    // let bm_icon_path = post_response === "No Post Found" ? "../img/bookmark_unsaved.svg" : "../img/bookmark_saved.svg"
-    let bm_icon_path = "../img/bookmark_unsaved.svg"
+    //Check if bookmarked
+    bm_url = python_url + "bookmark/" + localStorage.getItem("user_id") + "/" + post.post_id
+    let bm_response = await fetch(bm_url);
+    let post_response = await bm_response.json()
+    let bm_icon_path = post_response["message"] != "Bookmark not found" ? "../img/bookmark_saved.svg" : "../img/bookmark_unsaved.svg"
+    //let bm_icon_path = "../img/bookmark_unsaved.svg"
 
     if(response.status === 200){
         const image_text = await response.text();
