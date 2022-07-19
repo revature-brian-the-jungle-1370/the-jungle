@@ -13,7 +13,7 @@ public class FollowSteps {
     //Scenario 1 As a User I want to click on a user profile follow button
     @Given("the user is on another user's profile")
     public void the_user_is_on_another_users_profile(){
-        TestRunner.driver.get("http://127.0.0.1:5500/frontend/profilepage/profile-page.html?userId=233");
+        TestRunner.driver.get("http://dans-code.net.s3-website-us-east-1.amazonaws.com/frontend/profilepage/profile-page.html?userId=233");
     }
 
     @When("the user clicks on the follow button")

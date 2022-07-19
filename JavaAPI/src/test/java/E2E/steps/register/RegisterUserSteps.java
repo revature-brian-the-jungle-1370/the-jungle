@@ -14,7 +14,7 @@ public class RegisterUserSteps {
    // CORRECT INFORMATION TEST (with small validation correction)
    @Given("the user is on the sign up page")
    public void the_user_is_on_the_sign_up_page() {
-       TestRunner.driver.get("http://127.0.0.1:5500/FrontEnd/registrationpage/sign-up.html");
+       TestRunner.driver.get("http://dans-code.net.s3-website-us-east-1.amazonaws.com/FrontEnd/registrationpage/sign-up.html");
    }
 
    @When("the user enters First name into the new account form")
@@ -82,7 +82,7 @@ public class RegisterUserSteps {
    // DUPLICATE EMAIL BAD TEST
    @Given("the user is now on the sign up page with form")
    public void the_user_is_now_on_the_sign_up_page_with_form() {
-       TestRunner.driver.get("http://127.0.0.1:5500/FrontEnd/registrationpage/sign-up.html");
+       TestRunner.driver.get("http://dans-code.net.s3-website-us-east-1.amazonaws.com/FrontEnd/registrationpage/sign-up.html");
    }
 
    @When("the user enters bad test First name into the new account form")
