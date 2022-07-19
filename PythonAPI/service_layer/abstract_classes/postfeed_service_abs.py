@@ -16,9 +16,13 @@ class PostfeedService(ABC):
         pass
 
     @abstractmethod
-    def get_all_bookmarkded_posts_service(self,userid: int):
+    def get_all_bookmarked_posts_service(self,userid: int):
         pass
 
     @abstractmethod
     def bookmark_post_service(self, userid:int, postid:int):
+        pass
+
+    @abstractmethod
+    def get_bookmarked_post_service(self, userid:int, postid:int):
         pass

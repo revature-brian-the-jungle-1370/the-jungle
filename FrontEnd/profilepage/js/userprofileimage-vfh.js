@@ -9,12 +9,15 @@ async function getUserImage(){
 
   if(response.status === 200){
 
-      const image_text = await response.text();
+      let image_text = await response.text();
       // const image_Element = document.createElement('img');
       // image_Element.src = image_text;
       // document.getElementById("userImage").appendChild(image_Element);
       let image_Element = document.getElementById("userImageFile");
-      image_Element.src = "data:image/PNG;base64,"+image_text;
+      if(!image_text.includes("data:image")){
+        image_text= "data:image/PNG;base64,"+image_text;
+      }
+      image_Element.src = image_text;
       
   }
 }
@@ -44,9 +47,9 @@ async function createUserWithImage() {
               headers: {"Content-Type": "application/json"},
               body: String(base64gif)
           });
-          const imageText = await response.text();
+          let imageText = await response.text();
           let image_Element = document.getElementById("userImageFile");
-          image_Element.src = "data:image/PNG;base64,"+imageText;
+          image_Element.src = imageText;
       
       }
       else{

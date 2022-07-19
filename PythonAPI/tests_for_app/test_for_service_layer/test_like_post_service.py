@@ -20,3 +20,8 @@ def test_get_user_profile_failure_not_int():
     except ConnectionErrorr as e:
         assert str(e) == "post not found"
 
+def test_service_unlike_post():
+    like_post_service.LikePostDaoImp.unlike_post = MagicMock(return_value=3)
+
+def test_service_unlike_comment():
+    like_post_service.LikePostDaoImp.unlike_comment = MagicMock(return_value=3)
