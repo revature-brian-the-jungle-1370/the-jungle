@@ -1,3 +1,4 @@
+@testregistration
 Feature: Create Account
 
   Scenario: As a User, I should be able to register a new account, so that I can log into the system.
@@ -24,7 +25,6 @@ Feature: Create Account
     When the user enters bad test password into the new account form
     When the user clicks on the bad test submit button in the new account form
     Then a message for duplicate email error populates
-
 
   Scenario: As the System, I want to reject bad new account creations from a blank username.
     Given the user has now refreshed the sign up page
