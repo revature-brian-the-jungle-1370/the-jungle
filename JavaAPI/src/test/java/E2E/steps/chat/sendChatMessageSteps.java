@@ -30,7 +30,7 @@ public class sendChatMessageSteps {
     public void i_click_on_chat_option() {
         Alert al = new WebDriverWait(TestRunner.driver, Duration.ofSeconds(3)).until(ExpectedConditions.alertIsPresent());
         al.dismiss();
-        TestRunner.userHomePage.chatLink.click();
+        TestRunner.userHomePage.selectGroup.click();
     }
     @Given("I am on the chat page")
     public void i_am_on_the_chat_page() {

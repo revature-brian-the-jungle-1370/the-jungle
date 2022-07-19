@@ -29,23 +29,9 @@ public class FollowSteps {
         //Assert.assertEquals(title, "");
     }
 
-
-    //Scenario 2 As a User I want to unfollow a user
-    @Given("the user is on another user's profile")
-    public void the_user_is_on_a_followed_users_profile(){
-        //TestRunner.driver.get("")
-    }
-
     @When("the user clicks on the unfollow button")
     public void the_user_clicks_on_the_unfollow_button(){
         //TestRunner.rlsPom.unfollowButton.click();
-    }
-
-    @Then("the user will be redirected to their feed page")
-    public void the_user_will_be_redirected_back_to_their_feed_page(){
-        //explicit wait for title?
-        //String title = new TestRunner.driver.getTitle();
-        //Assert.assertEquals(title, "");
     }
 
     //Scenario 3 As a User I want to see my followers on the feed page
