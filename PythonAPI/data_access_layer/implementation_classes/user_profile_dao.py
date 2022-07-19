@@ -133,7 +133,7 @@ class UserProfileDAOImp(UserProfileDAO):
         cursor.execute(sql)
         user = cursor.fetchone()
         if user is None:
-            raise UserNotFound(user_not_found_string)
+            raise ValueError('Invalid Password Input')
 
         sql = "UPDATE user_table set passcode = %(password)s where user_id = %(user_id)s;"
         cursor.execute(sql,{"password":password,"user_id":user_id})

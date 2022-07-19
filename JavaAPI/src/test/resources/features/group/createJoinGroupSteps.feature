@@ -1,7 +1,7 @@
 Feature: Users can collaborate within a group
 
   Scenario: User can join a group
-    Given the user is on the login group page
+    Given the user is on the group page
     When the user clicks on the group they want to join
     When the user is redirected to the group page
     When the user is on the individual group page
@@ -9,8 +9,8 @@ Feature: Users can collaborate within a group
     Then a joined group success message will appear
 
   Scenario: User can create a group
-    Given the user is on the login group page
-    When the user enters the new group name
+    Given the user is on the group page
+    When the user enters the group name
     When the user enters the group description
     When the user clicks the create button
     Then a created group success message will appear
@@ -55,7 +55,7 @@ Feature: Users can collaborate within a group
     Then a group description too long message will appear
 
   Scenario: As the system, I want to reject a group name that is already taken
-    Given the user is on the login group page
+    Given the user is on the group page
     When the user enters a group name that is already taken
     When the user enters the group description
     When the user clicks the create button

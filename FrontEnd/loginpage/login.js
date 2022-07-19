@@ -16,9 +16,7 @@ const div = document.getElementById("errorMessageGoesHere");
 div.textContent = "";
 
 async function login() {
-
-  let response = await fetch("http://ec2-52-200-53-62.compute-1.amazonaws.com:8080/user/login", {
-
+  let response = await fetch(url+"/user/login", {
     method: "POST",
     mode: "cors",
     headers: { "Content-Type": "application/json" },
@@ -27,8 +25,9 @@ async function login() {
       passcode: passcodes.value,
     }),
   });
-
-  if (response.status === 200) {
+  console.log(response)
+  if (response.status == 200) {
+    console.log("received response")
     let body = await response.json();
     //  Storing information for later
     localStorage.setItem("userInfo", JSON.stringify(body));

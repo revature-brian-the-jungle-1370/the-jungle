@@ -1,15 +1,15 @@
 class User:
     def __init__(self,
-                 user_id: int = 'default',  # primary key
-                 first_name: str = None,
-                 last_name: str = None,
-                 email: str = None,
-                 username: str = None,  # must be unique
-                 passcode: str = None,
-                 user_about: str = None,
-                 user_birth_date: str = None,
-                 user_image_format: str = None
-                 ):
+                user_id: int = 'default',  # primary key
+                first_name: str = None,
+                last_name: str = None,
+                email: str = None,
+                username: str = None,  # must be unique
+                passcode: str = None,
+                user_about: str = None,
+                user_birth_date: str = None,
+                user_image_format: str = None
+                ):
 
         self.user_id = user_id
         self.first_name = first_name

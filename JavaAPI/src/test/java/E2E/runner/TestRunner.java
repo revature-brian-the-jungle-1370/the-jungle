@@ -6,6 +6,7 @@ import E2E.poms.group.GroupPage;
 import E2E.poms.homepage.UserHomePage;
 import E2E.poms.RegLoginSearchPOM;
 import E2E.poms.UserProfile;
+import E2E.poms.RegLoginSearchPOM;
 import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
 import org.junit.AfterClass;
