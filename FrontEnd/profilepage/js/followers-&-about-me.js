@@ -30,7 +30,7 @@ async function updateUserProfileData(){
         if(response.status === 200){
             let body = await response.json();
             successMessageForProfileModal();
-
+            setUpdatedProfileInfo()
             console.log(body);
         }
         else{
@@ -46,17 +46,67 @@ function resetProfileModalData(){
     modalMessageDiv.innerHTML = '';
 }
 
-function setProfileInfo(){
-    // let name=document.getElementById("name-display");
+function setUpdatedProfileInfo(){
     let bDay=document.getElementById("birthday-display");
-    // let username=document.getElementById("username-display");
     let aboutMe=document.getElementById("about-me-display");
-
     aboutMe.innerText=userAboutMe.value;
     bDay.innerText=userBirthDate.value;
-
 }
 
+function setProfileInfo(){
+    let name=document.getElementById("name-display");
+    let username=document.getElementById("username-display");
+    let bDay=document.getElementById("birthday-display");
+    let aboutMe=document.getElementById("about-me-display");
+  
+    let visitedUser;
+    if(userId!=loggedInUserId){
+        getProfileUser(userId,"visitedUser");
+       visitedUser=JSON.parse(localStorage.getItem("visitedUser"));
+    }
+    else{
+        getProfileUser(loggedInUserId,"userInfo");
+
+        visitedUser=JSON.parse(localStorage.getItem("userInfo"));
+    }
+    if(name && username && bDay && aboutMe){
+        name.innerText=visitedUser.firstName+" "+visitedUser.lastName
+        username.innerText="@"+visitedUser.username
+
+        let bd=new Date(visitedUser.birthday);
+        bDay.innerText=bd.getMonth()+"/"+bd.getDate()+"/"+bd.getFullYear();
+        aboutMe.innerText="about me:\n"+visitedUser.aboutMe 
+    }
+}
+/**
+ * 
+ * visitedUser	{"email":"email",
+ * "first_name":"first name",
+ * "last_name":"last name",
+ * "passcode":"newpasscode",
+ * "user_about":"smiley",
+ * "user_birth_date":"Mon, 18 Jul 2022 00:00:00 GMT","
+ * user_id":10000,
+ * "user_image_format":"png",
+ * "username":"username"}
+ */
+
+async function getProfileUser(userId,key){
+    let response = await fetch("http://127.0.0.1:5000/user/"+userId);
+    if (response.status === 200) {
+      let body = await response.json();
+      //  Storing information for later
+      let convertedUser=JSON.stringify({//set to keys thats used by previous code or else exception
+        "userId":body.user_id,
+        "firstName":body.first_name,
+        "lastName":body.last_name,
+        "aboutMe":body.user_about,
+        "birthday":body.user_birth_date,
+        "username":body.username
+    })
+      localStorage.setItem(key, convertedUser);
+  }
+}
 /*
     Function to print error message for update profile modal
 */
@@ -185,6 +235,7 @@ function goToGroupPage(groupId){
     localStorage.getItem("groupId");
 }
 
+<<<<<<< HEAD
 async function follow_user(){
     let followJson = JSON.stringify({"user_follower_id": Number(loggedInUserID), "user_being_followed_id": Number(userId)});
     let followResponse = await fetch("http://127.0.0.1:5000/user/" + loggedInUserID + "/followed/" + userId, {
@@ -200,5 +251,8 @@ async function follow_user(){
 submitFollow.addEventListener("click", follow_user);
 
 
+=======
+setProfileInfo();
+>>>>>>> 825edce (finish update profile feature)
 getUserFollowers();
 getGroupsForUser();
