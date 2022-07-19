@@ -4,6 +4,7 @@ const modalMessageDiv = document.getElementById("profileModalMsg");
 const followerSectionDiv = document.getElementById("followers-div");
 const groupSectionDiv = document.getElementById("groups-div");
 const submitFollow = document.getElementById("follow-user-button");
+const submitUnfollow = document.getElementById("unfollow-user-button");
 
 /*
     Grabs the user profile information from the update profile modal and sends it through the layers
@@ -37,7 +38,6 @@ async function updateUserProfileData(){
             errorMessageForProfileModal();
         }
 }
-
 /* 
     Reset the modal data when you close it
 */
@@ -248,10 +248,24 @@ async function follow_user(){
     });
     console.log(followResponse);
     let followResponseBody = await followResponse.json();
-
+    console.log(followResponseBody);
 }
 submitFollow.addEventListener("click", follow_user);
 
+
+async function unfollow_user(){
+    
+    let unfollowJson = JSON.stringify({"user_follower_id": loggedInUserId, "user_being_followed_id": userId});
+    let unfollowResponse = await fetch("http://127.0.0.1:5000/user/" + loggedInUserId + "/unfollowed/" + userId, {
+        method: "POST",
+        mode: "cors",
+        headers: {"Content-Type": "application/json"},
+        body:unfollowJson
+    });
+    let unfollowResponseBody = await unfollowResponse.json();
+    console.log(unfollowResponseBody);
+}
+submitUnfollow.addEventListener("click", unfollow_user);
 
 setProfileInfo();
 getUserFollowers();

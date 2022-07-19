@@ -579,6 +579,8 @@ def follow_user(user_follower_id: int, user_being_followed_id: int):
 
 @app.post("/user/<user_follower_id>/unfollowed/<user_being_followed_id>")
 def unfollow_user(user_follower_id: int, user_being_followed_id: int):
+    user_being_followed_id = int(user_being_followed_id)
+    user_follower_id = int(user_follower_id)
     try:
         user_profile_service.unfollow_user_service(user_follower_id, user_being_followed_id)
         unfollow_dictionary = {"message": str(user_follower_id) + " has unfollowed " + str(user_being_followed_id)}
