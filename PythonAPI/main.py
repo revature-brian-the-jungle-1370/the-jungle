@@ -556,6 +556,8 @@ def get_user_following(user_id: int):
 
 @app.post("/user/<user_follower_id>/followed/<user_being_followed_id>")
 def follow_user(user_follower_id: int, user_being_followed_id: int):
+    user_being_followed_id = int(user_being_followed_id)
+    user_follower_id = int(user_follower_id)
     try:
         user_profile_service.follow_user_service(user_follower_id, user_being_followed_id)
         follow_dictionary = {"message": str(user_follower_id) + " has followed " + str(user_being_followed_id)}
