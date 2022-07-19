@@ -30,6 +30,19 @@ async function create_div_from_post_response(post){
     let bm_icon_path = post_response["message"] != "Bookmark not found" ? "../img/bookmark_saved.svg" : "../img/bookmark_unsaved.svg"
     //let bm_icon_path = "../img/bookmark_unsaved.svg"
 
+  // <div class="overlap-group3-1" id="comment_div_${post.post_id} style="display:block" ">
+  //   <div class="feed-container">
+  //     <div class="feed valign-text-middle">
+  //       <textarea placeholder="What's on your mind?" id="commentInput_${post.post_id}"></textarea>
+  //     </div>
+  //     <img class="feed-button" src="img/feed-button@2x.svg" />
+  //     <button id="sendCommentButton_${post.post_id}" onclick="comment_post_as_user(${post.post_id})" `+
+  //          `type="button" class="btn btn-primary">Comment</button>
+  //   </div>
+  //   <p id="comment_info_${post.post_id}"></p>
+  //   <img class="line-under-feed" src="img/line-under-feed@2x.svg" />
+  // </div>
+
     if(response.status === 200){
         const image_text = await response.text();
         postBox.innerHTML =
@@ -46,7 +59,8 @@ async function create_div_from_post_response(post){
       <div class="icon-container">
         <input type="image" class="heart-icon" src="img/heart-icon@2x.svg" />
         <p>` + post.likes + `</p>
-        <input type="image" class="chat-bubble-icon" src="img/chat-bubble-icon@2x.svg"/>
+        <input type="image" class="chat-bubble-icon" src="img/chat-bubble-icon@2x.svg"`+
+            ` id="commentPost${post.post_id}" onclick="toggle_comment_div(${post.post_id})"/>
         <img class="share-icon" src="img/share-icon@2x.svg" />
         <input type="image" class="bookmark-icon" src=`+ bm_icon_path +
             ` id="bookmarkPost${post.post_id}" onclick="bookmark_post_as_user(${post.post_id})"/>
@@ -68,7 +82,8 @@ async function create_div_from_post_response(post){
       <div class="icon-container">
         <input type="image" class="heart-icon" src="img/heart-icon@2x.svg" />
         <p>` + post.likes + `</p>
-        <input type="image" class="chat-bubble-icon" src="img/chat-bubble-icon@2x.svg"/>
+        <input type="image" class="chat-bubble-icon" src="img/chat-bubble-icon@2x.svg"`+
+            ` id="commentPost${post.post_id}" onclick="toggle_comment_div(${post.post_id})"/>
         <img class="share-icon" src="img/share-icon@2x.svg" />
         <input type="image" class="chat-bubble-icon" src=`+ bm_icon_path +
             ` id="bookmarkPost${post.post_id}" onclick="bookmark_post_as_user(${post.post_id})"/>
@@ -81,12 +96,10 @@ async function create_div_from_post_response(post){
     return postBox
 }
 
+//----------------------------------------------- BOOKMARK POST FUNCTION-----------------------------------------------------
+
 async function bookmark_post_as_user(post_id){
   url = python_url + `bookmark/${localStorage.getItem("user_id")}/${post_id}`
-  // let data = {
-  //   "user_id": localStorage.getItem("user_id"),
-  //   "post_id": post_id
-  // }
   let response = await fetch(url, {
     method: "POST",
     headers: {

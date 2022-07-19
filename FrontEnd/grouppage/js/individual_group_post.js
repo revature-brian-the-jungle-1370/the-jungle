@@ -80,9 +80,35 @@ async function deleteGroupPost(post_id) {
 
 //----------------------------------------------- LIKE AND UNLIKE GROUP POST FUNCTION-----------------------------------------------------
 
-// async function likePost() {}
+// async function likePost(post_id) {}
 
-// async function unlikePost() {}
+// async function unlikePost(post_id) {}
+
+async function toggle_like_post(post_id){
+
+}
 
 //----------------------------------------------- COMMENTS ON GROUP POST FUNCTION-----------------------------------------------------
 // TODO: Need Comments Functions
+function toggle_comment_div(post_id){
+  // let comment_info_element = document.getElementById(`comment_info_${post_id}`)
+  // let comment_input_element = document.getElementById(`commentInput_${post_id}`)
+  // let div_element = document.getElementById(`comment_div_${post_id}`)
+  // //Clear out Error and Input area
+  // comment_info_element.innerHTML = ""
+  // comment_input_element.setAttribute("value", "")
+  // //Toggle Div
+  // if (div_element.style.display === "none") {
+  //   div_element.style.display = "block";
+  // } else {
+  //   div_element.style.display = "none";
+  // }
+}
+
+async function comment_post_as_user(post_id){
+  // //Check input range
+  // //Make fetch to database
+
+  // //Toggle Div on success
+  // toggle_comment_div(post_id)
+}
