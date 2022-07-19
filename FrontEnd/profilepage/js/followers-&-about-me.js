@@ -10,7 +10,7 @@ const submitFollow = document.getElementById("follow-user-button");
 */
 async function updateUserProfileData(){
     // Will need to update this to use the current user's ID
-    let url = "http://127.0.0.1:5000/user/profile/update/"+loggedInUserId;
+    let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/user/profile/update/"+loggedInUserId;
     let updateUserProfileJSON = JSON.stringify({
     "firstName": "Shouldn't change",
     "lastName": "Shouldn't change",
@@ -92,7 +92,7 @@ function setProfileInfo(){
  */
 
 async function getProfileUser(userId,key){
-    let response = await fetch("http://127.0.0.1:5000/user/"+userId);
+    let response = await fetch("http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/user/"+userId);
     if (response.status === 200) {
       let body = await response.json();
       //  Storing information for later
@@ -130,7 +130,7 @@ function successMessageForProfileModal(){
 }
 
 async function getUserFollowers(){
-    let url = "http://127.0.0.1:5000/user/followers/"+userId
+    let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/user/followers/"+userId
 
     let response = await fetch(url);
 
@@ -174,7 +174,7 @@ function populateUserFollowers(followerBody){
 async function getFollowerImage(followerBody){
     for(follower in followerBody){
         let image_Element = document.getElementById(`${follower}-image`);
-        let url = `http://127.0.0.1:5000/user/image/${followerBody[follower]}`;
+        let url = `http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/user/image/${followerBody[follower]}`;
         // console.log(url);
         let response = await fetch(url);
         if(response.status === 200){
@@ -189,7 +189,7 @@ async function getFollowerImage(followerBody){
 }
 
 async function getGroupsForUser(){
-    let url = "http://127.0.0.1:5000/group/user/"+userId
+    let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/group/user/"+userId
 
     let response = await fetch(url);
 
@@ -240,7 +240,7 @@ function goToGroupPage(groupId){
 
 async function follow_user(){
     let followJson = JSON.stringify({"user_follower_id": Number(loggedInUserId), "user_being_followed_id": Number(userId)});
-    let followResponse = await fetch("http://127.0.0.1:5000/user/" + loggedInUserId + "/followed/" + userId, {
+    let followResponse = await fetch("http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/user/" + loggedInUserId + "/followed/" + userId, {
         method: "POST",
         mode: "cors",
         headers: {"Content-Type": "application/json"},

@@ -1,4 +1,4 @@
-
+let java_url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:8080";
 // let userId = 9000;
 
 async function getUserImage(){

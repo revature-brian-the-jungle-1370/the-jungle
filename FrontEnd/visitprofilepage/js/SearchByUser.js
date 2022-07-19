@@ -1,5 +1,5 @@
-//const url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:8080";
-const url = "http://localhost:8080";
+const url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:8080";
+//const url = "http://localhost:8080";
 const searchField = document.getElementById("searchInputBox");
 const searchListResults = document.getElementById("searchList");
 function referToProfile(userId) {
