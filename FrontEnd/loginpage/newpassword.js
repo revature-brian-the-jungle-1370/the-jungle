@@ -25,8 +25,12 @@ async function resetPassword() {
         }),
     });
     console.log(response)
-    
-    if (response.status == 200) {
+    let validatePassword = specialChar2.test(response.passcode)
+    console.log(validatePassword)
+    if (response.passcode.includes(specialChar2)){
+        throw error;
+    }
+    else if (response.status == 200) {
         let body = await response.json();
         console.log(response)
         //  Storing information for later
@@ -56,7 +60,7 @@ function resetPasswordCheck() {
         if (passcode.value == "") {
             invalidIcon[0].style.display = "";
             infoIcon[0].style.display = "block";
-            invalidMessage[0].textContent = "Email is incorrect or missing";
+            invalidMessage[0].textContent = "Password is incorrect or missing";
             } else if (specialChar2.test(passcode.value)) {
             invalidIcon[0].style.display = "";
             infoIcon[0].style.display = "block";

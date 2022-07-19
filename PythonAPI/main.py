@@ -207,15 +207,10 @@ def update_profile_info(user_id):
 @app.post("/user/reset-password")
 def reset_password():
     try:
-        print(request)
         user_profile_email = request.get_json()
-        print(user_profile_email)
         if user_profile_dao.get_user_profile_by_email(user_profile_email["email"]) is not None:
             user_profile = user_profile_dao.get_user_profile_by_email(f"{user_profile_email['email']}")
-            print(user_profile)
             user_id = user_profile.user_id
-            print(user_id,flush=True)
-            print("Redirecting...")
             #return redirect(f"/user/{user_id}/new-password"), 200
             return json.dumps(user_id), 200
         else:
@@ -229,12 +224,17 @@ def reset_password():
 @app.post("/user/<user_id>/new-password")
 def input_new_password(user_id):
     try:
+        specialChars = "!@#$%^&*()-+?_=,<>/"
         user_new_passcode = request.get_json()
+        if any(c in specialChars for c in user_new_passcode["passcode"]):
+            raise ValueError("Invalid Password Input")
         user = user_profile_service.service_get_user_profile_service(user_id)
         user_profile_service.update_password_service(user.user_id,str(user_new_passcode["passcode"]))
         user = user_profile_service.service_get_user_profile_service(user_id)
         user_as_dictionary = user.make_dictionary()
         return jsonify(user_as_dictionary), 200
+    except ValueError as ve:
+        return str(ve),400
     except UserNotFound as e:
         return str(e), 400
 

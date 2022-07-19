@@ -25,7 +25,7 @@ async function login() {
     }),
   });
   console.log(response)
-  if (response.status === 200) {
+  if (response.status == 200) {
     console.log("received response")
     let body = await response.json();
     //  Storing information for later
