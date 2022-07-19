@@ -64,5 +64,10 @@ async function createUserWithImage() {
     }
   }
 
+  function clearDataOnLogout(){
+    localStorage.clear("userId")
+    localStorage.clear("userInfo")
+  }
+
 
 

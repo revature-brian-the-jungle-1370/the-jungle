@@ -6,7 +6,10 @@ const specialChar2 = /[ `^*()+=\[\]{};':"\\|,<>\/~]/;
 const invalidIcon = document.querySelectorAll("[id='invalid-icon']");
 let invalidMessage = document.querySelectorAll("[id='passcode-invalid-message']");
 let infoIcon = document.querySelectorAll(".info-icon");
-const url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000";
+// const frontendUrl = "http://s3.amazonaws.com/dans-code.net"
+// const url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000";
+const frontendUrl = "http://127.0.0.1:5500"
+const url = "127.0.0.1:5000";
 let validateCounter = 0;
 
 const div = document.getElementById("errorMessageGoesHere");
@@ -34,7 +37,7 @@ async function resetPassword() {
         let body = await response.json();
         console.log(response)
         window.localStorage.clear()
-        window.location.href = "http://127.0.0.1:5500/FrontEnd/loginpage/login.html"; //  Redirect to Here????
+        window.location.href = frontendUrl+"/FrontEnd/loginpage/login.html"; //  Redirect to Here????
     } else {
         div.textContent = "Invalid Password";
     }

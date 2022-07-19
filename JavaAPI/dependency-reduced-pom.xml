@@ -29,7 +29,9 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <version>3.0.0-M5</version>
         <configuration>
-          <suiteXmlFiles />
+          <suiteXmlFiles>
+            <suiteXmlFile>selenium_test_suite.xml</suiteXmlFile>
+          </suiteXmlFiles>
         </configuration>
       </plugin>
       <plugin>
