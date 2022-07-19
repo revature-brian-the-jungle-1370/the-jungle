@@ -31,7 +31,7 @@ async function updateUserProfileData(){
             let body = await response.json();
             successMessageForProfileModal();
             setUpdatedProfileInfo()
-            console.log(body);
+            // console.log(body);
         }
         else{
             errorMessageForProfileModal();
@@ -175,7 +175,7 @@ async function getFollowerImage(followerBody){
     for(follower in followerBody){
         let image_Element = document.getElementById(`${follower}-image`);
         let url = `http://127.0.0.1:5000/user/image/${followerBody[follower]}`;
-        console.log(url);
+        // console.log(url);
         let response = await fetch(url);
         if(response.status === 200){
             const image_text = await response.text();
@@ -235,7 +235,6 @@ function goToGroupPage(groupId){
     localStorage.getItem("groupId");
 }
 
-<<<<<<< HEAD
 async function follow_user(){
     let followJson = JSON.stringify({"user_follower_id": Number(loggedInUserID), "user_being_followed_id": Number(userId)});
     let followResponse = await fetch("http://127.0.0.1:5000/user/" + loggedInUserID + "/followed/" + userId, {
@@ -244,15 +243,13 @@ async function follow_user(){
         headers: {"Content-Type": "application/json"},
         body:followJson
     });
-    console.log(followResponse);
+    // console.log(followResponse);
     let followResponseBody = await followResponse.json();
 
 }
 submitFollow.addEventListener("click", follow_user);
 
 
-=======
 setProfileInfo();
->>>>>>> 825edce (finish update profile feature)
 getUserFollowers();
 getGroupsForUser();
