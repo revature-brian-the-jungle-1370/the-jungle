@@ -24,7 +24,6 @@ async function create_div_from_post_response(post){
     console.log(response);
     let date_time = new Date(post.date_time_of_creation)
     let date_2 = date_time.toDateString();
-
     if(response.status === 200){
         const image_text = await response.text();
         postBox.innerHTML =
@@ -34,7 +33,8 @@ async function create_div_from_post_response(post){
           <div class="username-1 valign-text-middle poppins-bold-cape-cod-20px">JostSNL21</div>
           <img class="feed-avatar" src="data:image/PNG;base64,`+ user_image_text  + `" alt="user_image_text" />
         </div>
-        <input type="image" class="three-dots-icon" src="img/three-dots-icon-1@2x.svg" id="deletePost${post.post_id}" onclick="deleteGroupPost(${post.post_id})"/>
+        <input type="image" class="three-dots-icon" src="img/three-dots-icon-1@2x.svg"`+ 
+            ` id="deletePost${post.post_id}" onclick="deleteGroupPost(${post.post_id})"/>
       </div>
       <img class="feed-picture" src="`+ image_text +`"/>
       <div class="icon-container">
@@ -42,6 +42,8 @@ async function create_div_from_post_response(post){
         <p>` + post.likes + `</p>
         <input type="image" class="chat-bubble-icon" src="img/chat-bubble-icon@2x.svg"/>
         <img class="share-icon" src="img/share-icon@2x.svg" />
+        <input type="image" class="bookmark-icon" src="../profilepage/img/bookmark-icon@2x.svg"`+
+            ` id="bookmarkPost${post.post_id}" onclick="bookmark_post_as_user(${post.post_id})"/>
       </div>
       <div class="overlap-group2">
         <div class="feed-text-2 valign-text-middle poppins-medium-black-18px"><p>`+ post.post_text +`</p></div>
@@ -61,6 +63,8 @@ async function create_div_from_post_response(post){
         <p>` + post.likes + `</p>
         <input type="image" class="chat-bubble-icon" src="img/chat-bubble-icon@2x.svg"/>
         <img class="share-icon" src="img/share-icon@2x.svg" />
+        <input type="image" class="chat-bubble-icon" src="img/chat-bubble-icon@2x.svg"`+
+            ` id="bookmarkPost${post.post_id}" onclick="bookmark_post_as_user(${post.post_id})"/>
       </div>
       <div class="overlap-group2">
         <div class="feed-text-2 valign-text-middle poppins-medium-black-18px"><p>`+ post.post_text +`</p></div>
@@ -68,4 +72,17 @@ async function create_div_from_post_response(post){
       }
     
     return postBox
+}
+
+async function bookmark_post_as_user(post_id){
+  url = python_url + `bookmark/${localStorage.getItem("user_id")}/${post_id}`
+  // let data = {
+  //   "user_id": localStorage.getItem("user_id"),
+  //   "post_id": post_id
+  // }
+  let response = await fetch(url);
+  if(response.status === 200){
+    let body = await response.json();
+    console.log(body);
+  }
 }
