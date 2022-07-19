@@ -1,11 +1,17 @@
 let params = new URLSearchParams(location.search);
 let userId=params.get('userId');
-let loggedInUserID = JSON.parse(localStorage.getItem("userInfo")).userId; 
+let loggedInUserId = JSON.parse(localStorage.getItem("userInfo")).userId; 
 
 (function () {
+  console.log(document.getElementById("label-for-profil-img"));
   let createPostModal=document.getElementById("createPostModal");
-  if(createPostModal!=null && userId!=loggedInUserID){
-    createPostModal.setAttribute("class","invisible")
+  if(userId==null){
+    userId=loggedInUserId;
+  }
+  if(createPostModal!=null && userId!=loggedInUserId){
+    createPostModal.remove();
+    document.getElementById("createPostBtn").remove();
+    document.getElementById("userImageFileInput").remove();
   }
 
 })();
@@ -143,6 +149,15 @@ async function createPostWithImage() {
   
       if(response.status === 200){//if there is an image then this one, else the other one
         const image_text = await response.text();
+        // let testString= `fvfcbvbnsbvncvncbnvbcnvbcnbncbvbbv,xcmbvljfnsf;v
+        // vfbvxbcn,vbjxnvjndfjnvjlnfdljnvljdnfljvnldjfnvljndflnbdlvndfv
+        // vnfjvjfnvjndfjnvljnfljnv
+        // fnvf,mvn,
+        // vn,m,nfv,nv,mv
+        // vsnv,nn,fv
+        // v,nbv,n,nf v'fbvnfbvmn 
+        // bf,bv,nf,nv,fv
+        // bvnfbv,n,nfv nf`;
         postBox.innerHTML =
         `<div class = "post" id = "post`+ post.post_id + `">
         <div class="flex-row">
@@ -160,13 +175,13 @@ async function createPostWithImage() {
           <input type="image" class="chat-bubble-icon" src="img/chat-bubble-icon@2x.svg"/>
           <img class="share-icon" src="img/share-icon@2x.svg" />
         </div>
-        <div class="overlap-group-1 text-overflow">
-          <p class="feed-text-2 valign-text-middle poppins-medium-black-18px">`+ post.post_text + `</p>
-        </div>
+        <div class="overlap-group-1">
+        <div class="feed-text-2 valign-text-middle poppins-medium-black-18px">`+ post.post_text + `</div>
+      </div>
       </div>`
       }else{
         postBox.innerHTML = 
-      `<div class = "post`+ post.post_id +`" id = "post`+ post.post_id + `">
+      `<div class = "post" id = "post`+ post.post_id + `">
       <div class="flex-row">
         <div class="overlap-group2">
           <div class="new-york-ny valign-text-middle">`+ date +`</div>
@@ -182,8 +197,8 @@ async function createPostWithImage() {
         <img class="share-icon" src="img/share-icon@2x.svg" />
       </div>
       <div class="overlap-group-1">
-        <div class="feed-text-2 valign-text-middle poppins-medium-black-18px">`+ post.post_text + `</div>
-      </div>
+      <div class="feed-text-2 valign-text-middle poppins-medium-black-18px">`+ post.post_text + `</div>
+    </div>
     </div>`
       }
   

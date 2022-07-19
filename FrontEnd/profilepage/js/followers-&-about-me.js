@@ -4,21 +4,23 @@ const modalMessageDiv = document.getElementById("profileModalMsg");
 const followerSectionDiv = document.getElementById("followers-div");
 const groupSectionDiv = document.getElementById("groups-div");
 
+
 /*
     Grabs the user profile information from the update profile modal and sends it through the layers
 */
 async function updateUserProfileData(){
     // Will need to update this to use the current user's ID
-    let url = "http://127.0.0.1:5000/user/profile/update/9000"
-
-    let updateUserProfileJSON = JSON.stringify({"firstName": "Shouldn't change",
+    let url = "http://127.0.0.1:5000/user/profile/update/"+loggedInUserId;
+    let updateUserProfileJSON = JSON.stringify({
+    "firstName": "Shouldn't change",
     "lastName": "Shouldn't change",
     "email": "Shouldn't change",
     "username": "Shouldn't change",
     "passcode": "Shouldn't change",
     "userAbout": userAboutMe.value,
     "userBirthDate": userBirthDate.value,
-    "userImageFormat": "Shouldn't change"});
+    "userImageFormat": "Shouldn't change"
+});
 
     let response = await fetch(url, {
         method: "PATCH",
@@ -28,6 +30,7 @@ async function updateUserProfileData(){
         if(response.status === 200){
             let body = await response.json();
             successMessageForProfileModal();
+
             console.log(body);
         }
         else{
@@ -41,6 +44,17 @@ async function updateUserProfileData(){
 function resetProfileModalData(){
     document.getElementById("updateUserProfileForm").reset()
     modalMessageDiv.innerHTML = '';
+}
+
+function setProfileInfo(){
+    // let name=document.getElementById("name-display");
+    let bDay=document.getElementById("birthday-display");
+    // let username=document.getElementById("username-display");
+    let aboutMe=document.getElementById("about-me-display");
+
+    aboutMe.innerText=userAboutMe.value;
+    bDay.innerText=userBirthDate.value;
+
 }
 
 /*

@@ -100,7 +100,9 @@
             >
             <img class="searchIcon" src="./img/searchIcon.png" alt="search icon"/></input>
             <button class="btn search-button" id="searchButton"><img src="./img/sendIcon.png" alt="send icon"></button>
-            <button class="btn createPostBtn"><img src="./img/createPostButton.png" alt="create post icon" data-bs-toggle="modal" data-bs-target="#createPostModal"></button>
+            <button class="btn createPostBtn" id="createPostBtn">
+              <img src="./img/createPostButton.png" alt="create post icon" data-bs-toggle="modal" data-bs-target="#createPostModal">
+            </button>
             <ul
               id="searchList"
               class="dropdown-menu w-100 list-group active"
@@ -162,10 +164,10 @@
 
             <!-- Profile Image Uploader -->
             <div class="image-upload">
-              <label for="userImageFileInput">
+              <label id="label-for-profil-img" for="userImageFileInput">
                 <img src="img/user-avatar@2x.png" class="user-avatar" id="userImageFile" type="button"/>
               </label>
-            
+
               <input type="file" id="userImageFileInput" onchange="createUserWithImage()"/>
             </div>
             <!-- Profile Image Uploader -->
@@ -173,10 +175,11 @@
 
             <div class="user-name valign-text-middle poppins-bold-cape-cod-18px">Scarlett Johansson</div>
             <div class="flex-row-1">
-              <div class="birthday valign-text-middle">DOB - Jan. 1st</div>
-              <img class="line-1" src="img/line-1@2x.svg" />
-              <div class="username valign-text-middle">@Scar_Jo12</div>
+              <div class="birthday valign-text-middle" id="birthday-display">DOB - Jan. 1st</div>
+              <img class="line-1" alt="" src="img/line-1@2x.svg" />
+              <div class="username valign-text-middle" id="username-display">@Scar_Jo12</div>
             </div>
+            <div class="valign-text-middle poppins-bold-cape-cod-18px"> </div>
             <div class="flex-col">
 
                             <!-- Edit Profile Button and Modal -->
@@ -252,8 +255,8 @@
     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
     crossorigin="anonymous"
   ></script>
-  <script src="nebulousHammer.js"></script>
-  <script src="SearchByUser.js"></script>
-  <script src="dZazulak.js"></script>
-  <script src="userprofileimage-vfh.js"></script>
+  <script src="js/post.js"></script>
+  <script src="js/SearchByUser.js"></script>
+  <script src="js/followers-&-about-me.js"></script>
+  <script src="js/userprofileimage-vfh.js"></script>
 </html>
