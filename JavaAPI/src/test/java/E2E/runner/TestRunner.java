@@ -21,8 +21,10 @@ import java.io.File;
 import java.time.Duration;
 
 @RunWith(Cucumber.class)
-@CucumberOptions(features = "classpath:features", glue = "E2E.steps", plugin = { "pretty",
-       "html:src/test/java/resources/reports/html-reports.html" })
+@CucumberOptions(
+    features = "classpath:features", 
+    glue = "E2E.steps", 
+    plugin = { "pretty", "html:src/test/java/resources/reports/html-reports.html" })
 public class TestRunner {
 
    public static WebDriver driver;

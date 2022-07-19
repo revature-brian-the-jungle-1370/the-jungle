@@ -381,6 +381,14 @@ def add_likes_to_post():
     except TypeError:
         return ("post not found!"), 400
 
+@app.post("/postfeed/unlike")
+def add_likes_to_post():
+    try:
+        data = request.get_json()
+        postid = data["postId"]
+        return jsonify(like_post_service.service_unlike_post(postid))
+    except TypeError:
+        return ("post not found!"), 400
 
 @app.post("/postfeed/comment")
 def add_likes_to_comment():
@@ -391,6 +399,14 @@ def add_likes_to_comment():
     except TypeError:
         return ("comment not found"), 400
 
+@app.post("/postfeed/comment/unlike")
+def add_likes_to_comment():
+    try:
+        data = request.get_json()
+        commentid = data["commentId"]
+        return jsonify(like_post_service.service_unlike_comment(commentid))
+    except TypeError:
+        return ("comment not found"), 400
 
 # delete comment information
 @app.delete("/Comments")
