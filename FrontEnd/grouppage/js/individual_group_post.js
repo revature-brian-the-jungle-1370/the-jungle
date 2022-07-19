@@ -5,12 +5,12 @@ let tableBody = document.getElementById("postBody");
 document.getElementById("sendGroupPostButton").addEventListener("click", createGroupPost);
 
 async function createGroupPost() {
-  
+
   let post_text = document.getElementById("postInput").value;
   let data = {
     "post_id": "0",
-    "user_id": Number(localStorage.getItem("user_id")),
-    "group_id": Number(localStorage.getItem("group_id")),
+    "user_id": Number(localStorage.getItem("userId")),
+    "group_id": Number(localStorage.getItem("groupId")),
     // "user_id": 10000,
     // "group_id": 9000,
     "post_text": post_text,
@@ -42,7 +42,8 @@ async function createGroupPost() {
 
 //--------------------------------------------------- LOAD GROUP POST FUNCTION-------------------------------------------------------
 async function getPost() {
-  let response = await fetch(python_url + "/group_post/group/10000", { //replace with "/group_post/group/" + group_id
+  let group_id = Number(localStorage.getItem("groupId"));
+  let response = await fetch(python_url + "/group_post/group/" + group_id, { //replace with "/group_post/group/" + group_id
     method: "GET",
     mode: "cors",
   });
