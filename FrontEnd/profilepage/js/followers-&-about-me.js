@@ -239,8 +239,8 @@ function goToGroupPage(groupId){
 }
 
 async function follow_user(){
-    let followJson = JSON.stringify({"user_follower_id": Number(loggedInUserId), "user_being_followed_id": Number(userId)});
-    let followResponse = await fetch("http://127.0.0.1:5000/user/" + loggedInUserId + "/followed/" + userId, {
+    let followJson = JSON.stringify({"user_follower_id": Number(loggedInUserID), "user_being_followed_id": Number(userId)});
+    let followResponse = await fetch("http://127.0.0.1:5000/user/" + loggedInUserID + "/followed/" + userId, {
         method: "POST",
         mode: "cors",
         headers: {"Content-Type": "application/json"},

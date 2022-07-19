@@ -20,3 +20,11 @@ class LikePostDAO(ABC):
     @abstractmethod
     def unlike_comment(self, comment_id : int) :
         pass
+
+    @abstractmethod
+    def liketable_post(self, user_id: int, post_id: int):
+        pass
+
+    @abstractmethod
+    def get_liketable_post_with_user_id_post_id(self, user_id: int, post_id: int) -> Post:
+        pass

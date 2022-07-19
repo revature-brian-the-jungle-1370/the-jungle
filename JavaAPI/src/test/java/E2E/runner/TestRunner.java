@@ -4,6 +4,7 @@ import E2E.poms.chat.ChatPage;
 import E2E.poms.group.GroupJunctionPOM;
 import E2E.poms.group.GroupPage;
 import E2E.poms.homepage.UserHomePage;
+import E2E.poms.IndividualGroupPOM;
 import E2E.poms.RegLoginSearchPOM;
 import E2E.poms.UserProfile;
 import E2E.poms.RegLoginSearchPOM;
@@ -36,6 +37,7 @@ public class TestRunner {
    public static UserHomePage userHomePage;
    public static GroupPage groupPage;
    public static GroupJunctionPOM groupJunctionPOM;
+   public static IndividualGroupPOM individualGroupPOM;
 
    @BeforeClass
    public static void setup() {
@@ -56,6 +58,7 @@ public class TestRunner {
        userHomePage = new UserHomePage(driver);
        groupPage = new GroupPage(driver);
        groupJunctionPOM = new GroupJunctionPOM(driver);
+       individualGroupPOM = new IndividualGroupPOM(driver);
 
        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(6));
        explicitWait = new WebDriverWait(driver, Duration.ofSeconds(6));
