@@ -20,3 +20,11 @@ class LikePostService(ABC):
     @abstractmethod
     def service_unlike_comment(self, comment_id: int):
         pass
+
+    @abstractmethod
+    def liketable_post_service(self, userid:int, postid:int):
+        pass
+
+    @abstractmethod
+    def get_liketable_post_service(self, userid:int, postid:int):
+        pass

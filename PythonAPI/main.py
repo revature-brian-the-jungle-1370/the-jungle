@@ -408,6 +408,47 @@ def add_unlikes_to_comment():
     except TypeError:
         return ("comment not found"), 400
 
+# Toggle User Liked Post
+@app.post("/likes/<user_id>/<post_id>")
+def save_post_as_liked(user_id,post_id):
+    try:
+        if(user_id.isdigit() and post_id.isdigit()):
+            result=like_post_service.liketable_post_service(int(user_id),int(post_id))
+            result_dictionary = {"message": str(result)}
+            return jsonify(result_dictionary),200
+        else:
+            exception_dictionary = {"message": "Invalid Url"}
+            exception_json = jsonify(exception_dictionary)
+            return exception_json, 400
+    except Exception as e:
+        exception_dictionary = {"message": str(e)}
+        exception_json = jsonify(exception_dictionary)
+        return exception_json, 400
+
+# Get Liked Post from Like Table
+@app.get("/likes/<user_id>/<post_id>")
+def get_liketable_post(user_id, post_id):
+    try:
+        if(user_id.isdigit() and post_id.isdigit()):
+            result=like_post_service.get_liketable_post_service(int(user_id),int(post_id))
+            if(result != "Like not found" or result != "Invalid userId or postId"):
+                result_dictionary = {}
+                if (result == "Like not found"):
+                    result_dictionary = {"message": result}
+                else:
+                    result_dictionary = {"message": result.make_dictionary()}
+                return jsonify(result_dictionary),200
+            else:
+                raise PostNotFound("No Post Found")
+        else:
+            exception_dictionary = {"message": "Invalid Url"}
+            exception_json = jsonify(exception_dictionary)
+            return exception_json, 400
+    except PostNotFound as e:
+        exception_dictionary = {"message": str(e)}
+        exception_json = jsonify(exception_dictionary)
+        return exception_json, 400
+
 # delete comment information
 @app.delete("/Comments")
 def delete_comment():
@@ -419,7 +460,7 @@ def delete_comment():
     except CommentNotFound:
         return "Comment not found", 400
 
-
+# get comment
 @app.get("/postfeed/<post_id>")
 def get_comments_by_post_id(post_id: str):
     try:
