@@ -34,7 +34,7 @@ async function resetPassword() {
         let body = await response.json();
         console.log(response)
         window.localStorage.clear()
-        window.location.href = "http://127.0.0.1:5500/FrontEnd/loginpage/login.html"; //  Redirect to Here????
+        window.location.href = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/FrontEnd/loginpage/login.html"; //  Redirect to Here????
     } else {
         div.textContent = "Invalid Password";
     }

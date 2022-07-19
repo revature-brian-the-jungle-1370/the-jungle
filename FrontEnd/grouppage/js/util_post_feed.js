@@ -1,5 +1,5 @@
-//let python_url =  "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/";
-//let java_url =    "http://ec2-52-200-53-62.compute-1.amazonaws.com:8080/";
+let python_url =  "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/";
+let java_url =    "http://ec2-52-200-53-62.compute-1.amazonaws.com:8080/";
 // let python_url = "http://127.0.0.1:5000/"
 // let java_url =    "http://127.0.0.1:8080/";
 
@@ -50,7 +50,7 @@ async function create_div_from_post_response(post){
           <div class="username-1 valign-text-middle poppins-bold-cape-cod-20px">JostSNL21</div>
           <img class="feed-avatar" src="data:image/PNG;base64,`+ user_image_text  + `" alt="user_image_text" />
         </div>
-        <input type="image" class="three-dots-icon" src="img/three-dots-icon-1@2x.svg"`+ 
+        <input type="image" class="three-dots-icon" src="img/three-dots-icon-1@2x.svg"`+
             ` id="deletePost${post.post_id}" onclick="deleteGroupPost(${post.post_id})"/>
       </div>
       <img class="feed-picture" src="`+ image_text +`"/>
@@ -92,7 +92,7 @@ async function create_div_from_post_response(post){
         <div class="feed-text-2 valign-text-middle poppins-medium-black-18px"><p>`+ post.post_text +`</p></div>
       </div>`
       }
-    
+
     return postBox
 }
 
