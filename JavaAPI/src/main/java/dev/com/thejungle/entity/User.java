@@ -1,9 +1,13 @@
 package dev.com.thejungle.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Generated;
 
 import java.util.Objects;
 
+@AllArgsConstructor
+@Builder
 @Generated
 public class User {
 
