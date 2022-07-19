@@ -29,10 +29,20 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <version>3.0.0-M5</version>
         <configuration>
-          <suiteXmlFiles>
-            <suiteXmlFile>testng.xml</suiteXmlFile>
-          </suiteXmlFiles>
+          <suiteXmlFiles />
         </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <version>2.12</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>integration-test</goal>
+              <goal>verify</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -69,6 +79,7 @@
           <excludes>
             <exclude>**/config/*</exclude>
             <exclude>dev/com/thejungle/app/</exclude>
+            <exclude>dev/com/thejungle/utility/</exclude>
           </excludes>
         </configuration>
       </plugin>
@@ -143,6 +154,7 @@
     </dependency>
   </dependencies>
   <properties>
+    <exec.mainClass>dev.com.thejungle.app.app.App</exec.mainClass>
     <maven.compiler.source>8</maven.compiler.source>
     <maven.compiler.target>8</maven.compiler.target>
   </properties>

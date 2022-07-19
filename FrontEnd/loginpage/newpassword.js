@@ -29,38 +29,12 @@ async function resetPassword() {
     if (response.status == 200) {
         let body = await response.json();
         console.log(response)
-        //  Storing information for later
-        //localStorage.setItem("user_id", JSON.stringify(body));
         window.localStorage.clear()
         window.location.href = "http://127.0.0.1:5500/FrontEnd/loginpage/login.html"; //  Redirect to Here????
     } else {
         div.textContent = "Invalid Password";
     }
 }
-
-// async function resetPassword(user_id) {
-//     console.log(user_id)
-//     let response = await fetch(url+`/user/${user_id}/new-password`, {
-//         method: "POST",
-//         mode: "cors",
-//         headers: { "Content-Type": "application/json" },
-//         body: JSON.stringify({
-//         passcode: passcode.value
-//         }),
-//     });
-//     console.log(response)
-    
-//     if (response.status == 200) {
-//         let body = await response.json();
-//         console.log(response)
-//         //  Storing information for later
-//         localStorage.setItem("user_id", JSON.stringify(body));
-        
-//         window.location.href = url+"FrontEnd/loginpage/login.html"; //  Redirect to Here????
-//     } else {
-//         div.textContent = "Invalid Password";
-//     }
-// }
 
 let jsonPasscodeObject = {
     passcode: "",

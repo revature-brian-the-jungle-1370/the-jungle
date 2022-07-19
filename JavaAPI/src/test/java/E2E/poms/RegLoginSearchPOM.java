@@ -1,5 +1,6 @@
 package E2E.poms;
 
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -75,7 +76,23 @@ public class RegLoginSearchPOM {
     @FindBy(xpath = "/html/body/div/div/div[2]/div/div[9]/p")
     public WebElement regErrorMessage;
 
+    // Reset Password
     @FindBy(className = "reset-password-link")
     public WebElement resetPasswordLink;
+    
+    @FindBy(id = "emailInput")
+    public WebElement emailInput;
 
+    @FindBy(id = "submitEmail")
+    public WebElement submitEmail;
+
+    @FindBy(id = "passcodeInput")
+    public WebElement passcodeInput;
+
+    @FindBy(id = "submitPasscode")
+    public WebElement submitPasscode;
+
+    public void unfocus_text_box(WebElement text_box){
+        text_box.sendKeys(Keys.TAB);
+    }
 }
