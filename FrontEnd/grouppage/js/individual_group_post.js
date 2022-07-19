@@ -84,8 +84,9 @@ async function deleteGroupPost(post_id) {
 
 // async function unlikePost(post_id) {}
 
-async function toggle_like_post(post_id){
-
+async function toggle_like(post_id){
+  let post_url = python_url + "group_post/" + post_id
+  console.log("toggle_like: " + post_url)
 }
 
 //----------------------------------------------- COMMENTS ON GROUP POST FUNCTION-----------------------------------------------------

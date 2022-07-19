@@ -2,8 +2,6 @@
 //let java_url =    "http://ec2-52-200-53-62.compute-1.amazonaws.com:8080/";
 // let python_url = "http://127.0.0.1:5000/"
 // let java_url =    "http://127.0.0.1:8080/";
-localStorage.setItem("user_id", 13)
-localStorage.setItem("group_id", 10000) //Comment this out later. This is to test functionality
 
 async function create_div_from_post_response(post){
     //Create Div
@@ -57,7 +55,8 @@ async function create_div_from_post_response(post){
       </div>
       <img class="feed-picture" src="`+ image_text +`"/>
       <div class="icon-container">
-        <input type="image" class="heart-icon" src="img/heart-icon@2x.svg" />
+        <input type="image" class="heart-icon" src="img/heart-icon@2x.svg"`+
+            ` id="likePost_Comment${post.post_id}" onclick="toggle_like(${post.post_id})" />
         <p>` + post.likes + `</p>
         <input type="image" class="chat-bubble-icon" src="img/chat-bubble-icon@2x.svg"`+
             ` id="commentPost${post.post_id}" onclick="toggle_comment_div(${post.post_id})"/>
@@ -80,7 +79,8 @@ async function create_div_from_post_response(post){
             ` id="deletePost${post.post_id}" onclick="deleteGroupPost(${post.post_id})"/>
       </div>
       <div class="icon-container">
-        <input type="image" class="heart-icon" src="img/heart-icon@2x.svg" />
+      <input type="image" class="heart-icon" src="img/heart-icon@2x.svg"`+
+      ` id="likePost_Comment${post.post_id}" onclick="toggle_like(${post.post_id})" />
         <p>` + post.likes + `</p>
         <input type="image" class="chat-bubble-icon" src="img/chat-bubble-icon@2x.svg"`+
             ` id="commentPost${post.post_id}" onclick="toggle_comment_div(${post.post_id})"/>

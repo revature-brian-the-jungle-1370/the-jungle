@@ -382,7 +382,7 @@ def add_likes_to_post():
         return ("post not found!"), 400
 
 @app.post("/postfeed/unlike")
-def add_likes_to_post():
+def add_unlikes_to_post():
     try:
         data = request.get_json()
         postid = data["postId"]
@@ -400,7 +400,7 @@ def add_likes_to_comment():
         return ("comment not found"), 400
 
 @app.post("/postfeed/comment/unlike")
-def add_likes_to_comment():
+def add_unlikes_to_comment():
     try:
         data = request.get_json()
         commentid = data["commentId"]
