@@ -45,4 +45,7 @@ public class UserHomePage {
 
     @FindBy(xpath = "//div[@id='groups-div']/div[1]/div")
     public WebElement groupToJoin;
+
+    @FindBy(xpath = "//div[@id='groups-div']/div[2]/div")
+    public WebElement selectGroup;
 }
