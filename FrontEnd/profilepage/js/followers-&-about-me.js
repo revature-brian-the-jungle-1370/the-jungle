@@ -163,7 +163,7 @@ function populateUserFollowers(followerBody){
         // Created the username div and set the class name and username
         let followerUsernameDiv = document.createElement("div");
         followerUsernameDiv.setAttribute("class", "name valign-text-middle poppins-bold-astronaut-22px");
-        followerUsernameDiv.innerHTML = `<a class="name valign-text-middle poppins-bold-astronaut-22px" href="profile-page.html?userId=${followerBody[follower]}">${follower}</a>`;
+        followerUsernameDiv.innerHTML = `<a class="name valign-text-middle poppins-bold-astronaut-22px" href="http://dans-code.net.s3-website-us-east-1.amazonaws.com/FrontEnd/profilepage/profile-page.html?userId=${followerBody[follower]}">${follower}</a>`;
 
         // Append the created elements to the page
         followerSectionDiv.appendChild(followerDiv);

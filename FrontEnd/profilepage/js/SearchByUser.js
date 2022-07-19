@@ -3,7 +3,7 @@ const searchField = document.getElementById("searchInputBox");
 const searchListResults = document.getElementById("searchList");
 function referToProfile(userId) {
     localStorage.setItem("targetId", userId);
-    location.href="profile-page.html?userId="+userId;
+    location.href="http://dans-code.net.s3-website-us-east-1.amazonaws.com/FrontEnd/profilepage/profile-page.html?userId="+userId;
 }
 const searchUserButton = document.getElementById("searchButton");
 
