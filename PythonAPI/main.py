@@ -611,17 +611,25 @@ def get_bookmark_post_by_user_id(user_id):
         exception_json = jsonify(exception_dictionary)
         return exception_json,400
         
-    
+@app.get("/bookmark/<user_id>/<post_id>")
+def get_dummy_bookmark(user_id,post_id):
+    dict = {"user_id": user_id, "post_id": post_id}
+    return jsonify(dict), 200
 
 @app.post("/bookmark/<user_id>/<post_id>")
 def save_post_as_bookmark(user_id,post_id):
-    if(user_id.isdigit() and post_id.isdigit()):
-        result=post_feed_service.bookmark_post_service(int(user_id),int(post_id))
-        result_dictionary = {"message": str(result)}
-        return jsonify(result_dictionary),200
-    else:
-        exception_dictionary = {"message": "Invalid Url"}
+    try:
+        if(user_id.isdigit() and post_id.isdigit()):
+            result=post_feed_service.bookmark_post_service(int(user_id),int(post_id))
+            result_dictionary = {"message": str(result)}
+            return jsonify(result_dictionary),200
+        else:
+            exception_dictionary = {"message": "Invalid Url"}
+            exception_json = jsonify(exception_dictionary)
+            return exception_json, 400
+    except PostNotFound as e:
+        exception_dictionary = {"message": str(e)}
         exception_json = jsonify(exception_dictionary)
-        return exception_json,400
+        return exception_json, 400
 
 app.run()
