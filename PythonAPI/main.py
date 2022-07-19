@@ -381,6 +381,14 @@ def add_likes_to_post():
     except TypeError:
         return ("post not found!"), 400
 
+@app.post("/postfeed/unlike")
+def add_unlikes_to_post():
+    try:
+        data = request.get_json()
+        postid = data["postId"]
+        return jsonify(like_post_service.service_unlike_post(postid))
+    except TypeError:
+        return ("post not found!"), 400
 
 @app.post("/postfeed/comment")
 def add_likes_to_comment():
@@ -391,6 +399,55 @@ def add_likes_to_comment():
     except TypeError:
         return ("comment not found"), 400
 
+@app.post("/postfeed/comment/unlike")
+def add_unlikes_to_comment():
+    try:
+        data = request.get_json()
+        commentid = data["commentId"]
+        return jsonify(like_post_service.service_unlike_comment(commentid))
+    except TypeError:
+        return ("comment not found"), 400
+
+# Toggle User Liked Post
+@app.post("/likes/<user_id>/<post_id>")
+def save_post_as_liked(user_id,post_id):
+    try:
+        if(user_id.isdigit() and post_id.isdigit()):
+            result=like_post_service.liketable_post_service(int(user_id),int(post_id))
+            result_dictionary = {"message": str(result)}
+            return jsonify(result_dictionary),200
+        else:
+            exception_dictionary = {"message": "Invalid Url"}
+            exception_json = jsonify(exception_dictionary)
+            return exception_json, 400
+    except Exception as e:
+        exception_dictionary = {"message": str(e)}
+        exception_json = jsonify(exception_dictionary)
+        return exception_json, 400
+
+# Get Liked Post from Like Table
+@app.get("/likes/<user_id>/<post_id>")
+def get_liketable_post(user_id, post_id):
+    try:
+        if(user_id.isdigit() and post_id.isdigit()):
+            result=like_post_service.get_liketable_post_service(int(user_id),int(post_id))
+            if(result != "Like not found" or result != "Invalid userId or postId"):
+                result_dictionary = {}
+                if (result == "Like not found"):
+                    result_dictionary = {"message": result}
+                else:
+                    result_dictionary = {"message": result.make_dictionary()}
+                return jsonify(result_dictionary),200
+            else:
+                raise PostNotFound("No Post Found")
+        else:
+            exception_dictionary = {"message": "Invalid Url"}
+            exception_json = jsonify(exception_dictionary)
+            return exception_json, 400
+    except PostNotFound as e:
+        exception_dictionary = {"message": str(e)}
+        exception_json = jsonify(exception_dictionary)
+        return exception_json, 400
 
 # delete comment information
 @app.delete("/Comments")
@@ -403,7 +460,7 @@ def delete_comment():
     except CommentNotFound:
         return "Comment not found", 400
 
-
+# get comment
 @app.get("/postfeed/<post_id>")
 def get_comments_by_post_id(post_id: str):
     try:
@@ -556,6 +613,8 @@ def get_user_following(user_id: int):
 
 @app.post("/user/<user_follower_id>/followed/<user_being_followed_id>")
 def follow_user(user_follower_id: int, user_being_followed_id: int):
+    user_being_followed_id = int(user_being_followed_id)
+    user_follower_id = int(user_follower_id)
     try:
         user_profile_service.follow_user_service(user_follower_id, user_being_followed_id)
         follow_dictionary = {"message": str(user_follower_id) + " has followed " + str(user_being_followed_id)}
@@ -595,12 +654,10 @@ def unfollow_user(user_follower_id: int, user_being_followed_id: int):
         exception_json = jsonify(exception_dictionary)
         return exception_json, 400
 
-app.run(host="0.0.0.0", port=5000,debug=True)
-
 @app.get("/bookmark/<user_id>")
 def get_bookmark_post_by_user_id(user_id):
     if(user_id.isdigit()):
-        post_as_post = post_feed_service.get_all_bookmarkded_posts_service(int(user_id))
+        post_as_post = post_feed_service.get_all_bookmarked_posts_service(int(user_id))
         posts_as_dictionary = []
         for post in post_as_post:
             dictionary_posts = post.make_dictionary()
@@ -611,17 +668,45 @@ def get_bookmark_post_by_user_id(user_id):
         exception_json = jsonify(exception_dictionary)
         return exception_json,400
         
-    
+@app.get("/bookmark/<user_id>/<post_id>")
+def get_bookmarked_post(user_id, post_id):
+    try:
+        if(user_id.isdigit() and post_id.isdigit()):
+            result=post_feed_service.get_bookmarked_post_service(int(user_id),int(post_id))
+            if(result != "Bookmark not found" or result != "Invalid userId or postId"):
+                result_dictionary = {}
+                if (result == "Bookmark not found"):
+                    result_dictionary = {"message": result}
+                else:
+                    result_dictionary = {"message": result.make_dictionary()}
+                return jsonify(result_dictionary),200
+            else:
+                raise PostNotFound("No Post Found")
+        else:
+            exception_dictionary = {"message": "Invalid Url"}
+            exception_json = jsonify(exception_dictionary)
+            return exception_json, 400
+    except PostNotFound as e:
+        exception_dictionary = {"message": str(e)}
+        exception_json = jsonify(exception_dictionary)
+        return exception_json, 400
 
 @app.post("/bookmark/<user_id>/<post_id>")
 def save_post_as_bookmark(user_id,post_id):
-    if(user_id.isdigit() and post_id.isdigit()):
-        result=post_feed_service.bookmark_post_service(int(user_id),int(post_id))
-        result_dictionary = {"message": str(result)}
-        return jsonify(result_dictionary),200
-    else:
-        exception_dictionary = {"message": "Invalid Url"}
+    try:
+        if(user_id.isdigit() and post_id.isdigit()):
+            result=post_feed_service.bookmark_post_service(int(user_id),int(post_id))
+            result_dictionary = {"message": str(result)}
+            return jsonify(result_dictionary),200
+        else:
+            exception_dictionary = {"message": "Invalid Url"}
+            exception_json = jsonify(exception_dictionary)
+            return exception_json, 400
+    except Exception as e:
+        exception_dictionary = {"message": str(e)}
         exception_json = jsonify(exception_dictionary)
-        return exception_json,400
+        return exception_json, 400
+        
+app.run(host="0.0.0.0", port=5000,debug=True)
 
-app.run()
+# app.run()

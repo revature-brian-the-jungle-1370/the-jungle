@@ -45,7 +45,7 @@ class PostFeedDaoImp(PostFeedDao):
             post_list.append(Post(*post))
         return post_list
 
-    def get_all_bookmarkded_posts(self, user_id: int) -> List[Post]:
+    def get_all_bookmarked_posts(self, user_id: int) -> List[Post]:
         sql = "select post_id from bookmark_table where user_id = %s"
         cursor =connection.cursor()
         cursor.execute(sql,[user_id])
@@ -85,4 +85,16 @@ class PostFeedDaoImp(PostFeedDao):
         else:
             return "Invalid userId or postId"
 
-    
+    def get_bookmarked_post_with_user_id_post_id(self, user_id: int, post_id: int) -> Post:
+        if(user_id!=None and post_id!=None): #None was originally NULL from the line 1 import
+            sql = "select * from bookmark_table where user_id = %s and post_id = %s;"
+            cursor = connection.cursor()
+            cursor.execute(sql, (user_id,post_id))
+            post_record = cursor.fetchone()
+            if not post_record:
+                return "Bookmark not found"
+            else:
+                post_record = Post(*post_record)
+                return post_record
+        else:
+            return "Invalid userId or postId"

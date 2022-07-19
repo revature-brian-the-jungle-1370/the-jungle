@@ -1,4 +1,5 @@
 from custom_exceptions.follower_not_found import FollowerNotFound
+from custom_exceptions.user_id_must_be_an_integer import UserIdMustBeAnInteger
 from custom_exceptions.user_image_not_found import UserImageNotFound
 from custom_exceptions.user_not_found import UserNotFound
 from data_access_layer.implementation_classes.user_profile_dao import UserProfileDAOImp, UserProfileDAO
@@ -216,6 +217,13 @@ def test_follow_user_failure_user_follower_id_failure(create_fake_user):
         user_profile_dao.follow_user(-1, 100000000)
         assert False
     except UserNotFound as e:
+        assert str(e) == user_not_found_message
+
+def test_follow_user_failure_user_follower_string_failure(create_fake_user):
+    try:
+        user_profile_dao.follow_user(100000000, "apple")
+        assert False
+    except UserIdMustBeAnInteger as e:
         assert str(e) == user_not_found_message
 
 

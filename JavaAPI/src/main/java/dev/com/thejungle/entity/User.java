@@ -1,9 +1,13 @@
 package dev.com.thejungle.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Generated;
 
 import java.util.Objects;
 
+@AllArgsConstructor
+@Builder
 @Generated
 public class User {
 
@@ -15,7 +19,7 @@ public class User {
     private String username;
     private String passcode;
     private String userAbout;
-    private long userBirthdate;
+    private Long userBirthdate;
     private String imageFormat;
 
     // CONSTRUCTORS
@@ -84,7 +88,7 @@ public class User {
 
 
     // GETTERS AND SETTERS
-    public int getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
@@ -140,7 +144,7 @@ public class User {
         this.userAbout = userAbout;
     }
 
-    public long getUserBirthdate() {
+    public Long getUserBirthdate() {
         return userBirthdate;
     }
 

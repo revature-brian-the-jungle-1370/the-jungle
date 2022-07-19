@@ -83,3 +83,10 @@ CREATE TABLE bookmark_table (
     CONSTRAINT newtable_fk FOREIGN KEY (post_id) REFERENCES post_table(post_id) ON DELETE CASCADE,
     CONSTRAINT newtable_fk_1 FOREIGN KEY (user_id) REFERENCES user_table(user_id) ON DELETE CASCADE
 );
+
+CREATE TABLE like_table (
+    user_id int4 NOT NULL,
+    post_id int4 NOT NULL,
+    CONSTRAINT newtable_fk FOREIGN KEY (post_id) REFERENCES post_table(post_id) ON DELETE CASCADE,
+    CONSTRAINT newtable_fk_1 FOREIGN KEY (user_id) REFERENCES user_table(user_id) ON DELETE CASCADE
+    );
