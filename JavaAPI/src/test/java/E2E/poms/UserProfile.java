@@ -40,6 +40,8 @@ public class UserProfile {
     public WebElement profileErrorMessage;
     @FindBy(xpath="/html/body/div/div/div/div[10]/div[2]/div/div")
     public WebElement userFollower;
+    @FindBy(id="follow-user-button")
+    public WebElement followUserButton;
 
 
 }

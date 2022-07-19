@@ -79,5 +79,4 @@ class CreatePostDAOImp(CreatePostDAO):
         connection.commit()
         image = cursor.fetchone()[0]
         encoded = base64.b64encode(image)
-        image_decoded = encoded.decode('utf-8')
-        return image_decoded
+        return base64.b64decode(encoded)

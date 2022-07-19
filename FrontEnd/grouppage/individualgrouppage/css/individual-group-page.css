@@ -213,6 +213,7 @@
 .individual-group-page .member-3 {
   align-items: flex-start;
   display: flex;
+  flex-direction: column;
   height: 40px;
   left: 25px;
   min-width: 226px;

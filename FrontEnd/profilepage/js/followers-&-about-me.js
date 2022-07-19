@@ -3,22 +3,24 @@ const userAboutMe = document.getElementById("userAboutMeInput");
 const modalMessageDiv = document.getElementById("profileModalMsg");
 const followerSectionDiv = document.getElementById("followers-div");
 const groupSectionDiv = document.getElementById("groups-div");
+const submitFollow = document.getElementById("follow-user-button");
 
 /*
     Grabs the user profile information from the update profile modal and sends it through the layers
 */
 async function updateUserProfileData(){
     // Will need to update this to use the current user's ID
-    let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/user/profile/update/9000"
-
-    let updateUserProfileJSON = JSON.stringify({"firstName": "Shouldn't change",
+    let url = "http://127.0.0.1:5000/user/profile/update/"+loggedInUserId;
+    let updateUserProfileJSON = JSON.stringify({
+    "firstName": "Shouldn't change",
     "lastName": "Shouldn't change",
     "email": "Shouldn't change",
     "username": "Shouldn't change",
     "passcode": "Shouldn't change",
     "userAbout": userAboutMe.value,
     "userBirthDate": userBirthDate.value,
-    "userImageFormat": "Shouldn't change"});
+    "userImageFormat": "Shouldn't change"
+});
 
     let response = await fetch(url, {
         method: "PATCH",
@@ -28,7 +30,8 @@ async function updateUserProfileData(){
         if(response.status === 200){
             let body = await response.json();
             successMessageForProfileModal();
-            console.log(body);
+            setUpdatedProfileInfo()
+            // console.log(body);
         }
         else{
             errorMessageForProfileModal();
@@ -43,6 +46,67 @@ function resetProfileModalData(){
     modalMessageDiv.innerHTML = '';
 }
 
+function setUpdatedProfileInfo(){
+    let bDay=document.getElementById("birthday-display");
+    let aboutMe=document.getElementById("about-me-display");
+    aboutMe.innerText=userAboutMe.value;
+    bDay.innerText=userBirthDate.value;
+}
+
+function setProfileInfo(){
+    let name=document.getElementById("name-display");
+    let username=document.getElementById("username-display");
+    let bDay=document.getElementById("birthday-display");
+    let aboutMe=document.getElementById("about-me-display");
+  
+    let visitedUser;
+    if(userId!=loggedInUserId){
+        getProfileUser(userId,"visitedUser");
+       visitedUser=JSON.parse(localStorage.getItem("visitedUser"));
+    }
+    else{
+        getProfileUser(loggedInUserId,"userInfo");
+
+        visitedUser=JSON.parse(localStorage.getItem("userInfo"));
+    }
+    if(name && username && bDay && aboutMe){
+        name.innerText=visitedUser.firstName+" "+visitedUser.lastName
+        username.innerText="@"+visitedUser.username
+
+        let bd=new Date(visitedUser.birthday);
+        bDay.innerText=bd.getMonth()+"/"+bd.getDate()+"/"+bd.getFullYear();
+        aboutMe.innerText="about me:\n"+visitedUser.aboutMe 
+    }
+}
+/**
+ * 
+ * visitedUser	{"email":"email",
+ * "first_name":"first name",
+ * "last_name":"last name",
+ * "passcode":"newpasscode",
+ * "user_about":"smiley",
+ * "user_birth_date":"Mon, 18 Jul 2022 00:00:00 GMT","
+ * user_id":10000,
+ * "user_image_format":"png",
+ * "username":"username"}
+ */
+
+async function getProfileUser(userId,key){
+    let response = await fetch("http://127.0.0.1:5000/user/"+userId);
+    if (response.status === 200) {
+      let body = await response.json();
+      //  Storing information for later
+      let convertedUser=JSON.stringify({//set to keys thats used by previous code or else exception
+        "userId":body.user_id,
+        "firstName":body.first_name,
+        "lastName":body.last_name,
+        "aboutMe":body.user_about,
+        "birthday":body.user_birth_date,
+        "username":body.username
+    })
+      localStorage.setItem(key, convertedUser);
+  }
+}
 /*
     Function to print error message for update profile modal
 */
@@ -66,7 +130,7 @@ function successMessageForProfileModal(){
 }
 
 async function getUserFollowers(){
-    let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/user/followers/32"
+    let url = "http://127.0.0.1:5000/user/followers/"+userId
 
     let response = await fetch(url);
 
@@ -97,7 +161,7 @@ function populateUserFollowers(followerBody){
         // Created the username div and set the class name and username
         let followerUsernameDiv = document.createElement("div");
         followerUsernameDiv.setAttribute("class", "name valign-text-middle poppins-bold-astronaut-22px");
-        followerUsernameDiv.innerHTML = `<a class="name valign-text-middle poppins-bold-astronaut-22px" href="profile-page.html">${follower}</a>`;
+        followerUsernameDiv.innerHTML = `<a class="name valign-text-middle poppins-bold-astronaut-22px" href="profile-page.html?userId=${followerBody[follower]}">${follower}</a>`;
 
         // Append the created elements to the page
         followerSectionDiv.appendChild(followerDiv);
@@ -110,11 +174,14 @@ function populateUserFollowers(followerBody){
 async function getFollowerImage(followerBody){
     for(follower in followerBody){
         let image_Element = document.getElementById(`${follower}-image`);
-        let url = `http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/user/image/${followerBody[follower]}`;
-        console.log(url);
+        let url = `http://127.0.0.1:5000/user/image/${followerBody[follower]}`;
+        // console.log(url);
         let response = await fetch(url);
         if(response.status === 200){
-            const image_text = await response.text();
+            let image_text = await response.text();
+            if(!image_text.includes("data:image")){
+                image_text="data:image/PNG;base64,"+image_text;
+            }
             image_Element.src = image_text;
         }
 
@@ -122,7 +189,7 @@ async function getFollowerImage(followerBody){
 }
 
 async function getGroupsForUser(){
-    let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/group/user/10"
+    let url = "http://127.0.0.1:5000/group/user/"+userId
 
     let response = await fetch(url);
 
@@ -171,5 +238,21 @@ function goToGroupPage(groupId){
     localStorage.getItem("groupId");
 }
 
+async function follow_user(){
+    let followJson = JSON.stringify({"user_follower_id": Number(loggedInUserId), "user_being_followed_id": Number(userId)});
+    let followResponse = await fetch("http://127.0.0.1:5000/user/" + loggedInUserId + "/followed/" + userId, {
+        method: "POST",
+        mode: "cors",
+        headers: {"Content-Type": "application/json"},
+        body:followJson
+    });
+    console.log(followResponse);
+    let followResponseBody = await followResponse.json();
+
+}
+submitFollow.addEventListener("click", follow_user);
+
+
+setProfileInfo();
 getUserFollowers();
 getGroupsForUser();
