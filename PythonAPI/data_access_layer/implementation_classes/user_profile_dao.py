@@ -194,7 +194,7 @@ class UserProfileDAOImp(UserProfileDAO):
         cursor = connection.cursor()
         cursor.execute(sql, {"user_id": user_being_followed_id})
 
-        if not cursor.fetchone() or user_follower_id<=0:
+        if not cursor.fetchone() or int(user_follower_id)<=0:
             raise UserNotFound(user_not_found_string)
         
         sql = "insert into user_follow_junction_table values(%(user_id)s, %(user_follow_id)s) RETURNING FALSE"
