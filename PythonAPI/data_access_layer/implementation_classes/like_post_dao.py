@@ -12,10 +12,14 @@ class LikePostDaoImp(LikePostDAO):
             cursor = connection.cursor()
             cursor.execute(sql,[post_id])
             connection.commit()
-            generated_likes_number = cursor.fetchone()[0]
-
-            if  generated_likes_number > 0:
-                return generated_likes_number
+            generated_likes_number = cursor.fetchone()
+            if generated_likes_number != None:
+                generated_likes_number=generated_likes_number[0]
+                if generated_likes_number > 0:
+                        return generated_likes_number
+                else:
+                    connection.rollback()
+                    raise ConnectionErrorr('post not found')
             else:
                 connection.rollback()
                 raise ConnectionErrorr('post not found')
@@ -25,10 +29,14 @@ class LikePostDaoImp(LikePostDAO):
             cursor = connection.cursor()
             cursor.execute(sql, [comment_id])
             connection.commit()
-            generated_likes_number = cursor.fetchone()[0]
-
-            if generated_likes_number > 0:
-                return generated_likes_number
+            generated_likes_number = cursor.fetchone()
+            if generated_likes_number !=None:
+                generated_likes_number=generated_likes_number[0]
+                if generated_likes_number > 0:
+                    return generated_likes_number
+                else:
+                    connection.rollback()
+                    raise ConnectionErrorr('comment not found')
             else:
                 connection.rollback()
                 raise ConnectionErrorr('comment not found')
