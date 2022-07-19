@@ -380,6 +380,8 @@ def add_likes_to_post():
         return jsonify(like_post_service.service_like_post(postid))
     except TypeError:
         return ("post not found!"), 400
+    except ConnectionErrorr:
+        return ("post not found!"), 400
 
 
 @app.post("/postfeed/comment")
@@ -390,6 +392,8 @@ def add_likes_to_comment():
         return jsonify(like_post_service.service_like_comment(commentid))
     except TypeError:
         return ("comment not found"), 400
+    except ConnectionErrorr:
+        return ("comment not found!"), 400
 
 
 # delete comment information
