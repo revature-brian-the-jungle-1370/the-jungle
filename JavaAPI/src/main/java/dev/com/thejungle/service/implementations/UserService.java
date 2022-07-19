@@ -100,5 +100,15 @@ public class UserService implements UserServiceInt {
             throw new UserNotFound("User not found");
         }   
     }
+
+    @Override
+    public void verifyNoExistingUsernameAndEmail(String username, String email) {
+        if (userDAO.checkForDuplicateUsername(username)) {
+            throw new DuplicateUsername("This username is already taken");
+        }
+        else if (userDAO.checkForDuplicateEmail(email)) {
+            throw new DuplicateEmail("Email is already in use");
+        }
+    }
 }
 
