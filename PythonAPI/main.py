@@ -623,7 +623,11 @@ def get_bookmarked_post(user_id, post_id):
         if(user_id.isdigit() and post_id.isdigit()):
             result=post_feed_service.get_bookmarked_post_service(int(user_id),int(post_id))
             if(result != "Bookmark not found" or result != "Invalid userId or postId"):
-                result_dictionary = {"message": result}
+                result_dictionary = {}
+                if (result == "Bookmark not found"):
+                    result_dictionary = {"message": result}
+                else:
+                    result_dictionary = {"message": result.make_dictionary()}
                 return jsonify(result_dictionary),200
             else:
                 raise PostNotFound("No Post Found")
