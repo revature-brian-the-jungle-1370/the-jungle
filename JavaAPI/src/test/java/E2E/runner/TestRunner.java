@@ -4,6 +4,7 @@ import E2E.poms.chat.ChatPage;
 import E2E.poms.group.GroupJunctionPOM;
 import E2E.poms.group.GroupPage;
 import E2E.poms.homepage.UserHomePage;
+import E2E.poms.IndividualGroupPOM;
 import E2E.poms.RegLoginSearchPOM;
 import E2E.poms.UserProfile;
 import io.cucumber.junit.Cucumber;
@@ -21,8 +22,9 @@ import java.io.File;
 import java.time.Duration;
 
 @RunWith(Cucumber.class)
-@CucumberOptions(features = "classpath:features", glue = "E2E.steps", plugin = { "pretty",
-       "html:src/test/java/resources/reports/html-reports.html" })
+@CucumberOptions(features = "src/test/resources/features/individualGroup/individualGroup.feature", 
+glue = "E2E.steps", 
+plugin = { "pretty", "html:src/test/java/resources/reports/html-reports.html" })
 public class TestRunner {
 
    public static WebDriver driver;
@@ -35,6 +37,7 @@ public class TestRunner {
    public static UserHomePage userHomePage;
    public static GroupPage groupPage;
    public static GroupJunctionPOM groupJunctionPOM;
+   public static IndividualGroupPOM individualGroupPOM;
 
    @BeforeClass
    public static void setup() {
@@ -55,6 +58,7 @@ public class TestRunner {
        userHomePage = new UserHomePage(driver);
        groupPage = new GroupPage(driver);
        groupJunctionPOM = new GroupJunctionPOM(driver);
+       individualGroupPOM = new IndividualGroupPOM(driver);
 
        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(6));
        //explicitWait = new WebDriverWait(driver, Duration.ofSeconds(6));

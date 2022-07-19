@@ -10,6 +10,7 @@ def before_all(context: Context):
     context.create_new_password_page = Enter_new_password(context.driver)
     context.login_page = Login_page(context.driver)
 
+
     context.driver.implicitly_wait(10)
 
 
