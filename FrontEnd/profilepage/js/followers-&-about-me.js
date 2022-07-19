@@ -10,6 +10,7 @@ const submitFollow = document.getElementById("follow-user-button");
 */
 async function updateUserProfileData(){
     // Will need to update this to use the current user's ID
+    let loggedInUserId = localStorage.getItem("userId");
     let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/user/profile/update/"+loggedInUserId;
     let updateUserProfileJSON = JSON.stringify({
     "firstName": "Shouldn't change",
@@ -58,11 +59,11 @@ function setProfileInfo(){
     let username=document.getElementById("username-display");
     let bDay=document.getElementById("birthday-display");
     let aboutMe=document.getElementById("about-me-display");
-  
+
     let visitedUser;
     if(userId!=loggedInUserId){
         getProfileUser(userId,"visitedUser");
-       visitedUser=JSON.parse(localStorage.getItem("visitedUser"));
+        visitedUser=JSON.parse(localStorage.getItem("visitedUser"));
     }
     else{
         getProfileUser(loggedInUserId,"userInfo");
@@ -75,11 +76,11 @@ function setProfileInfo(){
 
         let bd=new Date(visitedUser.birthday);
         bDay.innerText=bd.getMonth()+"/"+bd.getDate()+"/"+bd.getFullYear();
-        aboutMe.innerText="about me:\n"+visitedUser.aboutMe 
+        aboutMe.innerText="about me:\n"+visitedUser.aboutMe
     }
 }
 /**
- * 
+ *
  * visitedUser	{"email":"email",
  * "first_name":"first name",
  * "last_name":"last name",
@@ -130,7 +131,8 @@ function successMessageForProfileModal(){
 }
 
 async function getUserFollowers(){
-    let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/user/followers/"+userId
+    let userId= localStorage("userId");
+    let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/user/followers/"+userId;
 
     let response = await fetch(url);
 
@@ -189,7 +191,8 @@ async function getFollowerImage(followerBody){
 }
 
 async function getGroupsForUser(){
-    let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/group/user/"+userId
+    let userId= localStorage.getItem("userId");
+    let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/group/user/"+userId;
 
     let response = await fetch(url);
 
