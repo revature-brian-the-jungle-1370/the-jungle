@@ -14,7 +14,7 @@ async function joinGroup() {
     if (response.status === 200) {
         const groupJoined = document.getElementById("groupJoined");
         groupJoined.style.display = "block";
-        setTimeout(fade_out, 5000);
+        setTimeout(fade_out, 15000);
         const hideJoinButton = document.getElementById("submitJoinGroup");
         hideJoinButton.style.display = "none";
     }

@@ -18,6 +18,11 @@ public class GroupPostSteps {
        TestRunner.driver.get("https://s3.amazonaws.com/dans-code.net/FrontEnd/grouppage/individualgrouppage/individual-group-page.html");
    }
 
+   @When("the user clicks on their group")
+   public void the_user_clicks_on_their_group() {
+       TestRunner.groupPage.myGroups.click();
+   }
+
    @When("the group member enters their group post")
    public void the_group_member_enters_their_group_post() {
        TestRunner.explicitWait.until(ExpectedConditions.elementToBeClickable(TestRunner.groupPage.getGroupPostInput));

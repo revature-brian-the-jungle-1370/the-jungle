@@ -30,12 +30,18 @@ public class GroupJunctionSteps {
 
     @Then("user can see who created the group")
     public void userCanSeeWhoCreatedTheGroup() {
-        Assert.assertEquals(TestRunner.groupJunctionPOM.creator.getText(),"test create post,test");
+        Assert.assertEquals(TestRunner.groupJunctionPOM.creator.getText(),"first name,last name");
+    }
+
+    @When("the user refreshes the page")
+    public void theUserRefreshesThePage() {
+        TestRunner.driver.navigate().refresh();
     }
 
     @When("the user clicks the leave button")
     public void theUserClicksTheLeaveButton() {
-        actions.moveToElement(TestRunner.groupJunctionPOM.leaveButton).click();
+        TestRunner.explicitWait.until(ExpectedConditions.elementToBeClickable(TestRunner.groupJunctionPOM.leaveButton));
+        TestRunner.groupJunctionPOM.leaveButton.click();
     }
 
     @Then("the user will be redirected to the group homepage")
@@ -54,10 +60,14 @@ public class GroupJunctionSteps {
         TestRunner.driver.get("https://s3.amazonaws.com/dans-code.net/FrontEnd/grouppage/group-page.html");
     }
 
+    @When("the user selects the group that has members")
+    public void theUserSelectsTheGroupHasMembers() {
+        TestRunner.userHomePage.selectGroup.click();
+    }
+
     @When("the user selects the group")
     public void theUserSelectsTheGroup() {
-        actions.moveToElement(TestRunner.driver.findElement(By.cssSelector("#groupLink-7")));
-        TestRunner.driver.findElement(By.xpath("/html/body/div/div/div[2]/div/div[3]/div[2]/div[5]/div")).click();
+        TestRunner.userHomePage.groupToJoin.click();
     }
 
     @When("User is redirected to the group individual page")
@@ -70,20 +80,6 @@ public class GroupJunctionSteps {
         TestRunner.explicitWait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div/div/div[1]/div[3]/div[2]/div"))).click();
     }
 
-    @Given("the user is on the login page")
-    public void theUserIsOnTheLoginPage() {
-        TestRunner.driver.get("https://s3.amazonaws.com/dans-code.net/FrontEnd/loginpage/login.html");
-    }
-
-    @When("the user enter the username")
-    public void theUserEnterTheUsername() {
-            TestRunner.rlsPom.usernameInput.sendKeys("test");
-    }
-
-    @When("the user enters password")
-    public void theUserEntersPassword() {
-            TestRunner.rlsPom.passwordInput.sendKeys("createpost");
-    }
 
     @When("The user will be redirected to their profile page")
     public void theUserWillBeRedirectedToTheirProfilePage() {
