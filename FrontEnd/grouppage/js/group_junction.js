@@ -85,7 +85,7 @@ async function creatorOf() {
 }
 
 async function getGroup() {
-    groupId = window.localStorage.getItem("group_id")
+    groupId = localStorage.getItem("group_id")
 
     let url =  python_url + `group/${groupId}`
 
