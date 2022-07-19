@@ -1,17 +1,14 @@
 async function getUserInGroups() {
     groupId = localStorage.getItem("groupId")
-<<<<<<< HEAD
-    url = `http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/GroupJunction/UserList/${groupId}`
-=======
-    url = `http://ec2-52-200-53-62.compute-1.amazonaws.com:8080/GroupJunction/UserList/${groupId}`
->>>>>>> d603ff48dc661befde936ac77d3be9a185e7ecad
-    let response = await fetch(url)
+    url = `http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/GroupJunction/UserList/${groupId}`;
+
+    let response = await fetch(url);
 
     if(response.status === 200){
-        let body = await response.json()
-        console.log(body)
-         createList(body)
-         buttonCheck(body)
+        let body = await response.json();
+        console.log(body);
+        createList(body);
+        buttonCheck(body);
 
     }
 
@@ -40,30 +37,30 @@ function createList(response) {
     }
 
 async function deleteRequest() {
-    userId = 9000
+    userId = localStorage.getItem("userId")
     groupId = localStorage.getItem("groupId")
     url = `http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/group/leave/${userId}/${groupId}`
     let response = await fetch(url, { method: "DELETE", headers: { "Content-Type": "application/json" }});
     if(response.status === 200){
-        location.replace("../group-page.html")
+        location.replace("../group-page.html");
 
     }if(response.status === 400){
-        let message = document.getElementById("message")
-        message.textContent = response.statusText
+        let message = document.getElementById("message");
+        message.textContent = response.statusText;
     }
 
 }
 
 async function creatorOf() {
     groupId = localStorage.getItem("groupId")
-    url = `http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/creator/${groupId}`
-    let response = await fetch(url)
+    url = `http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/creator/${groupId}`;
+    let response = await fetch(url);
     if(response.status === 200){
-        let body = await response.json()
-        console.log(body)
-        let newSect = document.getElementById("groupCreator")
-        newSect.innerHTML = ` <div id="groupCreator" class="creator valign-text-middle">${body[0][0]},${body[0][1]}</div>`
-        let username = document.getElementById("creatorUserName")
+        let body = await response.json();
+        console.log(body);
+        let newSect = document.getElementById("groupCreator");
+        newSect.innerHTML = ` <div id="groupCreator" class="creator valign-text-middle">${body[0][0]},${body[0][1]}</div>`;
+        let username = document.getElementById("creatorUserName");
         username.innerHTML = `<div id="creatorUserName"
         class="creator-username valign-text-middle poppins-medium-dove-gray-18px">
         @${body[0][2]}
@@ -74,42 +71,41 @@ async function creatorOf() {
 }
 
 async function getGroup() {
-    groupId = window.localStorage.getItem("groupId")
+    groupId = window.localStorage.getItem("groupId");
 
-    let url = `http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/group/${groupId}`
+    let url = `http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/group/${groupId}`;
 
-    let response = await fetch(url)
+    let response = await fetch(url);
 
     if(response.status === 200){
-        let body = await response.json()
-        console.log(body)
-        groupdef = document.getElementById("groupName")
-        groupdef.innerHTML = body.groupName
+        let body = await response.json();
+        console.log(body);
+        groupdef = document.getElementById("groupName");
+        groupdef.innerHTML = body.groupName;
 
     }
 
 }
 
 function buttonCheck(response) {
-    userId = localStorage.getItem('userId')
-    groupId = localStorage.getItem('groupId')
+    userId = localStorage.getItem('userId');
+    groupId = localStorage.getItem('groupId');
     if (response == undefined ) {
-        let button = document.getElementById('tbd')
-        button.style.display = "none"
+        let button = document.getElementById('tbd');
+        button.style.display = "none";
     }else{
         for (const users of response) {
             console.log(response)
             if (userId == users.user_id) {
-                let button = document.getElementById("tbd")
-                button.style.display = "block"
+                let button = document.getElementById("tbd");
+                button.style.display = "block";
             } else {
-                let button = document.getElementById('tbd')
-                button.style.display = "none"
+                let button = document.getElementById('tbd');
+                button.style.display = "none";
             }
 
         }
     }
-    
 }
 getUserInGroups()
 creatorOf()

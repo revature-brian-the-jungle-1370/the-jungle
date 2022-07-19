@@ -17,7 +17,7 @@ public class GroupJunctionPOM {
     }
 
 
-    @FindBy(css = "#tbd")
+    @FindBy(id = "tbd")
     public WebElement leaveButton;
 
     @FindBy(xpath = "#member-3 > div:nth-child(1) > div")
@@ -26,6 +26,6 @@ public class GroupJunctionPOM {
     @FindBy(xpath = "#groupName")
     public WebElement groupName;
 
-    @FindBy(css = "#groupCreator")
+    @FindBy(xpath = "//div[@id='groupCreator']/div")
     public WebElement creator;
 }

@@ -5,8 +5,7 @@
 async function likePost(e){
 
     let fetchJson = JSON.stringify({"postId": e})
-
-    let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:8080/postfeed"
+    let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/postfeed"
     
     let theResponse = await fetch(url, {
         method:"POST",
@@ -23,9 +22,9 @@ async function likePost(e){
 commentButton.onclick = async function(e){
     e.preventDefault();
 
- 
 
-    let response = await fetch(`http://ec2-52-200-53-62.compute-1.amazonaws.com:8080/postfeed/comment`, {
+    let response = await fetch(`http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/postfeed/comment`, {
+
         method : "POST",
         body : JSON.stringify({
             commentId: 2

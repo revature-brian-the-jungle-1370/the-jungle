@@ -6,14 +6,14 @@ const specialChar2 = /[ `^*()+=\[\]{};':"\\|,<>\/~]/;
 const invalidIcon = document.querySelectorAll("[id='invalid-icon']");
 let invalidMessage = document.querySelectorAll("[id='email-invalid-message']");
 let infoIcon = document.querySelectorAll(".info-icon");
-const url = "http://localhost:8080";
+const url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000";
 let validateCounter = 0;
 
 const div = document.getElementById("errorMessageGoesHere");
 div.textContent = "";
 
 async function checkEmailForResetPassword() {
-    let response = await fetch("http://localhost:8080/user/reset-password", {
+    let response = await fetch(url+"/user/reset-password", {
         method: "POST",
         mode: "cors",
         headers: { "Content-Type": "application/json" },

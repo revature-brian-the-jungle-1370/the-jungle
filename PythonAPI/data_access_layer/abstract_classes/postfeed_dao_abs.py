@@ -17,3 +17,7 @@ class PostFeedDao(ABC):
     @abstractmethod
     def get_all_posts_with_user_id(self, user_id: int) -> List[Post]:
         pass
+
+    @abstractmethod
+    def get_all_bookmarkded_posts(self,user_id: int) -> List[Post]:
+        pass

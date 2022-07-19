@@ -204,30 +204,36 @@ def update_profile_info(user_id):
         exception_json = jsonify(exception_dictionary)
         return exception_json, 400
 
+@app.post("/user/<user_id>/new-password")
+def input_new_password(user_id):
+    try:
+        user_new_passcode = request.get_json()
+        print(user_new_passcode)
+        user = user_profile_service.service_get_user_profile_service(user_id)
+        user_profile_service.update_password_service(user.user_id,str(user_new_passcode["passcode"]))
+        user = user_profile_service.service_get_user_profile_service(user_id)
+        user_as_dictionary = user.make_dictionary()
+        return jsonify(user_as_dictionary), 200
+    except UserNotFound as e:
+        return str(e), 400
+
 @app.post("/user/reset-password")
 def reset_password():
     try:
         user_profile_email = request.get_json()
         if user_profile_dao.get_user_profile_by_email(user_profile_email["email"]) is not None:
-            user_profile = user_profile_dao.get_user_profile_by_email(user_profile_email["email"])
+            print(user_profile_email["email"],flush=True)
+            user_profile = user_profile_dao.get_user_profile_by_email(f"{user_profile_email['email']}")
+            print("GOT EMAIL STR" + str(user_profile))
             user_id = user_profile.user_id
-            return redirect(url_for("reset-password",user_id = user_id)), 200
+            return redirect(f"/user/{user_id}/new-password"), 200
         else:
             flash('Invalid Email')
     except UserNotFound as e:
+        print("ERROR MESSAGE"+str(user_profile_email["email"]),flush=True)
         exception_dictionary = {"message":str(e)}
         exception_json = jsonify(exception_dictionary)
         return exception_json, 400
-
-@app.post("/user/<user_id>/reset-password")
-def input_new_password(user_id: int):
-    try:
-        user = user_profile_service.service_get_user_profile_service(user_id)
-        user_profile_service.update_password_service(user.user_id,user.passcode)
-        user_as_dictionary = user.make_dictionary()
-        return jsonify(user_as_dictionary), 200
-    except UserNotFound as e:
-        return str(e), 400
 
 # -----------------------------------------------------------------------------------------------------
 
@@ -592,3 +598,25 @@ def unfollow_user(user_follower_id: int, user_being_followed_id: int):
 
 app.run(host="0.0.0.0", port=5000,debug=True)
 
+@app.get("/bookmark/<user_id>")
+def get_bookmark_post_by_user_id(user_id):
+    post_as_post = post_feed_service.get_all_bookmarkded_posts_service(int(user_id))
+    posts_as_dictionary = []
+    for post in post_as_post:
+        dictionary_posts = post.make_dictionary()
+        posts_as_dictionary.append(dictionary_posts)
+    return jsonify(posts_as_dictionary),200
+
+
+@app.post("/bookmark/<user_id>/<post_id>")
+def save_post_as_bookmark(user_id,post_id):
+    if(user_id.isdigit() and post_id.isdigit()):
+        result=post_feed_service.bookmark_post_service(int(user_id),int(post_id))
+        result_dictionary = {"message": str(result)}
+        return jsonify(result_dictionary),200
+    else:
+        exception_dictionary = {"message": "Invalid Url"}
+        exception_json = jsonify(exception_dictionary)
+        return exception_json,400
+
+app.run()

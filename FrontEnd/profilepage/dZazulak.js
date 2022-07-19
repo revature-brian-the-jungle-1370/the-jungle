@@ -9,7 +9,7 @@ const groupSectionDiv = document.getElementById("groups-div");
 */
 async function updateUserProfileData(){
     // Will need to update this to use the current user's ID
-    let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:8080/user/profile/update/9000"
+    let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/user/profile/update/9000"
 
     let updateUserProfileJSON = JSON.stringify({"firstName": "Shouldn't change",
     "lastName": "Shouldn't change",
@@ -35,7 +35,7 @@ async function updateUserProfileData(){
         }
 }
 
-/* 
+/*
     Reset the modal data when you close it
 */
 function resetProfileModalData(){
@@ -167,7 +167,7 @@ async function getGroupImage(groupBody){
 function goToGroupPage(groupId){
     let groupLink = getElementById("groupLink-" + groupId);
     // groupLink.setAttribute("href", "")
-    localStorage.setItem("groupId") = groupId;
+    localStorage.setItem("groupId", groupId);
     localStorage.getItem("groupId");
 }
 

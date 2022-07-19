@@ -79,6 +79,7 @@
           <excludes>
             <exclude>**/config/*</exclude>
             <exclude>dev/com/thejungle/app/</exclude>
+            <exclude>dev/com/thejungle/utility/</exclude>
           </excludes>
         </configuration>
       </plugin>
@@ -153,8 +154,8 @@
     </dependency>
   </dependencies>
   <properties>
-    <maven.compiler.target>8</maven.compiler.target>
     <exec.mainClass>dev.com.thejungle.app.app.App</exec.mainClass>
     <maven.compiler.source>8</maven.compiler.source>
+    <maven.compiler.target>8</maven.compiler.target>
   </properties>
 </project>
