@@ -595,8 +595,6 @@ def unfollow_user(user_follower_id: int, user_being_followed_id: int):
         exception_json = jsonify(exception_dictionary)
         return exception_json, 400
 
-app.run(host="0.0.0.0", port=5000,debug=True)
-
 @app.get("/bookmark/<user_id>")
 def get_bookmark_post_by_user_id(user_id):
     if(user_id.isdigit()):
@@ -631,5 +629,7 @@ def save_post_as_bookmark(user_id,post_id):
         exception_dictionary = {"message": str(e)}
         exception_json = jsonify(exception_dictionary)
         return exception_json, 400
+        
+app.run(host="0.0.0.0", port=5000,debug=True)
 
-app.run()
+# app.run()
