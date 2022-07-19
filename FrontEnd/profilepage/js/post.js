@@ -158,13 +158,17 @@ async function createPostWithImage() {
         // v,nbv,n,nf v'fbvnfbvmn 
         // bf,bv,nf,nv,fv
         // bvnfbv,n,nfv nf`;
+
+        if(!user_image_text.includes("data:image")){
+          user_image_text= "data:image/PNG;base64,"+user_image_text;
+        }
         postBox.innerHTML =
         `<div class = "post" id = "post`+ post.post_id + `">
         <div class="flex-row">
           <div class="overlap-group2">
             <div class="new-york-ny valign-text-middle">`+ date +`</div>
             <div class="username-1 valign-text-middle poppins-bold-cape-cod-20px">JostSNL21</div>
-            <img class="feed-avatar-1" src="data:image/PNG;base64,`+ user_image_text + `" alt="img/ellipse-1@2x.png" />
+            <img class="feed-avatar-1" src="`+ user_image_text + `" alt="img/ellipse-1@2x.png" />
           </div>
           <input type="image" class="three-dots-icon-1" src="img/bi-three-dots@2x.svg" id="deletePost${post.post_id}" onclick="deletePost(${post.post_id})"/>
         </div>
@@ -186,7 +190,7 @@ async function createPostWithImage() {
         <div class="overlap-group2">
           <div class="new-york-ny valign-text-middle">`+ date +`</div>
           <div class="username-1 valign-text-middle poppins-bold-cape-cod-20px">JostSNL21</div>
-          <img class="feed-avatar-1" src="data:image/PNG;base64,`+ user_image_text + `" alt="img/ellipse-1@2x.png" />
+          <img class="feed-avatar-1" src="`+ user_image_text + `" alt="img/ellipse-1@2x.png" />
         </div>
         <input type="image" class="three-dots-icon-1" src="img/bi-three-dots@2x.svg" id="deletePost${post.post_id}" onclick="deletePost(${post.post_id})"/>
       </div>
