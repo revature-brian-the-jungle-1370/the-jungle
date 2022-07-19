@@ -5,17 +5,31 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.io.File;
 
 public class EditProfileSteps {
 
+    @Given("the user is on the homepage")
+    public void the_user_is_on_the_homepage() {
+        TestRunner.driver.get("http://127.0.0.1:5000/FrontEnd/loginpage/login.html");
+        TestRunner.rlsPom.usernameInput.sendKeys("username");
+        TestRunner.rlsPom.passcodeInput.sendKeys("newpasscode");
+        TestRunner.driver.findElement(By.xpath("/html/body")).click();
+        TestRunner.rlsPom.loginButton.click();
+    }
+
    @When("the user clicks on the edit profile button")
    public void the_user_clicks_on_the_edit_profile_button() {
-       TestRunner.userProfile.updateProfileEditButton.click();
-
+    //    TestRunner.userProfile.updateProfileEditButton.click();
+        WebElement myelement = TestRunner.driver.findElement(By.id("updateProfileEditProfileBtn"));
+        TestRunner.explicitWait.until(ExpectedConditions.elementToBeClickable(myelement));
+        JavascriptExecutor jse2 = (JavascriptExecutor)TestRunner.driver;
+        jse2.executeScript("arguments[0].click();", myelement);
    }
 
    @When("the user modifies their about me section")
@@ -35,7 +49,7 @@ public class EditProfileSteps {
 
    @Then("there is a success message saying that the changes have been saved")
    public void there_is_a_success_message_saying_that_the_changes_have_been_saved() {
-       TestRunner.explicitWait.until(ExpectedConditions.visibilityOf(TestRunner.userProfile.profileSuccessMessage));
+       TestRunner.explicitWait.until(ExpectedConditions.textToBePresentInElement(TestRunner.userProfile.profileSuccessMessage, "Saved"));
    }
 
    @When("the user clears the date")

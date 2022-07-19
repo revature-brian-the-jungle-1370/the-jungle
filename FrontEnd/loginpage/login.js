@@ -7,8 +7,8 @@ const specialChar2 = /[ `^*()+=\[\]{};':"\\|,<>\/~]/;
 const invalidIcon = document.querySelectorAll("[id='invalid-icon']");
 let invalidMessage = document.querySelectorAll("[id='signup-invalid-message']");
 let infoIcon = document.querySelectorAll(".info-icon");
-const url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:8080";
-const frontendUrl="http://dans-code.net.s3-website-us-east-1.amazonaws.com";
+const url = "http://localhost:8080";
+const frontendUrl="http://127.0.0.1:5000/FrontEnd";
 let validateCounter = 0;
 
 const div = document.getElementById("errorMessageGoesHere");
