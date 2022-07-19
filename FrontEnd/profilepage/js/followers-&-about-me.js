@@ -3,7 +3,7 @@ const userAboutMe = document.getElementById("userAboutMeInput");
 const modalMessageDiv = document.getElementById("profileModalMsg");
 const followerSectionDiv = document.getElementById("followers-div");
 const groupSectionDiv = document.getElementById("groups-div");
-
+const submitFollow = document.getElementById("follow-user-button");
 
 /*
     Grabs the user profile information from the update profile modal and sends it through the layers
@@ -184,6 +184,21 @@ function goToGroupPage(groupId){
     localStorage.setItem("groupId") = groupId;
     localStorage.getItem("groupId");
 }
+
+async function follow_user(){
+    let followJson = JSON.stringify({"user_follower_id": Number(loggedInUserID), "user_being_followed_id": Number(userId)});
+    let followResponse = await fetch("http://127.0.0.1:5000/user/" + loggedInUserID + "/followed/" + userId, {
+        method: "POST",
+        mode: "cors",
+        headers: {"Content-Type": "application/json"},
+        body:followJson
+    });
+    console.log(followResponse);
+    let followResponseBody = await followResponse.json();
+
+}
+submitFollow.addEventListener("click", follow_user);
+
 
 getUserFollowers();
 getGroupsForUser();
