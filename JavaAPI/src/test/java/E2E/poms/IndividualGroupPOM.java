@@ -35,4 +35,10 @@ public WebElement post_button;
 @FindBy(xpath = "//*[@id='postInfo']/div[1]/div[1]/input")
 public WebElement delete_button;
 
+@FindBy(xpath = "//*[@id='allpost']/div[1]/div[2]/input[contains(@id,'likePost')]")
+public WebElement like_button;
+
+@FindBy(xpath = "//*[@id='allpost']/div[1]/div[2]/input[contains(@id,'bookmarkPost')]")
+public WebElement bookmark_button;
+
 }

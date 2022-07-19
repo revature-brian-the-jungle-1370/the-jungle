@@ -22,16 +22,11 @@ import java.io.File;
 import java.time.Duration;
 
 @RunWith(Cucumber.class)
-<<<<<<< HEAD
-@CucumberOptions(features = "src/test/resources/features/individualGroup/individualGroup.feature", 
-glue = "E2E.steps", 
-plugin = { "pretty", "html:src/test/java/resources/reports/html-reports.html" })
-=======
 @CucumberOptions(
-    features = "classpath:features", 
+    //features = "classpath:features", 
+    features = "src/test/resources/features/individualGroup/individualgroup.feature",
     glue = "E2E.steps", 
     plugin = { "pretty", "html:src/test/java/resources/reports/html-reports.html" })
->>>>>>> 5f7f1e9c8183a4c380218258ca54db014e68c082
 public class TestRunner {
 
    public static WebDriver driver;
