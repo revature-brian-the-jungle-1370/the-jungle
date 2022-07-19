@@ -178,8 +178,11 @@ async function getFollowerImage(followerBody){
         // console.log(url);
         let response = await fetch(url);
         if(response.status === 200){
-            const image_text = await response.text();
-            image_Element.src = "data:image/PNG;base64,"+image_text;
+            let image_text = await response.text();
+            if(!image_text.includes("data:image")){
+                image_text="data:image/PNG;base64,"+image_text;
+            }
+            image_Element.src = image_text;
         }
 
 }
@@ -236,14 +239,14 @@ function goToGroupPage(groupId){
 }
 
 async function follow_user(){
-    let followJson = JSON.stringify({"user_follower_id": Number(loggedInUserID), "user_being_followed_id": Number(userId)});
-    let followResponse = await fetch("http://127.0.0.1:5000/user/" + loggedInUserID + "/followed/" + userId, {
+    let followJson = JSON.stringify({"user_follower_id": Number(loggedInUserId), "user_being_followed_id": Number(userId)});
+    let followResponse = await fetch("http://127.0.0.1:5000/user/" + loggedInUserId + "/followed/" + userId, {
         method: "POST",
         mode: "cors",
         headers: {"Content-Type": "application/json"},
         body:followJson
     });
-    // console.log(followResponse);
+    console.log(followResponse);
     let followResponseBody = await followResponse.json();
 
 }

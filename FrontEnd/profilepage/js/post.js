@@ -137,6 +137,9 @@ async function createPostWithImage() {
       let user_image_text;
       if(response.status === 200){
           user_image_text = await response.text();
+          if(!user_image_text.includes("data:image")){
+            user_image_text= "data:image/PNG;base64,"+user_image_text;
+          }
         }
   
       //get the post image
@@ -159,9 +162,7 @@ async function createPostWithImage() {
         // bf,bv,nf,nv,fv
         // bvnfbv,n,nfv nf`;
 
-        if(!user_image_text.includes("data:image")){
-          user_image_text= "data:image/PNG;base64,"+user_image_text;
-        }
+       
         postBox.innerHTML =
         `<div class = "post" id = "post`+ post.post_id + `">
         <div class="flex-row">
