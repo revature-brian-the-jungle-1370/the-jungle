@@ -28,7 +28,7 @@ public class LoginSteps {
     @When("the user enters correct password")
     public void the_user_enters_correct_password() {
         TestRunner.rlsPom.passwordInput.sendKeys("newpasscode");
-        TestRunner.rlsPom.usernameInput.click();
+        TestRunner.rlsPom.unfocus_text_box(TestRunner.rlsPom.passwordInput);
     }
 
     @When("the user clicks on log-in button to log in")
