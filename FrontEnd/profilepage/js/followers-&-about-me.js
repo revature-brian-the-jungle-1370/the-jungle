@@ -140,7 +140,7 @@ async function getUserFollowers(){
         getFollowerImage(body);
     }
     else{
-        alert("Error with followers");
+        //alert("Error with followers");
     }
 }
 

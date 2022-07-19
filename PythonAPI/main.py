@@ -1,7 +1,7 @@
 import json
 import logging
 
-from flask import Flask, render_template, request, jsonify,redirect,url_for,flash
+from flask import Flask, request, jsonify, flash
 from flask_cors import CORS
 
 from custom_exceptions.comment_not_found import CommentNotFound
@@ -221,7 +221,7 @@ def reset_password():
         else:
             flash('Invalid Email')
     except UserNotFound as e:
-        print("ERROR MESSAGE"+str(user_profile_email),flush=True)
+
         exception_dictionary = {"message":str(e)}
         exception_json = jsonify(exception_dictionary)
         return exception_json, 400

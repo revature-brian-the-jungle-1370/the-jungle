@@ -6,9 +6,9 @@ const specialChar2 = /[ `^*()+=\[\]{};':"\\|,<>\/~]/;
 const invalidIcon = document.querySelectorAll("[id='invalid-icon']");
 let invalidMessage = document.querySelectorAll("[id='passcode-invalid-message']");
 let infoIcon = document.querySelectorAll(".info-icon");
-const url = "http://localhost:5000";
-let validateCounter = 0;
-
+const url = "http://127.0.0.1:5000"
+//const url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000";
+let validateCounter = 0
 const div = document.getElementById("errorMessageGoesHere");
 div.textContent = "";
 
@@ -25,12 +25,14 @@ async function resetPassword() {
         }),
     });
     console.log(response)
-    if (response.status === 200) {
+    
+    if (response.status == 200) {
         let body = await response.json();
-        //console.log(response)
+        console.log(response)
         //  Storing information for later
-        localStorage.setItem("passcodeInput", JSON.stringify(body));
-        window.location.href = "../loginpage/login.html"; //  Redirect to Here????
+        //localStorage.setItem("user_id", JSON.stringify(body));
+        window.localStorage.clear()
+        window.location.href = "http://127.0.0.1:5500/FrontEnd/loginpage/login.html"; //  Redirect to Here????
     } else {
         div.textContent = "Invalid Password";
     }
