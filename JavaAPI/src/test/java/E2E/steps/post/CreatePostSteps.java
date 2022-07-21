@@ -4,16 +4,23 @@ import E2E.runner.TestRunner;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import junit.framework.Test;
+
+import java.time.Duration;
+
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 
 public class CreatePostSteps {
+    private int postCount;
+    private int newPostCount;
     public void login(){
-        TestRunner.driver.get("127.0.0.1:5500/FrontEnd/loginpage/login.html");
+        TestRunner.driver.get("http://127.0.0.1:5500/FrontEnd/loginpage/login.html");
         TestRunner.rlsPom.usernameInput.sendKeys("test");
         TestRunner.rlsPom.passwordInput.sendKeys("createpost");
-        TestRunner.rlsPom.usernameInput.click();
+        TestRunner.rlsPom.usernameInput.sendKeys(Keys.TAB);
         TestRunner.explicitWait.until(ExpectedConditions.elementToBeClickable(TestRunner.rlsPom.loginButton));
         TestRunner.rlsPom.loginButton.click();
         try {
@@ -21,19 +28,24 @@ public class CreatePostSteps {
         } catch (Exception e) {
 
         }
-
     }
 
-    @Given("the user id on their dashboard page")
-    public void the_user_is_on_their_dashboard_page(){
+    public void logoutAfterTest(){
+        TestRunner.rlsPom.logoutButton.click();
+    }
+
+    @Given("the user is on their dashboard page")
+    public void the_user_is_on_their_dashboard_page() throws InterruptedException{
         login();
-        Assert.assertEquals(TestRunner.driver.getTitle(), "Home");
+        Thread.sleep(1500);
+        postCount = TestRunner.driver.findElements(By.className("post")).size();
+        Assert.assertEquals(TestRunner.driver.getTitle(), "Home"); 
     }
 
     @When("the user clicks on the create post modal button")
     public void the_user_clicks_on_the_create_post_modal_button() {
-        TestRunner.explicitWait.until(ExpectedConditions.visibilityOf(TestRunner.userProfile.profileCreateANewPost));
-        TestRunner.userProfile.profileCreateANewPost.click();
+        TestRunner.userProfile.createNewPostBtn.click();
+        TestRunner.explicitWait.until(ExpectedConditions.visibilityOf(TestRunner.userProfile.createNewPostBtn));
     }
 
     @When("the user enters their post body")
@@ -44,19 +56,19 @@ public class CreatePostSteps {
 
     @When("the user clicks on the post button")
     public void the_user_clicks_on_the_post_button() {
-        TestRunner.explicitWait.until(ExpectedConditions.visibilityOf(TestRunner.userProfile.submitNewPostButton));
-        TestRunner.userProfile.submitNewPostButton.click();
+        TestRunner.explicitWait.until(ExpectedConditions.visibilityOf(TestRunner.userProfile.submitNewPostBtn));
+        TestRunner.userProfile.submitNewPostBtn.click();
         TestRunner.driver.navigate().refresh();
+        postCount+=1;
     }
 
     @Then("the user will see the created post")
-    public void the_user_will_see_the_created_post() {
-
-        TestRunner.explicitWait.until(ExpectedConditions.textToBePresentInElementLocated(By.id("newPostText"), "E2E Test for about me"));
-        Assert.assertEquals(TestRunner.userProfile.newPostText.getText(), "E2E Test for about me");
-
+    public void the_user_will_see_the_created_post() throws InterruptedException {
+        Thread.sleep(1500);
+        Assert.assertEquals(TestRunner.driver.findElements(By.className("post")).size(),postCount);
         //to delete the testing post so that it does not mess up further tests
         TestRunner.userProfile.deleteButton.click();
+        logoutAfterTest();
     }
 
 
@@ -64,6 +76,7 @@ public class CreatePostSteps {
     public void the_user_will_see_an_error_message_in_the_post_feed() {
         TestRunner.explicitWait.until(ExpectedConditions.textToBePresentInElementLocated(By.id("postErrorMessage"), "Error creating the post."));
         Assert.assertEquals(TestRunner.userProfile.postErrorMessage.getText(), "Error creating the post.");
+        logoutAfterTest();
     }
 
     @When("the user enters their post body with too much text")

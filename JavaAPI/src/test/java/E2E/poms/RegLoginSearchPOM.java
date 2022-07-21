@@ -1,5 +1,7 @@
 package E2E.poms;
 
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -29,7 +31,7 @@ public class RegLoginSearchPOM {
 
     // ------------------- LOGOUT --------------------------------
 
-    @FindBy(id = "logoutButtonPressed")
+    @FindBy(id = "logoutBtn")
     public WebElement logoutButton;
 
     // -------------------- SYSTEM ---------------------------------

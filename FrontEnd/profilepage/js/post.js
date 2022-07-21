@@ -42,8 +42,12 @@ async function getPostImage(){// the postId and imageFormat will probably have t
 
 // A basic create post without images for users.
 async function createPost(){
-    let postText = document.getElementById("postText");
+  try{
+  let postText = document.getElementById("postText");
     console.log(postText.value)
+    if(postText.value.length > 500){
+      throw new Error("Post size must be under 500 characters")
+    }
     let postJson = JSON.stringify({"user_id":userId, "post_text": postText.value, "image_format": "false"});
     let url = "http://127.0.0.1:5000/post"
     let thePost = await fetch(url, {
@@ -51,6 +55,10 @@ async function createPost(){
         headers:{'Content-Type': 'application/json'}, 
         body:postJson}).then(response => {return response.json()});
     console.log(thePost);
+    
+  }catch(error){
+    error.status = 400;
+  }
 }
 
 
@@ -183,7 +191,7 @@ async function createPostWithImage() {
           <img class="share-icon" src="img/share-icon@2x.svg" />
         </div>
         <div class="overlap-group-1">
-        <div class="feed-text-2 valign-text-middle poppins-medium-black-18px">`+ post.post_text + `</div>
+        <div class="feed-text-2 valign-text-middle poppins-medium-black-18px" id="newPost${post.post_id}">`+ post.post_text + `</div>
       </div>
       </div>`
       }else{
@@ -204,7 +212,7 @@ async function createPostWithImage() {
         <img class="share-icon" src="img/share-icon@2x.svg" />
       </div>
       <div class="overlap-group-1">
-      <div class="feed-text-2 valign-text-middle poppins-medium-black-18px">`+ post.post_text + `</div>
+      <div class="feed-text-2 valign-text-middle poppins-medium-black-18px" id="newPost${post.post_id}">`+ post.post_text + `</div>
     </div>
     </div>`
       }
