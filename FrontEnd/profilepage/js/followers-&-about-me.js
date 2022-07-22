@@ -13,7 +13,7 @@ const pyUrl = "http://127.0.0.1:5000"
 */
 async function updateUserProfileData(){
     // Will need to update this to use the current user's ID
-    let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/user/profile/update/9000"
+    let url = "http://localhost:5000/user/profile/update/"+userId;
 
     let updateUserProfileJSON = JSON.stringify({"firstName": "Shouldn't change",
     "lastName": "Shouldn't change",
@@ -131,10 +131,10 @@ function successMessageForProfileModal(){
 }
 
 async function getUserFollowers(){
-    let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/user/followers/32"
+    let url = "http://127.0.0.1:5000/user/followers/"+userId;
 
     let response = await fetch(url);
-
+    console.log(response);
     if(response.status === 200){
         let body = await response.json();
         // console.log(body);
@@ -175,7 +175,7 @@ function populateUserFollowers(followerBody){
 async function getFollowerImage(followerBody){
     for(follower in followerBody){
         let image_Element = document.getElementById(`${follower}-image`);
-        let url = `http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/user/image/${followerBody[follower]}`;
+        let url = `http://localhost:5000/user/image/${followerBody[follower]}`;
         console.log(url);
         let response = await fetch(url);
         if(response.status === 200){
@@ -190,7 +190,7 @@ async function getFollowerImage(followerBody){
 }
 
 async function getGroupsForUser(){
-    let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/group/user/10"
+    let url = "http://localhost:5000/group/user/"+userId
 
     let response = await fetch(url);
 

@@ -840,6 +840,12 @@
   margin: 10px 0px 35px 15px;
 }
 
+.follow-unfolow{
+  display: block;
+  margin: -20px 0px 0px 90px;
+  /* margin: auto; */
+}
+
 .profile-page .followers-div{
   width: 342px;
   background-color: var(--white);
