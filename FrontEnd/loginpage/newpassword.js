@@ -9,7 +9,7 @@ let infoIcon = document.querySelectorAll(".info-icon");
 // const frontendUrl = "http://s3.amazonaws.com/dans-code.net"
 // const url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000";
 const frontendUrl = "http://127.0.0.1:5500"
-const url = "127.0.0.1:5000";
+const url = "http://127.0.0.1:5000";
 let validateCounter = 0;
 
 const div = document.getElementById("errorMessageGoesHere");
@@ -30,15 +30,12 @@ async function resetPassword() {
     console.log(response)
     let validatePassword = specialChar2.test(response.passcode)
     console.log(validatePassword)
-    if (response.passcode.includes(specialChar2)){
-        throw error;
-    }
-    else if (response.status == 200) {
+    if (response.status == 200) {
         let body = await response.json();
-        console.log(response)
+        console.log(body)
         window.localStorage.clear()
         window.location.href = frontendUrl+"/FrontEnd/loginpage/login.html"; //  Redirect to Here????
-    } else {
+    } else if(validatePassword == false){
         div.textContent = "Invalid Password";
     }
 }

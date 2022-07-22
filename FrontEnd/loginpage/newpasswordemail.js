@@ -6,7 +6,6 @@ const specialChar2 = /[ `^*()+=\[\]{};':"\\|,<>\/~]/;
 const invalidIcon = document.querySelectorAll("[id='invalid-icon']");
 let invalidMessage = document.querySelectorAll("[id='email-invalid-message']");
 let infoIcon = document.querySelectorAll(".info-icon");
-//const url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000";
 const url = "http://127.0.0.1:5000";
 let validateCounter = 0;
 
@@ -27,7 +26,6 @@ async function checkEmailForResetPassword() {
     if (response.status == 200) {
         console.log("200")
         let body = await response.json()
-        console.log(body)
         console.log(body)
         window.localStorage.setItem("user_id", body)
         console.log("Successful transaction")

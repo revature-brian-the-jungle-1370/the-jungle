@@ -93,6 +93,9 @@ public class RegLoginSearchPOM {
 
     @FindBy(id = "submitPasscode")
     public WebElement submitPasscode;
+    
+    @FindBy(xpath = "/html/body/div[1]/div/div[2]/div/div[1]/div/div/div[1]/button")
+    public WebElement closePost;
 
     public void unfocus_text_box(WebElement text_box){
         text_box.sendKeys(Keys.TAB);

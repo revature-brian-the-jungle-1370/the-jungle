@@ -15,14 +15,13 @@ import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
 import java.time.Duration;
 
 @RunWith(Cucumber.class)
-@CucumberOptions(features = "src/test/resources/features/post/createPosts.feature", glue = "E2E.steps", plugin = { "pretty",
+@CucumberOptions(features = "src/test/resources/features/login/loginSteps.feature", glue = "E2E.steps", plugin = { "pretty",
         "html:src/test/java/resources/reports/html-reports.html" })
     public class TestRunner {
 

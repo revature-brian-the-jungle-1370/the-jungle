@@ -45,8 +45,8 @@ async function createPost(){
   try{
   let postText = document.getElementById("postText");
     console.log(postText.value)
-    if(postText.value.length > 500){
-      throw new Error("Post size must be under 500 characters")
+    if(postText.value.length > 500 || postText.value.length==0){
+      alert('Post can only contain 1-500 characters')
     }
     let postJson = JSON.stringify({"user_id":userId, "post_text": postText.value, "image_format": "false"});
     let url = "http://127.0.0.1:5000/post"
