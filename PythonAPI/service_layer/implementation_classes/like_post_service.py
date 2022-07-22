@@ -18,3 +18,9 @@ class LikePostServiceImp(LikePostService):
 
     def service_unlike_comment(self, comment_id: int):
         return self.like_post_dao.unlike_comment(comment_id)
+
+    def liketable_post_service(self, userid: int, postid: int):
+        return self.like_post_dao.liketable_post(userid, postid)
+
+    def get_liketable_post_service(self, userid:int, postid:int):
+        return self.like_post_dao.get_liketable_post_with_user_id_post_id(userid, postid)

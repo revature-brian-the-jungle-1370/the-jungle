@@ -19,7 +19,7 @@ async function createGroupPost() {
     "date_time_of_creation": ""
   }
 
-  let response = await fetch(python_url + "/group_post", {
+  let response = await fetch(python_url + "group_post", {
     method: "POST",
     mode: "cors",
     headers: {
@@ -81,17 +81,114 @@ async function deleteGroupPost(post_id) {
 
 //----------------------------------------------- LIKE AND UNLIKE GROUP POST FUNCTION-----------------------------------------------------
 
-// async function likePost(post_id) {}
+async function likePost(post_id) {
+  let data = {
+    "postId": post_id
+  }
+  let response = await fetch(python_url + "postfeed", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      'Accept': 'application/json'
+    },
+    body: JSON.stringify(data),
+  });
 
-// async function unlikePost(post_id) {}
+  let result = await response.json()
+  let count_element = document.getElementById(`post-like-count_${post_id}`)
+  count_element.innerHTML = parseInt(count_element.innerHTML) + 1
+}
 
-async function toggle_like(post_id){
-  let post_url = python_url + "group_post/" + post_id
-  console.log("toggle_like: " + post_url)
+async function unlikePost(post_id) {
+  let data = {
+    "postId": post_id
+  }
+  let response = await fetch(python_url + "postfeed/unlike", {
+    method: "POST",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      'Accept': 'application/json'
+    },
+    body: JSON.stringify(data),
+  });
+
+  let result = await response.json()
+  let count_element = document.getElementById(`post-like-count_${post_id}`)
+  count_element.innerHTML = parseInt(count_element.innerHTML) - 1
+}
+
+async function get_relevant_liketable_post(post_id){
+  let liketable_url = python_url + "likes/" + localStorage.getItem("user_id") + "/" + post_id
+  let response = await fetch(liketable_url, {
+    method: "GET",
+    mode: "cors"
+  });
+
+  if(response.status === 200){
+    console.log("get_relevant_liketable_post: Success")
+    let result = await response.json()
+    return result
+  }else{
+    console.log("get_relevant_liketable_post: Failed")
+    return "Failed"
+  }
+}
+
+async function update_relevant_liketable_post(post_id){
+  let liketable_url = python_url + "likes/" + localStorage.getItem("user_id") + "/" + post_id
+  let response = await fetch(liketable_url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      'Accept': 'application/json'
+    },
+  });
+
+  if(response.status === 200){
+    let body = await response.json();
+    console.log("update_relevant_liketable_post: Success")
+    toggle_like_icon(post_id, body["message"])
+  }
+  else{
+    console.log("update_relevant_liketable_post: Failed")
+  }
+}
+
+async function toggle_like_post(post_id){
+  // Get Post
+  let liked_obj = await get_relevant_liketable_post(post_id)
+
+  if (liked_obj["message"] === "Like not found"){
+    await likePost(post_id)
+  }else{
+    await unlikePost(post_id)
+  }
+  await update_relevant_liketable_post(post_id)
+}
+
+function toggle_like_icon(post_id, msg){
+  let element = document.getElementById(`likePost_${post_id}`)
+  let cur_icon = element.getAttribute("src")
+  cur_icon = msg === "Like added" ? "../img/heart-icon@2x.svg" : "../img/heart-icon-empty.svg"
+  element.setAttribute("src", cur_icon)
 }
 
 //----------------------------------------------- COMMENTS ON GROUP POST FUNCTION-----------------------------------------------------
 // TODO: Need Comments Functions
+async function likeComment(comment_id) {
+
+}
+
+async function unlikeComment(comment_id) {
+
+}
+
+async function toggle_like_comment(post_id){
+  let comment_url = python_url + "postfeed/" + post_id
+  console.log("toggle_like_comment: " + post_url)
+}
+
 function toggle_comment_div(post_id){
   // let comment_info_element = document.getElementById(`comment_info_${post_id}`)
   // let comment_input_element = document.getElementById(`commentInput_${post_id}`)

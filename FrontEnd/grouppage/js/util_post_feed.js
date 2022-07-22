@@ -28,6 +28,10 @@ async function create_div_from_post_response(post){
     let bm_icon_path = post_response["message"] != "Bookmark not found" ? "../img/bookmark_saved.svg" : "../img/bookmark_unsaved.svg"
     //let bm_icon_path = "../img/bookmark_unsaved.svg"
 
+    //Check if liked
+    post_response = await get_relevant_liketable_post(post.post_id)
+    let heart_icon_path = post_response["message"] != "Like not found" ? "../img/heart-icon@2x.svg" : "../img/heart-icon-empty.svg"
+
   // <div class="overlap-group3-1" id="comment_div_${post.post_id} style="display:block" ">
   //   <div class="feed-container">
   //     <div class="feed valign-text-middle">
@@ -50,14 +54,14 @@ async function create_div_from_post_response(post){
           <div class="username-1 valign-text-middle poppins-bold-cape-cod-20px">JostSNL21</div>
           <img class="feed-avatar" src="data:image/PNG;base64,`+ user_image_text  + `" alt="user_image_text" />
         </div>
-        <input type="image" class="three-dots-icon" src="img/three-dots-icon-1@2x.svg"`+
+        <input type="image" class="three-dots-icon" src="img/trash-bin.svg"`+ 
             ` id="deletePost${post.post_id}" onclick="deleteGroupPost(${post.post_id})"/>
       </div>
       <img class="feed-picture" src="`+ image_text +`"/>
       <div class="icon-container">
-        <input type="image" class="heart-icon" src="img/heart-icon@2x.svg"`+
-            ` id="likePost_Comment${post.post_id}" onclick="toggle_like(${post.post_id})" />
-        <p>` + post.likes + `</p>
+        <input type="image" class="heart-icon" src=`+ heart_icon_path +
+            ` id="likePost_${post.post_id}" onclick="toggle_like_post(${post.post_id})" />
+        <p id="post-like-count_${post.post_id}>` + post.likes + `</p>
         <input type="image" class="chat-bubble-icon" src="img/chat-bubble-icon@2x.svg"`+
             ` id="commentPost${post.post_id}" onclick="toggle_comment_div(${post.post_id})"/>
         <img class="share-icon" src="img/share-icon@2x.svg" />
@@ -75,13 +79,13 @@ async function create_div_from_post_response(post){
           <div class="username-1 valign-text-middle poppins-bold-cape-cod-20px">JostSNL21</div>
           <img class="feed-avatar" id="UserImage`+ post.post_id +`" src="data:image/PNG;base64,`+ user_image_text  + `" />
         </div>
-        <input type="image" class="three-dots-icon" src="img/three-dots-icon-1@2x.svg"`+
+        <input type="image" class="three-dots-icon" src="img/trash-bin.svg"`+
             ` id="deletePost${post.post_id}" onclick="deleteGroupPost(${post.post_id})"/>
       </div>
       <div class="icon-container">
-      <input type="image" class="heart-icon" src="img/heart-icon@2x.svg"`+
-      ` id="likePost_Comment${post.post_id}" onclick="toggle_like(${post.post_id})" />
-        <p>` + post.likes + `</p>
+        <input type="image" class="heart-icon" src=`+ heart_icon_path +
+        ` id="likePost_${post.post_id}" onclick="toggle_like_post(${post.post_id})" />
+        <p id="post-like-count_${post.post_id}">` + post.likes + `</p>
         <input type="image" class="chat-bubble-icon" src="img/chat-bubble-icon@2x.svg"`+
             ` id="commentPost${post.post_id}" onclick="toggle_comment_div(${post.post_id})"/>
         <img class="share-icon" src="img/share-icon@2x.svg" />

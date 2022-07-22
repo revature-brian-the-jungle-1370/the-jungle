@@ -32,7 +32,7 @@
                   <div class="modal-content">
                     <div class="modal-header">
                       <h5 class="modal-title" id="updateUserProfileModalTitle">Create A Post</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                      <button type="button" class="btn-close" id="close-post-btn" data-bs-dismiss="modal" aria-label="Close"
                         onclick="resetProfileModalData()">
                       </button>
                     </div>
@@ -44,7 +44,7 @@
                         <div class="mb-3">
                           <input class="form-control" type="file" id="imageFile" class="btn edit-button">
                         </div>
-                        <button type="button" class="btn edit-button" onclick="createPostWithImage()">Create</button>
+                        <button type="button" class="btn edit-button" id = "submitNewPostBtn" onclick="createPostWithImage()">Create</button>
                       </form>
                     </div>
                     <div class="modal-footer">
@@ -58,7 +58,7 @@
 
               <!-- the post column -->
               <div class= "overlap-group1-1">
-                <div class = "col" id = "post column" >
+                <div class = "col posts" id = "post column" >
 
                 </div>
               </div>
@@ -126,8 +126,8 @@
             <div class="logout-container">
               <div class="logout valign-text-middle poppins-semi-bold-astronaut-24px">Logout</div>
               <img class="x-icon" src="img/logout-icon@2x.svg" />
-            </div>
-          </div> -->
+            </div> 
+          </div>-->
           <div class="nav poppins-semi-bold-astronaut-24px">
             <!-- Chat Link -->
             <div class="chat-container">
@@ -153,10 +153,18 @@
               >
             </div>
 
-            <!-- Logout Button...need code -->
+            <!-- Logout Button -->
+
             <div class="logout-container">
-              <div class="logout valign-text-middle">Logout</div>
-              <img class="x-icon" src="img/logout-icon@2x.svg" />
+              <a onclick = "clearDataOnLogout()"
+                href="../loginpage/login.html"
+                id = "logoutBtn"
+                class="chat valign-text-middle"
+                ><img class="x-icon" src="img/logout-icon@2x.svg" /><span
+                  class="linkLogout"
+                  >Logout</span
+                ></a
+              >
             </div>
           </div>
           

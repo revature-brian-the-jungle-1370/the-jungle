@@ -8,15 +8,14 @@ import io.cucumber.java.en.When;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.Alert;
 import org.testng.Assert;
-
-import static E2E.runner.TestRunner.driver;
+import E2E.runner.TestRunner;
 
 
 public class CreateGroupSteps {
    // Create Group
 
     public void login(){
-        TestRunner.driver.get("https://s3.amazonaws.com/dans-code.net/FrontEnd/loginpage/login.html");
+        TestRunner.driver.get("https://127.0.0.1/FrontEnd/loginpage/login.html");
         TestRunner.rlsPom.usernameInput.sendKeys("test");
         TestRunner.rlsPom.passwordInput.sendKeys("createpost");
         TestRunner.rlsPom.usernameInput.click();

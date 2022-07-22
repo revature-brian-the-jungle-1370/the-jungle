@@ -27,7 +27,6 @@ async function checkEmailForResetPassword() {
         console.log("200")
         let body = await response.json()
         console.log(body)
-        console.log(body)
         window.localStorage.setItem("user_id", body)
         console.log("Successful transaction")
         window.location.href = "../loginpage/newpassword.html" //  Redirect to Here????

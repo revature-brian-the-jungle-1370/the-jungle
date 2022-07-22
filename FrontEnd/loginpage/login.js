@@ -9,6 +9,9 @@ let invalidMessage = document.querySelectorAll("[id='signup-invalid-message']");
 let infoIcon = document.querySelectorAll(".info-icon");
 const url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:8080";
 const frontendUrl="http://dans-code.net.s3-website-us-east-1.amazonaws.com";
+// const url = "http://127.0.0.1:8080";
+// // const frontendUrl="http://127.0.0.1:5500/FrontEnd";
+// const frontendUrl="http://127.0.0.1:5500";
 let validateCounter = 0;
 
 const div = document.getElementById("errorMessageGoesHere");
@@ -26,14 +29,14 @@ async function login() {
       passcode: passcodes.value,
     }),
   });
-  console.log(response)
   if (response.status == 200) {
-    console.log("received response")
     let body = await response.json();
     //  Storing information for later
     localStorage.setItem("userInfo", JSON.stringify(body));
     localStorage.setItem("userId", body.userId);
-    window.location.href = frontendUrl + "/FrontEnd/profilepage/profile-page.html?userId=" + body.userId; //  Redirect to Here????
+    //window.location.href = "http://127.0.0.1:5500/profilepage/profile-page.html"
+    window.location.href = "../profilepage/profile-page.html?user_id="+body.userId
+    //?userId="+body.userId; //  Redirect to Here????
   } else {
     div.textContent = "Incorrect Username or Password";
   }

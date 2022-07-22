@@ -5,19 +5,25 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-
-import java.time.Duration;
-
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 public class LoginSteps {
 
+    private void returnPasswordToOriginal(){
+        TestRunner.rlsPom.resetPasswordLink.click();
+        TestRunner.rlsPom.emailInput.sendKeys("email");
+        TestRunner.rlsPom.unfocus_text_box(TestRunner.rlsPom.emailInput);
+        TestRunner.explicitWait.until(ExpectedConditions.elementSelectionStateToBe(TestRunner.rlsPom.submitEmail, false));
+        TestRunner.rlsPom.submitEmail.click();
+        TestRunner.rlsPom.passcodeInput.sendKeys("passcode");
+        TestRunner.rlsPom.unfocus_text_box(TestRunner.rlsPom.passcodeInput);
+        TestRunner.explicitWait.until(ExpectedConditions.elementSelectionStateToBe(TestRunner.rlsPom.submitPasscode, false));
+        TestRunner.rlsPom.submitPasscode.click();
+    }
+    
     @Given("the user is on the log-in page")
     public void the_user_is_on_the_log_in_page() {
-        TestRunner.driver.get("http://dans-code.net.s3-website-us-east-1.amazonaws.com/FrontEnd/loginpage/login.html");
+        TestRunner.driver.get("http://127.0.0.1:5500/FrontEnd/loginpage/login.html");
     }
 
     @When("the user enters correct username")
@@ -27,7 +33,7 @@ public class LoginSteps {
 
     @When("the user enters correct password")
     public void the_user_enters_correct_password() {
-        TestRunner.rlsPom.passwordInput.sendKeys("newpasscode");
+        TestRunner.rlsPom.passwordInput.sendKeys("passcode");
         TestRunner.rlsPom.unfocus_text_box(TestRunner.rlsPom.passwordInput);
     }
 
@@ -69,8 +75,8 @@ public class LoginSteps {
 
     @Given("user is on the log-in page")
     public void user_is_on_the_log_in_page() {
-        //TestRunner.driver.get("file:///Users/adamjanusewski/Desktop/The-Jungle/FrontEnd/loginpage/login.html");
-         TestRunner.driver.get("http://dans-code.net.s3-website-us-east-1.amazonaws.com/FrontEnd/loginpage/login.html");
+        //TestRunner.driver.get("http://dans-code.net.s3-website-us-east-1.amazonaws.com/FrontEnd/loginpage/login.html");
+        TestRunner.driver.get("http://127.0.0.1:5500/FrontEnd/loginpage/login.html");
     }
 
     @When("the user enters wrong username")
@@ -108,14 +114,13 @@ public class LoginSteps {
         }
 
     @When("clicks the reset password button")
-    public void clicks_reset_password_button(){
+    public void clicks_reset_password_button() throws InterruptedException{
         TestRunner.explicitWait.until(ExpectedConditions.elementSelectionStateToBe(TestRunner.rlsPom.submitEmail, false));
         TestRunner.rlsPom.submitEmail.click();
     }
 
     @When("then enters their new password")
-    public void then_enters_their_new_password(){
-        
+    public void then_enters_their_new_password() throws InterruptedException{
         TestRunner.rlsPom.passcodeInput.sendKeys("newpasscode");
         TestRunner.rlsPom.unfocus_text_box(TestRunner.rlsPom.passcodeInput);
     }
@@ -130,6 +135,8 @@ public class LoginSteps {
     public void then_they_return_to_the_login_page(){
         TestRunner.explicitWait.until(ExpectedConditions.titleContains("Login"));
         Assert.assertEquals(TestRunner.driver.getTitle(), "Login");
+        //Return password to original value
+        returnPasswordToOriginal();
     }
 
 }

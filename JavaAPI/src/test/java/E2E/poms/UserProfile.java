@@ -28,16 +28,12 @@ public class UserProfile {
 
     @FindBy(id="modalProfileSuccessMessage")
     public WebElement profileSuccessMessage;
-
-    @FindBy(id="profileCreateANewPost")
-    public WebElement profileCreateANewPost;
-
+    @FindBy(id="createPostBtn")
+    public WebElement createNewPostBtn;
     @FindBy(id="postText")
     public WebElement postText;
-
-    @FindBy(id="submitNewPostButton")
-    public WebElement submitNewPostButton;
-
+    @FindBy(id="submitNewPostBtn")
+    public WebElement submitNewPostBtn;
     @FindBy(id= "newPostText")
     public WebElement newPostText;
 

@@ -156,8 +156,7 @@ chatGroupDiv.setAttribute(
 
 //Displaying the Group Names by grabbing the userId's to display the names on the top right...
 async function getAllGroupByUserId() {
-  let userId = localStorage.getItem("userId");
-  let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:8080/user/groupNames/" + userId;
+  let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:8080/user/groupNames/" + storage.user_id;
   let response = await fetch(url);
   if (response.status === 200) {
     let body = await response.json();

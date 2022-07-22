@@ -25,7 +25,7 @@ post_feed_dao: PostFeedDao = PostFeedDaoImp()
 post_feed_service: PostfeedService = PostFeedServiceImp(post_feed_dao)
 
 create_post_dao.create_post = MagicMock(return_value="thisisareturnvalue")
-temp_post = Post(97, 1, None, "text", "image_format", 0, '1991-8-6')
+temp_post = Post(230, 1, None, "text", "image_format", 0, '1991-8-6')
 user_profile_dao.get_user_profile =MagicMock(return_value="Uservlaue")
 temp_user=User(13,"first_name","last_name","email@email.com","username","password","about","1144558","none")
 
