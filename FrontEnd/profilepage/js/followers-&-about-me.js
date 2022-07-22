@@ -5,6 +5,8 @@ const followerSectionDiv = document.getElementById("followers-div");
 const groupSectionDiv = document.getElementById("groups-div");
 const submitFollow = document.getElementById("follow-user-button");
 const submitUnfollow = document.getElementById("unfollow-user-button");
+const frontendUrl="http://127.0.0.1:5500/Frontend";
+const pyUrl = "http://127.0.0.1:5000"
 
 /*
     Grabs the user profile information from the update profile modal and sends it through the layers
@@ -247,6 +249,11 @@ async function follow_user(){
     });
     console.log(followResponse);
     let followResponseBody = await followResponse.json();
+    if(followResponse.status == 200){
+        window.location.href = frontendUrl+"/profilepage/profile-page.html?userId="+loggedInUserId;
+    } else {
+        alert("Can only follow a user once.");
+    }
     console.log(followResponseBody);
 }
 submitFollow.addEventListener("click", follow_user);
@@ -262,6 +269,11 @@ async function unfollow_user(){
         body:unfollowJson
     });
     let unfollowResponseBody = await unfollowResponse.json();
+    if(unfollowResponse.status == 200){
+        window.location.href = frontendUrl+"/profilepage/profile-page.html?userId="+loggedInUserId;
+    } else {
+        alert("You have already unfollowed that User");
+    }
     console.log(unfollowResponseBody);
 }
 submitUnfollow.addEventListener("click", unfollow_user);

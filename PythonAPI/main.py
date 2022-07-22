@@ -21,6 +21,7 @@ from custom_exceptions.too_many_characters import TooManyCharacters
 from custom_exceptions.user_id_must_be_an_integer import UserIdMustBeAnInteger
 from custom_exceptions.user_image_not_found import UserImageNotFound
 from custom_exceptions.user_not_found import UserNotFound
+from custom_exceptions.follow_already_exists import FollowAlreadyExists
 from data_access_layer.implementation_classes.comment_dao import CommentDAOImp
 from data_access_layer.implementation_classes.create_post_dao import CreatePostDAOImp
 from data_access_layer.implementation_classes.group_dao import GroupDAOImp
@@ -595,6 +596,10 @@ def follow_user(user_follower_id: int, user_being_followed_id: int):
         exception_dictionary = {"message": str(e)}
         exception_json = jsonify(exception_dictionary)
         return exception_json, 400
+    except FollowAlreadyExists as e:
+        exception_dictionary = {"message": str(e)}
+        exception_json = jsonify(exception_dictionary)
+        return exception_json, 400
 
 
 @app.post("/user/<user_follower_id>/unfollowed/<user_being_followed_id>")
@@ -615,6 +620,10 @@ def unfollow_user(user_follower_id: int, user_being_followed_id: int):
         exception_json = jsonify(exception_dictionary)
         return exception_json, 400
     except UserNotFound as e:
+        exception_dictionary = {"message": str(e)}
+        exception_json = jsonify(exception_dictionary)
+        return exception_json, 400
+    except FollowAlreadyExists as e:
         exception_dictionary = {"message": str(e)}
         exception_json = jsonify(exception_dictionary)
         return exception_json, 400
