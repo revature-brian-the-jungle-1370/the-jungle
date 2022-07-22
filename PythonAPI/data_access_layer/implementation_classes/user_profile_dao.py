@@ -204,17 +204,20 @@ class UserProfileDAOImp(UserProfileDAO):
         return True
 
     def unfollow_user(self, user_follower_id: int, user_being_followed_id: int) -> bool:
+
         sql = "select * from user_follow_junction_table where user_follow_id = %(user_follow_id)s" \
               " and user_id = %(user_id)s"
-        cursor = connection.cursor()
+        cursor = connection.cursor()    
         cursor.execute(sql, {'user_follow_id': user_being_followed_id, "user_id": user_follower_id })
         if not cursor.fetchone():
             raise FollowerNotFound("The follower was not found.")
 
-        sql = "delete from user_follow_junction_table where user_follow_id = %(user_follow_id)s" \
-              " and user_id = %(user_id)s"
+        sql = "delete from user_follow_junction_table where user_id = %(user_id)s" \
+              " and user_follow_id = %(user_follow_id)s"
+
         cursor = connection.cursor()
-        cursor.execute(sql, {"user_follow_id": user_follower_id, "user_id": user_being_followed_id})
+        cursor.execute(sql, {"user_id": user_follower_id, "user_follow_id": user_being_followed_id})
+        
         connection.commit()
         return True
 

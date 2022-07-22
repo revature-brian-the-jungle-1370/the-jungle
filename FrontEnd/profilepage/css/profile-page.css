@@ -911,10 +911,17 @@
   font-weight: 500;
 }
 
+#userImageFile{
+  background: transparent;
+}
 /* for treating the image as a file upload button */
 .image-upload>input {
   display: none;
 }
+/* tried turn background of profile pic transparent but doesn't work
+#label-for-profil-img{
+  background: transparent;
+} */
 
 /* Search Bar */
 .profile-page .search {
