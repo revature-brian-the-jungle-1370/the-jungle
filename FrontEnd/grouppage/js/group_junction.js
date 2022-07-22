@@ -66,7 +66,7 @@ async function deleteRequest() {
 }
 
 async function creatorOf() {
-    groupId = localStorage.getItem("group_id")
+    groupId = localStorage.getItem("groupId")
     url = python_url + `creator/${groupId}`
     let response = await fetch(url)
     if(response.status === 200){
@@ -85,7 +85,7 @@ async function creatorOf() {
 }
 
 async function getGroup() {
-    groupId = localStorage.getItem("group_id")
+    groupId = localStorage.getItem("groupId")
 
     let url =  python_url + `group/${groupId}`
 

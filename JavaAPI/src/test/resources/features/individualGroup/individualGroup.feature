@@ -9,14 +9,17 @@ Then the group is displayed under Groups
 
 
 Scenario: A user wants to visit individual group page
+Given the user is on the login group page
 When a user clicks on group name under Groups
 Then a user gets navigated to individual group page
 
 Scenario: A user wants to post
+Given the user is on the login group page
 When a user writes a post
 When a user clicks on post button
 Then the post is displayed below
 
 Scenario: A user wants to delete a post
+Given the user is on the login group page
 When a user clicks on delete button
 Then the post gets deleted

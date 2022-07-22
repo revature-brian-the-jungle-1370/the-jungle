@@ -34,7 +34,7 @@ public class GroupJunctionSteps {
 
     @Then("user can see who created the group")
     public void userCanSeeWhoCreatedTheGroup() {
-        Assert.assertEquals(TestRunner.groupJunctionPOM.creator.getText(),"first name,last name");
+        Assert.assertEquals(TestRunner.groupJunctionPOM.creator.getText(),"Scarlett Johansson");
     }
 
     @When("the user refreshes the page")
