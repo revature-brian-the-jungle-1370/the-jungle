@@ -1,4 +1,5 @@
 Feature: Edit Profile
+  @testprofile
   Scenario: As a User, I should be able to change my about me section, so that I can change what people know about me
     Given the user is on the homepage
     When the user clicks on the edit profile button

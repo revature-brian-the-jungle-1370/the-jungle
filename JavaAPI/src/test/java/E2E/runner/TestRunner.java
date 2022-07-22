@@ -22,7 +22,7 @@ import java.time.Duration;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(features = "classpath:features", glue = "E2E.steps", plugin = { "pretty",
-       "html:src/test/java/resources/reports/html-reports.html" })
+       "html:src/test/java/resources/reports/html-reports.html" }, tags = "@chat_message")
 public class TestRunner {
 
    public static WebDriver driver;
@@ -57,7 +57,7 @@ public class TestRunner {
        groupJunctionPOM = new GroupJunctionPOM(driver);
 
        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(6));
-       //explicitWait = new WebDriverWait(driver, Duration.ofSeconds(6));
+       explicitWait = new WebDriverWait(driver, Duration.ofSeconds(6));
        System.out.println("Set up complete!");
    }
 

@@ -86,7 +86,7 @@ public class UserDAOTests {
     // TEST REQUEST LOGIN
     @Test
     public void testRequestLoginSuccess() {
-        User user = userDAO.requestLogin("username", "passcode");
+        User user = userDAO.requestLogin("username", "newpasscode");
         Assert.assertTrue(user.getUsername().equals("username"));
     }
 

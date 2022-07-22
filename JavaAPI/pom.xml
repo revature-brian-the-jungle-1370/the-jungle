@@ -11,7 +11,6 @@
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
-        <exec.mainClass>dev.com.thejungle.app.app.App</exec.mainClass>
     </properties>
 
     <dependencies>
@@ -178,7 +177,7 @@
                     <target>8</target>
                 </configuration>
             </plugin>
-            <plugin>
+            <plugin> 
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <configuration>

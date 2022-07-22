@@ -1,6 +1,7 @@
+import json
 import logging
 
-from flask import Flask, request, jsonify,redirect,url_for,flash
+from flask import Flask, request, jsonify, flash
 from flask_cors import CORS
 
 from custom_exceptions.comment_not_found import CommentNotFound
@@ -203,36 +204,39 @@ def update_profile_info(user_id):
         exception_json = jsonify(exception_dictionary)
         return exception_json, 400
 
-@app.post("/user/<user_id>/new-password")
-def input_new_password(user_id):
-    try:
-        user_new_passcode = request.get_json()
-        print(user_new_passcode)
-        user = user_profile_service.service_get_user_profile_service(user_id)
-        user_profile_service.update_password_service(user.user_id,str(user_new_passcode["passcode"]))
-        user = user_profile_service.service_get_user_profile_service(user_id)
-        user_as_dictionary = user.make_dictionary()
-        return jsonify(user_as_dictionary), 200
-    except UserNotFound as e:
-        return str(e), 400
-
 @app.post("/user/reset-password")
 def reset_password():
     try:
         user_profile_email = request.get_json()
         if user_profile_dao.get_user_profile_by_email(user_profile_email["email"]) is not None:
-            print(user_profile_email["email"],flush=True)
             user_profile = user_profile_dao.get_user_profile_by_email(f"{user_profile_email['email']}")
-            print("GOT EMAIL STR" + str(user_profile))
             user_id = user_profile.user_id
-            return redirect(f"/user/{user_id}/new-password"), 200
+            #return redirect(f"/user/{user_id}/new-password"), 200
+            return json.dumps(user_id), 200
         else:
             flash('Invalid Email')
     except UserNotFound as e:
-        print("ERROR MESSAGE"+str(user_profile_email["email"]),flush=True)
+
         exception_dictionary = {"message":str(e)}
         exception_json = jsonify(exception_dictionary)
         return exception_json, 400
+
+@app.post("/user/<user_id>/new-password")
+def input_new_password(user_id):
+    try:
+        specialChars = "!@#$%^&*()-+?_=,<>/"
+        user_new_passcode = request.get_json()
+        if any(c in specialChars for c in user_new_passcode["passcode"]):
+            raise ValueError("Invalid Password Input")
+        user = user_profile_service.service_get_user_profile_service(user_id)
+        user_profile_service.update_password_service(user.user_id,str(user_new_passcode["passcode"]))
+        user = user_profile_service.service_get_user_profile_service(user_id)
+        user_as_dictionary = user.make_dictionary()
+        return jsonify(user_as_dictionary), 200
+    except ValueError as ve:
+        return str(ve),400
+    except UserNotFound as e:
+        return str(e), 400
 
 # -----------------------------------------------------------------------------------------------------
 
@@ -381,6 +385,14 @@ def add_likes_to_post():
     except TypeError:
         return ("post not found!"), 400
 
+@app.post("/postfeed/unlike")
+def add_unlikes_to_post():
+    try:
+        data = request.get_json()
+        postid = data["postId"]
+        return jsonify(like_post_service.service_unlike_post(postid))
+    except TypeError:
+        return ("post not found!"), 400
 
 @app.post("/postfeed/comment")
 def add_likes_to_comment():
@@ -391,6 +403,14 @@ def add_likes_to_comment():
     except TypeError:
         return ("comment not found"), 400
 
+@app.post("/postfeed/comment/unlike")
+def add_unlikes_to_comment():
+    try:
+        data = request.get_json()
+        commentid = data["commentId"]
+        return jsonify(like_post_service.service_unlike_comment(commentid))
+    except TypeError:
+        return ("comment not found"), 400
 
 # delete comment information
 @app.delete("/Comments")
@@ -599,12 +619,10 @@ def unfollow_user(user_follower_id: int, user_being_followed_id: int):
         exception_json = jsonify(exception_dictionary)
         return exception_json, 400
 
-app.run(host="0.0.0.0", port=5000,debug=True)
-
 @app.get("/bookmark/<user_id>")
 def get_bookmark_post_by_user_id(user_id):
     if(user_id.isdigit()):
-        post_as_post = post_feed_service.get_all_bookmarkded_posts_service(int(user_id))
+        post_as_post = post_feed_service.get_all_bookmarked_posts_service(int(user_id))
         posts_as_dictionary = []
         for post in post_as_post:
             dictionary_posts = post.make_dictionary()
@@ -615,17 +633,45 @@ def get_bookmark_post_by_user_id(user_id):
         exception_json = jsonify(exception_dictionary)
         return exception_json,400
         
-    
+@app.get("/bookmark/<user_id>/<post_id>")
+def get_bookmarked_post(user_id, post_id):
+    try:
+        if(user_id.isdigit() and post_id.isdigit()):
+            result=post_feed_service.get_bookmarked_post_service(int(user_id),int(post_id))
+            if(result != "Bookmark not found" or result != "Invalid userId or postId"):
+                result_dictionary = {}
+                if (result == "Bookmark not found"):
+                    result_dictionary = {"message": result}
+                else:
+                    result_dictionary = {"message": result.make_dictionary()}
+                return jsonify(result_dictionary),200
+            else:
+                raise PostNotFound("No Post Found")
+        else:
+            exception_dictionary = {"message": "Invalid Url"}
+            exception_json = jsonify(exception_dictionary)
+            return exception_json, 400
+    except PostNotFound as e:
+        exception_dictionary = {"message": str(e)}
+        exception_json = jsonify(exception_dictionary)
+        return exception_json, 400
 
 @app.post("/bookmark/<user_id>/<post_id>")
 def save_post_as_bookmark(user_id,post_id):
-    if(user_id.isdigit() and post_id.isdigit()):
-        result=post_feed_service.bookmark_post_service(int(user_id),int(post_id))
-        result_dictionary = {"message": str(result)}
-        return jsonify(result_dictionary),200
-    else:
-        exception_dictionary = {"message": "Invalid Url"}
+    try:
+        if(user_id.isdigit() and post_id.isdigit()):
+            result=post_feed_service.bookmark_post_service(int(user_id),int(post_id))
+            result_dictionary = {"message": str(result)}
+            return jsonify(result_dictionary),200
+        else:
+            exception_dictionary = {"message": "Invalid Url"}
+            exception_json = jsonify(exception_dictionary)
+            return exception_json, 400
+    except Exception as e:
+        exception_dictionary = {"message": str(e)}
         exception_json = jsonify(exception_dictionary)
-        return exception_json,400
+        return exception_json, 400
+        
+app.run(port=5500,debug=True)
 
-app.run()
+# app.run()

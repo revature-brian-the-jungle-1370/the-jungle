@@ -6,17 +6,17 @@ const specialChar2 = /[ `^*()+=\[\]{};':"\\|,<>\/~]/;
 const invalidIcon = document.querySelectorAll("[id='invalid-icon']");
 let invalidMessage = document.querySelectorAll("[id='passcode-invalid-message']");
 let infoIcon = document.querySelectorAll(".info-icon");
-const url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000";
-let validateCounter = 0;
-
+const url = "http://127.0.0.1:5000"
+//const url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000";
+let validateCounter = 0
 const div = document.getElementById("errorMessageGoesHere");
 div.textContent = "";
 
 async function resetPassword() {
-    let path = window.location.href;
-    let userId = getUserId("http://ec2-52-200-53-62.compute-1.amazonaws.com/user/",path)
-    console.log(userId)
-    let response = await fetch(url+`/user/${userId}/reset-password`, {
+    let retrievedUserId = window.localStorage.getItem("user_id")
+    console.log(retrievedUserId)
+    let user_id = JSON.parse(retrievedUserId)
+    let response = await fetch(url+`/user/${user_id}/new-password`, {
         method: "POST",
         mode: "cors",
         headers: { "Content-Type": "application/json" },
@@ -24,14 +24,21 @@ async function resetPassword() {
         passcode: passcode.value
         }),
     });
-
-    if (response.status === 200) {
+    console.log(response)
+    let validatePassword = specialChar2.test(response.passcode)
+    console.log(validatePassword)
+    if (response.passcode.includes(specialChar2)){
+        throw error;
+    }
+    else if (response.status == 200) {
         let body = await response.json();
+        console.log(response)
         //  Storing information for later
-        localStorage.setItem("passcodeInput", JSON.stringify(body));
-        window.location.href = "../user/login.html"; //  Redirect to Here????
+        //localStorage.setItem("user_id", JSON.stringify(body));
+        window.localStorage.clear()
+        window.location.href = "http://127.0.0.1:5500/FrontEnd/loginpage/login.html"; //  Redirect to Here????
     } else {
-        div.textContent = "Incorrect Username or Password";
+        div.textContent = "Invalid Password";
     }
 }
 
@@ -50,10 +57,10 @@ function getUserId(prefix,path){
 passcode.addEventListener("focusin", resetPasswordCheck());
 function resetPasswordCheck() {
     passcode.addEventListener("focusout", function () {
-        if (email.value == "") {
+        if (passcode.value == "") {
             invalidIcon[0].style.display = "";
             infoIcon[0].style.display = "block";
-            invalidMessage[0].textContent = "Email is incorrect or missing";
+            invalidMessage[0].textContent = "Password is incorrect or missing";
             } else if (specialChar2.test(passcode.value)) {
             invalidIcon[0].style.display = "";
             infoIcon[0].style.display = "block";

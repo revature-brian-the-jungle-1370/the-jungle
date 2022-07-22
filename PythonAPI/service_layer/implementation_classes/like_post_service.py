@@ -12,3 +12,9 @@ class LikePostServiceImp(LikePostService):
 
     def service_like_comment(self, comment_id: int):
         return self.like_post_dao.like_comment(comment_id)
+
+    def service_unlike_post(self, post_id):
+        return self.like_post_dao.unlike_post(post_id)
+
+    def service_unlike_comment(self, comment_id: int):
+        return self.like_post_dao.unlike_comment(comment_id)

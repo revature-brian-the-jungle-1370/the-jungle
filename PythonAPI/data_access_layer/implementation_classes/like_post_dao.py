@@ -29,3 +29,29 @@ class LikePostDaoImp(LikePostDAO):
             else:
                 connection.rollback()
                 raise ConnectionErrorr('comment not found')
+
+    def unlike_post(self,post_id:int):
+            sql = "update post_table set likes = likes - 1 where post_id=%s returning likes"
+            cursor = connection.cursor()
+            cursor.execute(sql,[post_id])
+            connection.commit()
+            generated_likes_number = cursor.fetchone()[0]
+            if  generated_likes_number > 0:
+                     return generated_likes_number
+
+            else:
+                connection.rollback()
+                raise ConnectionErrorr('post not found')
+
+    def unlike_comment(self, comment_id: int):
+            sql = "update comment_table set likes = likes - 1 where comment_id=%s returning likes"
+            cursor = connection.cursor()
+            cursor.execute(sql, [comment_id])
+            connection.commit()
+            generated_likes_number = cursor.fetchone()[0]
+            if generated_likes_number > 0:
+                return generated_likes_number
+
+            else:
+                connection.rollback()
+                raise ConnectionErrorr('comment not found')
