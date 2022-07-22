@@ -14,7 +14,7 @@ public class IndividualGroupSteps {
 
     @Given("a user is on group page")
     public void a_user_is_on_group_page() throws InterruptedException{
-        TestRunner.driver.get("http://127.0.0.1:5500/FrontEnd/grouppage/group-page.html");
+        TestRunner.driver.get("https://s3.amazonaws.com/dans-code.net/FrontEnd/grouppage/group-page.html");
         Thread.sleep(2000);
         TestRunner.driver.navigate().refresh();
     }
@@ -38,7 +38,7 @@ public class IndividualGroupSteps {
     public void the_group_is_displayed_under_MyGroups() throws InterruptedException{
         TestRunner.driver.navigate().refresh();
         Thread.sleep(2000);
-        Assert.assertEquals(TestRunner.driver.getCurrentUrl(), "http://127.0.0.1:5500/FrontEnd/grouppage/group-page.html");
+        Assert.assertEquals(TestRunner.driver.getCurrentUrl(), "https://s3.amazonaws.com/dans-code.net/FrontEnd/grouppage/group-page.html");
     }
 
     @When("a user clicks on group name under Groups")
@@ -53,13 +53,13 @@ public class IndividualGroupSteps {
 
     @Then("a user gets navigated to individual group page")
     public void a_user_gets_navigated_to_individual_group_page() throws InterruptedException{
-        Assert.assertEquals(TestRunner.driver.getCurrentUrl(), "http://127.0.0.1:5500/FrontEnd/grouppage/individualgrouppage/individual-group-page.html");
+        Assert.assertEquals(TestRunner.driver.getCurrentUrl(), "https://s3.amazonaws.com/dans-code.net/FrontEnd/grouppage/individualgrouppage/individual-group-page.html");
         Thread.sleep(2000);
     }
 
     @When("a user writes a post")
     public void a_user_writes_a_post() throws InterruptedException{
-        TestRunner.driver.get("http://127.0.0.1:5500/FrontEnd/grouppage/individualgrouppage/individual-group-page.html");
+        TestRunner.driver.get("https://s3.amazonaws.com/dans-code.net/FrontEnd/grouppage/individualgrouppage/individual-group-page.html");
         TestRunner.individualGroupPOM.post_text_box.sendKeys("BDD Testing");
         Thread.sleep(2000);
     }
@@ -72,7 +72,7 @@ public class IndividualGroupSteps {
 
     @Then("the post is displayed below")
     public void the_post_is_displayed_below() throws InterruptedException{
-        Assert.assertEquals(TestRunner.driver.getCurrentUrl(), "http://127.0.0.1:5500/FrontEnd/grouppage/individualgrouppage/individual-group-page.html");
+        Assert.assertEquals(TestRunner.driver.getCurrentUrl(), "https://s3.amazonaws.com/dans-code.net/FrontEnd/grouppage/individualgrouppage/individual-group-page.html");
         Thread.sleep(4000);
     }
 
@@ -84,7 +84,7 @@ public class IndividualGroupSteps {
     
     @Then("the post gets deleted")
     public void the_post_gets_deleted() throws InterruptedException{
-        Assert.assertEquals(TestRunner.driver.getCurrentUrl(), "http://127.0.0.1:5500/FrontEnd/grouppage/individualgrouppage/individual-group-page.html");
+        Assert.assertEquals(TestRunner.driver.getCurrentUrl(), "https://s3.amazonaws.com/dans-code.net/FrontEnd/grouppage/individualgrouppage/individual-group-page.html");
         Thread.sleep(2000);
     }
 }

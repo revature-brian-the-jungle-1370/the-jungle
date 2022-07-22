@@ -24,7 +24,7 @@ public class CreatePostSteps {
     private String alertText;
 
     public void login(){
-        TestRunner.driver.get("http://127.0.0.1:5500/FrontEnd/loginpage/login.html");
+        TestRunner.driver.get("https://s3.amazonaws.com/dans-code.net/FrontEnd/loginpage/login.html");
         TestRunner.rlsPom.usernameInput.sendKeys("test");
         TestRunner.rlsPom.passwordInput.sendKeys("createpost");
         TestRunner.rlsPom.usernameInput.sendKeys(Keys.TAB);
