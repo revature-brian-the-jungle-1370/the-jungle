@@ -6,11 +6,6 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-import java.time.Duration;
-
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 public class LoginSteps {
@@ -70,7 +65,7 @@ public class LoginSteps {
     @Given("user is on the log-in page")
     public void user_is_on_the_log_in_page() {
         //TestRunner.driver.get("file:///Users/adamjanusewski/Desktop/The-Jungle/FrontEnd/loginpage/login.html");
-         TestRunner.driver.get("http://dans-code.net.s3-website-us-east-1.amazonaws.com/FrontEnd/loginpage/login.html");
+        TestRunner.driver.get("http://dans-code.net.s3-website-us-east-1.amazonaws.com/FrontEnd/loginpage/login.html");
     }
 
     @When("the user enters wrong username")
