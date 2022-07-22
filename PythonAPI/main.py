@@ -671,6 +671,6 @@ def save_post_as_bookmark(user_id,post_id):
         exception_json = jsonify(exception_dictionary)
         return exception_json, 400
         
-app.run(port=5500,debug=True)
+app.run(port=5000,debug=True)
 
 # app.run()

@@ -1,6 +1,8 @@
 package dev.com.thejungle.app.appcontroller.controllers;
 
 import com.google.gson.Gson;
+
+import dev.com.thejungle.customexception.InvalidInputException;
 import dev.com.thejungle.dao.implementations.ChatDAO;
 import dev.com.thejungle.entity.ChatMessage;
 import dev.com.thejungle.entity.User;
@@ -67,8 +69,12 @@ public class ChatController {
             String chatContent = messageJson.get("chatContent");
             String userName =messageJson.get("userName");
             ChatMessage chatMessage = new ChatMessage(userId,groupId,chatContent);
-            ChatMessage returnedChat = chatService.serviceCreateMessageObject(chatMessage);
-            broadcastMessage(returnedChat.getChatId(),returnedChat.getUserId(),returnedChat.getChatContent(),userName,returnedChat.getChatDate(),groupId);
+            try {
+                ChatMessage returnedChat = chatService.serviceCreateMessageObject(chatMessage);
+                broadcastMessage(returnedChat.getChatId(),returnedChat.getUserId(),returnedChat.getChatContent(),userName,returnedChat.getChatDate(),groupId);
+            } catch (InvalidInputException e) {
+                
+            }
         });
         ws.onBinaryMessage(ctx -> {
             int groupId = Integer.parseInt(ctx.pathParam("id"));

@@ -21,41 +21,102 @@
       
             <a href="../profilepage/profile-page.html"><img class="jungle3-1" src="img/jungle3-1@2x.png" /> </a>
           </div>
-          <img class="about-me" src="img/about-me@1x.png" />
-            <!-- Navigation Links -->
-            <div class="nav poppins-semi-bold-astronaut-24px">
-              <!-- Chat Link -->
-              <div class="chat-container">
-                <a
-                  href="../chatpage/chat-page.html"
-                  class="chat valign-text-middle"
-               
-                  ><img class="x-icon" src="img/chat-icon@2x.svg" /><span
-                    class="linkChat"
-                    >Chat</span
-                  ></a
-                >
-              </div>
-  
-              <!-- Group Link -->
-              <div class="group-container">
-                <a
-                  href="../grouppage/group-page.html"
-                  class="chat valign-text-middle"
-                 
-                  ><img class="x-icon" src="img/group-icon@2x.svg" /><span
-                    class="linkGroups"
-                    >Groups</span
-                  ></a
-                >
-              </div>
-  
-              <!-- Logout Button...need code -->
-              <div class="logout-container">
-                <div class="logout valign-text-middle">Logout</div>
-                <img class="x-icon" src="img/logout-icon@2x.svg" />
-              </div>
+          <div class="about-me">
+
+            <!-- Profile Image Uploader -->
+            <div class="image-upload">
+              <label id="label-for-profil-img" for="userImageFileInput">
+                <img src="img/user-avatar@2x.png" class="user-avatar" id="userImageFile" type="button"/>
+              </label>
+
+              <input type="file" id="userImageFileInput" onchange="createUserWithImage()"/>
             </div>
+            <!-- Profile Image Uploader -->
+
+
+            <div class="user-name valign-text-middle poppins-bold-cape-cod-18px" id="name-display">Scarlett Johansson</div>
+            <div class="flex-row-1">
+              <div class="birthday valign-text-middle" id="birthday-display">DOB - Jan. 1st</div>
+              <img class="line-1" alt="" src="img/line-1@2x.svg" />
+              <div class="username valign-text-middle" id="username-display">@Scar_Jo12</div>
+            </div>
+            <div class="poppins-cape-cod-18px" id="about-me-display"> </div>
+            <div class="">
+                <!-- Edit Profile Button and Modal -->
+                <button id="updateProfileEditProfileBtn" type="button" class="btn edit-button" data-bs-toggle="modal" data-bs-target="#myModal">
+                  <img src="img/Edit_Icon.png" alt="edit-icon" class="edit-icon"/> Edit Profile
+                </button>                
+                <!-- Modal -->
+                <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="updateUserProfileModalTitle">Update User Profile</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="resetProfileModalData()">
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                          <form id="updateUserProfileForm">
+                              <div class="mb-3">
+                                  <label class="form-label">About me</label>
+                                  <textarea id="userAboutMeInput"class="form-control"></textarea>
+                              </div>
+                              <div class="mb-3">
+                                  <label for="form-label">Birthday</label>
+                                  <br>
+                                  <input id="userBirthdateInput" class="form-control" type="date"/>
+                              </div>
+                          </form>
+                      </div>
+                      <div class="modal-footer">
+                        <div id="profileModalMsg">
+                        </div>
+                        <div>
+                        <button id="updateProfileCloseModalBtn"type="button" class="btn close-profile-button" data-bs-dismiss="modal" onclick="resetProfileModalData()">Close</button>
+                        <button id="updateProfileModalBtn"type="button" class="btn save-profile-button" onclick="updateUserProfileData()">Save changes</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <img class="line-under-search-1" src="img/line-under-search-1@2x.svg" />
+          </div>
+          
+          <!-- Navigation Links -->
+          <div class="nav poppins-semi-bold-astronaut-24px">
+            <!-- Chat Link -->
+            <div class="chat-container">
+              <a
+                href="../chatpage/chat-page.html"
+                class="chat valign-text-middle"
+              
+                ><img class="x-icon" src="img/chat-icon@2x.svg" /><span
+                  class="linkChat"
+                  >Chat</span
+                ></a
+              >
+            </div>
+  
+            <!-- Group Link -->
+            <div class="group-container">
+              <a
+                href="../grouppage/group-page.html"
+                class="chat valign-text-middle"
+                
+                ><img class="x-icon" src="img/group-icon@2x.svg" /><span
+                  class="linkGroups"
+                  >Groups</span
+                ></a
+              >
+            </div>
+  
+            <!-- Logout Button...need code -->
+            <div class="logout-container">
+              <div class="logout valign-text-middle">Logout</div>
+              <img class="x-icon" src="img/logout-icon@2x.svg" />
+            </div>
+          </div>
           <!-- <div class="nav">
             <div class="chat-container">
               <div class="chat valign-text-middle poppins-semi-bold-astronaut-24px">Chat</div>
@@ -124,7 +185,10 @@
       </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script src="js/chat-page.js"></script>
+    <script src="js/chat-profile.js"></script>
+    <script src="js/userprofileimage-vfh.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
   </body>
 </html>

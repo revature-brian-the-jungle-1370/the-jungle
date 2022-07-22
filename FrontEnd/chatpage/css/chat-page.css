@@ -46,11 +46,11 @@
   width: 193px;
 }
 
-.chat-page .about-me {
+/* .chat-page .about-me {
   height: 389px;
   margin-top: 51px;
   width: 307px;
-}
+} */
 
 .chat-page .nav {
   align-items: flex-start;
@@ -380,13 +380,13 @@
   padding: 0 14px;
 }
 
-.chat-page .flex-row-1 {
+/* .chat-page .flex-row-1 {
   align-items: flex-start;
   display: flex;
   margin-right: 6px;
   margin-top: 0px;
   min-width: 552px;
-}
+} */
 
 .chat-page .input-box{
   border: none;
@@ -585,13 +585,13 @@
   width: 54px;
 }
 
-.chat-page .line-under-search-1 {
+/* .chat-page .line-under-search-1 {
   height: 1px;
   left: 39px;
   position: absolute;
   top: 73px;
   width: 298px;
-}
+} */
 
 .chat-page .group-icon {
   height: 40px;
@@ -629,4 +629,144 @@
   text-align: center;
   top: 13px;
   width: 247px;
+}
+
+.chat-page .about-me {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  left: 16px;
+  min-height: 389px;
+  height: 389px;
+  margin-top: 51px;
+  width: 307px;
+}
+
+.chat-page .user-avatar {
+  height: 151px;
+  margin-right: 6.0px;
+  object-fit: cover;
+  width: 151px;
+  border-radius: 80px;
+}
+
+.chat-page .user-name {
+  height: 44px;
+  letter-spacing: -0.27px;
+  margin-right: 7.0px;
+  margin-top: 13px;
+  text-align: center;
+  width: 192px;
+}
+
+.chat-page .flex-row-1 {
+  align-items: flex-start;
+  display: flex;
+  margin-right: 6.0px;
+  margin-top: 10px;
+}
+
+.chat-page .birthday {
+  color: #6f6f6f;
+  font-family: var(--font-family-poppins);
+  font-size: var(--font-size-m);
+  font-weight: 500;
+  height: 29px;
+  letter-spacing: -0.27px;
+  margin-top: 3px;
+  text-align: center;
+  width: 133px;
+}
+
+.chat-page .username {
+  color: #6e6e6e;
+  font-family: var(--font-family-poppins);
+  font-size: var(--font-size-m);
+  font-weight: 500;
+  height: 29px;
+  letter-spacing: -0.27px;
+  margin-left: 16px;
+  margin-top: 3px;
+  text-align: center;
+  width: 133px;
+}
+
+.chat-page .edit-container {
+  background-color: var(--white);
+  border: 2px solid #f47635;
+  border-radius: 10px;
+  height: 42px;
+  margin-right: 10.0px;
+  position: relative;
+  width: 216px;
+}
+
+.chat-page .edit-profile {
+  color: #f47736;
+  font-family: var(--font-family-poppins);
+  font-size: var(--font-size-m);
+  font-weight: 500;
+  height: 24px;
+  left: 30px;
+  letter-spacing: -0.27px;
+  position: absolute;
+  text-align: center;
+  top: 6px;
+  width: 175px;
+}
+
+.chat-page .line-under-search-1 {
+  height: 1px;
+  margin-top: 48px;
+  width: 250px;
+}
+
+#ModalMsgProfile {
+  float: left;
+  width: 100%;
+  text-align: center;
+}
+
+.chat-page .edit-button{
+  color: var(--atomic-orange);
+  background-color: white;
+  border-color: var(--atomic-orange);
+  border-radius: 10px;
+  font-family: var(--font-family-poppins);
+  margin: 1.7rem 0 0 0;
+}
+
+.chat-page .save-profile-button{
+  color: white;
+  background-color: var(--atomic-orange);
+  border-color: var(--atomic-orange);
+  border-radius: 10px;
+  font-family: var(--font-family-poppins);
+}
+
+.chat-page .close-profile-button{
+  color: white;
+  background-color: var(--gray);
+  border-color: var(--gray);
+  border-radius: 10px;
+  font-family: var(--font-family-poppins);
+}
+
+.chat-page #updateProfileEditProfileBtn{
+  width: 100%;
+}
+
+#searchInputBox {
+  border-style: hidden;
+  border-width: 0px;
+  outline: none;
+  width: 500px;
+}
+
+#userImageFile{
+  background: transparent;
+}
+/* for treating the image as a file upload button */
+.image-upload>input {
+  display: none;
 }

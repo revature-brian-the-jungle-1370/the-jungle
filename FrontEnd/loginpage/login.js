@@ -8,7 +8,7 @@ const invalidIcon = document.querySelectorAll("[id='invalid-icon']");
 let invalidMessage = document.querySelectorAll("[id='signup-invalid-message']");
 let infoIcon = document.querySelectorAll(".info-icon");
 const url = "http://localhost:8080";
-const frontendUrl="http://127.0.0.1:5000/FrontEnd";
+const frontendUrl="http://127.0.0.1:5500/FrontEnd";
 let validateCounter = 0;
 
 const div = document.getElementById("errorMessageGoesHere");
