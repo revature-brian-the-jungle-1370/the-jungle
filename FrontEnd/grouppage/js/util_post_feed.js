@@ -13,7 +13,11 @@ async function create_div_from_post_response(post){
     let response = await fetch(url);
     let user_image_text;
     if(response.status === 200){
-        user_image_text = await response.text();}
+        user_image_text = await response.text();
+        if(!user_image_text.includes("data:image")){
+          user_image_text= "data:image/PNG;base64, "+user_image_text;
+        }
+      }    
 
     //get Username
     let post_username = await get_username(post.user_id)
@@ -25,7 +29,7 @@ async function create_div_from_post_response(post){
     let date_2 = date_time.toDateString();
 
     //Check if bookmarked
-    bm_url = python_url + "bookmark/" + localStorage.getItem("user_id") + "/" + post.post_id
+    bm_url = python_url + "bookmark/" + localStorage.getItem("userId") + "/" + post.post_id
     let bm_response = await fetch(bm_url);
     let post_response = await bm_response.json()
     let bm_icon_path = post_response["message"] != "Bookmark not found" ? "../img/bookmark_saved.svg" : "../img/bookmark_unsaved.svg"
@@ -42,7 +46,7 @@ async function create_div_from_post_response(post){
         <div class="overlap-group">
           <div class="new-york-ny valign-text-middle poppins-bold-pink-swan-14px"> `+ date_2 +` </div>
           <div class="username-1 valign-text-middle poppins-bold-cape-cod-20px">`+ post_username +`</div>
-          <img class="feed-avatar" src="data:image/PNG;base64,`+ user_image_text  + `" alt="user_image_text" />
+          <img class="feed-avatar" src="`+ user_image_text  + `" alt="user_image_text" />
         </div>
         <input type="image" class="three-dots-icon" src="img/trash-bin.svg"`+ 
             ` id="deletePost${post.post_id}" onclick="deleteGroupPost(${post.post_id})"/>
@@ -67,7 +71,7 @@ async function create_div_from_post_response(post){
         <div class="overlap-group">
           <div class="new-york-ny valign-text-middle poppins-bold-pink-swan-14px"> `+ date_2 +` </div>
           <div class="username-1 valign-text-middle poppins-bold-cape-cod-20px">`+ post_username + `</div>
-          <img class="feed-avatar" id="UserImage`+ post.post_id +`" src="data:image/PNG;base64,`+ user_image_text  + `" />
+          <img class="feed-avatar" id="UserImage`+ post.post_id +`" src="`+ user_image_text  + `" />
         </div>
         <input type="image" class="three-dots-icon" src="img/trash-bin.svg"`+
             ` id="deletePost${post.post_id}" onclick="deleteGroupPost(${post.post_id})"/>
@@ -105,7 +109,7 @@ async function get_username(user_id){
 //----------------------------------------------- BOOKMARK POST FUNCTION-----------------------------------------------------
 
 async function bookmark_post_as_user(post_id){
-  url = python_url + `bookmark/${localStorage.getItem("user_id")}/${post_id}`
+  url = python_url + `bookmark/${localStorage.getItem("userId")}/${post_id}`
   let response = await fetch(url, {
     method: "POST",
     headers: {
