@@ -20,3 +20,20 @@ Then the post is displayed below
 Scenario: A user wants to delete a post
 When a user clicks on delete button
 Then the post gets deleted
+
+Scenario: A user wants to like a post
+When a user clicks on like button
+Then the post gets liked
+
+Scenario: A user wants to unlike a post
+When a user clicks on like button twice
+Then the post gets unliked
+
+Scenario: A user wants to bookmark a post
+When user clicks on bookmark icon of a post
+Then the post is saved and the icon is changed
+
+
+Scenario: A user wants to remove bookmarked post
+When user clicks on bookmark icon of a post that is bookmarked
+Then the post is unsaved and the icon is changed

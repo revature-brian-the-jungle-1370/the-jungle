@@ -87,4 +87,51 @@ public class IndividualGroupSteps {
         Assert.assertEquals(TestRunner.driver.getCurrentUrl(), "http://127.0.0.1:5500/FrontEnd/grouppage/individualgrouppage/individual-group-page.html");
         Thread.sleep(2000);
     }
+
+    @When("a user clicks on like button")
+    public void a_user_clicks_on_like_button() throws InterruptedException{
+        TestRunner.individualGroupPOM.like_button.click();
+        Thread.sleep(2000);
+    }
+
+    @Then("the post gets liked")
+    public void the_post_gets_liked() throws InterruptedException{
+        Assert.assertEquals(TestRunner.driver.getCurrentUrl(), "http://127.0.0.1:5500/FrontEnd/grouppage/individualgrouppage/individual-group-page.html");
+        Thread.sleep(2000);
+    }
+
+    @When("a user clicks on like button twice")
+    public void a_user_clicks_on_like_button_twice() throws InterruptedException{
+        TestRunner.individualGroupPOM.like_button.click();
+        Thread.sleep(2000);
+    }
+
+    @Then("the post gets unliked")
+    public void the_post_gets_unliked() throws InterruptedException{
+        Assert.assertEquals(TestRunner.driver.getCurrentUrl(), "http://127.0.0.1:5500/FrontEnd/grouppage/individualgrouppage/individual-group-page.html");
+        Thread.sleep(2000);
+    }
+
+    @When("user clicks on bookmark icon of a post")
+    public void user_clicks_on_bookmark_icon_of_a_post() throws InterruptedException{
+        TestRunner.individualGroupPOM.bookmark_button.click();
+        Thread.sleep(2000);
+    }
+    @Then("the post is saved and the icon is changed")
+    public void the_post_is_saved_and_the_icon_is_changed() throws InterruptedException{
+        Assert.assertEquals(TestRunner.driver.getCurrentUrl(), "http://127.0.0.1:5500/FrontEnd/grouppage/individualgrouppage/individual-group-page.html");
+        Thread.sleep(2000);
+    }
+
+    @When("user clicks on bookmark icon of a post that is bookmarked")
+    public void user_clicks_on_bookmark_icon_of_a_post_that_is_bookmarked() throws InterruptedException{
+        TestRunner.individualGroupPOM.bookmark_button.click();
+        Thread.sleep(2000);
+    }
+    @Then("the post is unsaved and the icon is changed")
+    public void the_post_is_unsaved_and_the_icon_is_changed() throws InterruptedException{
+        Assert.assertEquals(TestRunner.driver.getCurrentUrl(), "http://127.0.0.1:5500/FrontEnd/grouppage/individualgrouppage/individual-group-page.html");
+        Thread.sleep(2000);
+    }
+
 }
