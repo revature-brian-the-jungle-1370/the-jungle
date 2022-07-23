@@ -1,7 +1,7 @@
 let params = new URLSearchParams(location.search);
 let userId=params.get('userId');
 let loggedInUserId = JSON.parse(localStorage.getItem("userInfo")).userId; 
-
+let currentUsername=JSON.parse(localStorage.getItem("userInfo")).username; 
 (function () {
   console.log(document.getElementById("label-for-profil-img"));
   let createPostModal=document.getElementById("createPostModal");
@@ -12,10 +12,66 @@ let loggedInUserId = JSON.parse(localStorage.getItem("userInfo")).userId;
     createPostModal.remove();
     document.getElementById("createPostBtn").remove();
     document.getElementById("userImageFileInput").remove();
+    currentUsername=JSON.parse(localStorage.getItem("visitedUser")).username; 
   }
-
 })();
+setProfileInfo();
 
+
+function setProfileInfo(){
+  let name=document.getElementById("name-display");
+  let username=document.getElementById("username-display");
+  let bDay=document.getElementById("birthday-display");
+  let aboutMe=document.getElementById("about-me-display");
+
+  let visitedUser;
+  if(userId!=loggedInUserId){
+      getProfileUser(userId,"visitedUser");
+     visitedUser=JSON.parse(localStorage.getItem("visitedUser"));
+  }
+  else{
+      getProfileUser(loggedInUserId,"userInfo");
+
+      visitedUser=JSON.parse(localStorage.getItem("userInfo"));
+  }
+  if(name && username && bDay && aboutMe){
+      name.innerText=visitedUser.firstName+" "+visitedUser.lastName
+      username.innerText="@"+visitedUser.username
+
+      let bd=new Date(visitedUser.birthday);
+      bDay.innerText=bd.getMonth()+"/"+bd.getDate()+"/"+bd.getFullYear();
+      aboutMe.innerText="about me:\n"+visitedUser.aboutMe
+  }
+}
+/**
+*
+* visitedUser	{"email":"email",
+* "first_name":"first name",
+* "last_name":"last name",
+* "passcode":"newpasscode",
+* "user_about":"smiley",
+* "user_birth_date":"Mon, 18 Jul 2022 00:00:00 GMT","
+* user_id":10000,
+* "user_image_format":"png",
+* "username":"username"}
+*/
+
+async function getProfileUser(userId,key){
+  let response = await fetch("http://127.0.0.1:5000/user/"+userId);
+  if (response.status === 200) {
+    let body = await response.json();
+    //  Storing information for later
+    let convertedUser=JSON.stringify({//set to keys thats used by previous code or else exception
+      "userId":body.user_id,
+      "firstName":body.first_name,
+      "lastName":body.last_name,
+      "aboutMe":body.user_about,
+      "birthday":body.user_birth_date,
+      "username":body.username
+  })
+    localStorage.setItem(key, convertedUser);
+}
+}
 
 
 // this is just a proof of concept and does not contain styling elements of the finished code
@@ -117,6 +173,20 @@ async function createPostWithImage() {
     }
   }
   
+  //get the user's image
+  async function getPosterImage(user_id){
+    let url = "http://localhost:5000/user/image/" + user_id;
+    let response = await fetch(url);
+    let user_image_text;
+    if(response.status === 200){
+        user_image_text = await response.text();
+        if(!user_image_text.includes("data:image")){
+          user_image_text= "data:image/PNG;base64,"+user_image_text;
+        }
+        return user_image_text;
+      }
+  }
+    
   async function populateData(responseBody) {
     const allpost = document.getElementById("post column");
     for (let post of responseBody) {
@@ -131,21 +201,13 @@ async function createPostWithImage() {
       // <button id="deletePost${post.post_id}" onclick="deleteGroupPost(${post.post_id})">Delete</button>
       // </div>`
       
-      //add the poster image
-      let url = "http://localhost:5000/user/image/" + post.user_id;
-      let response = await fetch(url);
-      let user_image_text;
-      if(response.status === 200){
-          user_image_text = await response.text();
-          if(!user_image_text.includes("data:image")){
-            user_image_text= "data:image/PNG;base64,"+user_image_text;
-          }
-        }
+      //add the poster's image
+      let user_image_text = await getPosterImage(post.user_id);
   
       //get the post image
-      url = "http://localhost:5000/post/image/" + post.post_id;
+      let url = "http://localhost:5000/post/image/" + post.post_id;
       console.log(url);
-      response = await fetch(url);
+      let response = await fetch(url);
       console.log(response);
       let date_time = new Date(post.date_time_of_creation)
       let date = date_time.toDateString();
@@ -180,7 +242,7 @@ async function createPostWithImage() {
         <div class="icon-container">
           <input type="image" class="heart-icon" src="img/heart-icon@2x.svg" />
           <p>` + post.likes + `</p>
-          <input type="image" class="chat-bubble-icon" src="img/chat-bubble-icon@2x.svg"/>
+          <input type="image" class="chat-bubble-icon" src="img/chat-bubble-icon@2x.svg" onclick="getComments(`+post.post_id+`)"/>
           <img class="share-icon" src="img/share-icon@2x.svg" />
         </div>
         </div>`
@@ -201,7 +263,7 @@ async function createPostWithImage() {
       <div class="icon-container">
         <input type="image" class="heart-icon" src="img/heart-icon@2x.svg" />
         <p>` + post.likes + `</p>
-        <input type="image" class="chat-bubble-icon" src="img/chat-bubble-icon@2x.svg"/>
+        <input type="image" class="chat-bubble-icon" src="img/chat-bubble-icon@2x.svg" onclick="getComments(`+post.post_id+`)"/>
         <img class="share-icon" src="img/share-icon@2x.svg" />
       </div>
       </div>`
@@ -210,8 +272,6 @@ async function createPostWithImage() {
       allpost.appendChild(postBox)
     }
   }
-  
-  getPost()
 
   async function deletePost(post_id) {
     let deleteResponse = await fetch("http://localhost:5000/group_post/" + post_id, {
@@ -222,3 +282,122 @@ async function createPostWithImage() {
       document.getElementById("post" + post_id).remove();
     }
   }
+
+
+ async function getComments(post_id){
+  let commentData= await fetch("http://localhost:5000/postfeed/"+post_id);
+  if (commentData.status==200){
+    let comments= await commentData.json()
+    console.log(comments)
+    let commentDiv=document.getElementById("comment-section-post"+post_id); 
+    if(commentDiv!=null){
+      commentDiv.innerHTML="";
+    }
+    for(let comment of comments){
+      let image_text= await getPosterImage(comment.user_id);
+      displayComment(comment,post_id,image_text);
+    }
+    addCommentBox(post_id);
+  }
+ }
+
+function displayComment(commentJson,post_id,image_text){
+  let post= document.getElementById("post"+post_id);
+  let commentDiv=document.getElementById("comment-section-post"+post_id);
+  let comment=document.createElement("div");
+  if(commentDiv==null){
+    commentDiv=document.createElement("div");
+    commentDiv.setAttribute("id","comment-section-post"+post_id)
+    commentDiv.setAttribute("class","d-flex flex-column");
+  }
+  commentDiv.appendChild(comment);
+  comment.innerHTML=
+  `<div class="d-flex comment-row" >
+    <div class="overlap-group2 comment-avatar">
+      <div class="username-1 valign-text-middle poppins-bold-cape-cod-20px">${commentJson.user_name}</div>
+      <img class="feed-avatar-1" src="${image_text}" />
+    </div>
+    <div class="comments poppins-medium-black-18px" id=>
+    `
+    + commentJson.comment_text +
+    `
+    </div>
+  </div>
+  `;
+  post.appendChild(commentDiv);
+}
+
+function addCommentBox(post_id){
+  let commentDiv=document.getElementById("comment-section-post"+post_id); 
+  let commentBox=document.createElement("div");
+  let userImageFile=document.getElementById("userImageFile");
+  commentBox.innerHTML=
+  `<div class="d-flex comment-row" >
+  <div class="overlap-group2 comment-avatar">
+    <div class="username-1 valign-text-middle poppins-bold-cape-cod-20px">${JSON.parse(localStorage.getItem("userInfo")).username}</div>
+    <img class="feed-avatar-1" src="${userImageFile.src}" />
+  </div>
+  <div class="comments poppins-medium-black-18px" >
+    <input type="text" class="comment-box" id="comment-box-post`+post_id+`" placeholder="comment">
+  </div>
+  `;
+  if(commentDiv==null){
+    let post= document.getElementById("post"+post_id);
+    commentDiv=document.createElement("div");
+    commentDiv.setAttribute("id","comment-section-post"+post_id)
+    commentDiv.setAttribute("class","d-flex flex-column");
+    post.appendChild(commentDiv);
+  }
+  commentDiv.prepend(commentBox);
+  commentBox.addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') {
+      submitComments(post_id)
+    }
+});
+
+}
+
+async function submitComments(post_id){
+  let commentRow=document.getElementById("comment-box-post"+post_id).parentElement.parentElement;
+  let comment=document.getElementById("comment-box-post"+post_id);
+  let commentText=comment.value;
+  let url="http://127.0.0.1:5000/createComment";
+  let response= await fetch (url,{
+    method: 'POST',
+    headers:{
+      'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    "postId": post_id,
+    "userId": loggedInUserId,
+    "groupId": null,
+    "replyUser": userId,
+    "commentText": commentText
+    })
+  });
+
+  if(response.status==200){
+    let comment=document.createElement("div");
+    let userImageFile=document.getElementById("userImageFile");
+    comment.innerHTML=
+    `<div class="d-flex comment-row" >
+    <div class="overlap-group2 comment-avatar">
+      <div class="username-1 valign-text-middle poppins-bold-cape-cod-20px">${JSON.parse(localStorage.getItem("userInfo")).username}</div>
+      <img class="feed-avatar-1" src="${userImageFile.src}" />
+    </div>
+    <div class="comments poppins-medium-black-18px" >
+      `+
+      commentText
+      +
+      `
+    </div>
+    `;
+    comment.value="";
+    commentRow.parentNode.insertBefore(comment,commentRow.nextElementSibling);
+  }
+
+
+  
+}
+
+getPost()

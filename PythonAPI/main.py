@@ -432,6 +432,7 @@ def get_comments_by_post_id(post_id: str):
         post_comments_as_dictionary = []
         for comments in results:
             dictionary_comment = comments.make_dictionary()
+            # print(dictionary_comment)
             post_comments_as_dictionary.append(dictionary_comment)
         return jsonify(post_comments_as_dictionary), 200
     except PostNotFound:
