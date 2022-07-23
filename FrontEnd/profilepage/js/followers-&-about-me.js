@@ -5,13 +5,15 @@ const followerSectionDiv = document.getElementById("followers-div");
 const groupSectionDiv = document.getElementById("groups-div");
 const submitFollow = document.getElementById("follow-user-button");
 const submitUnfollow = document.getElementById("unfollow-user-button");
+const frontendUrl="http://127.0.0.1:5500/Frontend";
+const pyUrl = "http://127.0.0.1:5000"
 
 /*
     Grabs the user profile information from the update profile modal and sends it through the layers
 */
 async function updateUserProfileData(){
     // Will need to update this to use the current user's ID
-    let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/user/profile/update/9000"
+    let url = "http://localhost:5000/user/profile/update/"+userId;
 
     let updateUserProfileJSON = JSON.stringify({"firstName": "Shouldn't change",
     "lastName": "Shouldn't change",
@@ -129,10 +131,10 @@ function successMessageForProfileModal(){
 }
 
 async function getUserFollowers(){
-    let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/user/followers/32"
+    let url = "http://127.0.0.1:5000/user/followers/"+userId;
 
     let response = await fetch(url);
-
+    console.log(response);
     if(response.status === 200){
         let body = await response.json();
         // console.log(body);
@@ -173,7 +175,7 @@ function populateUserFollowers(followerBody){
 async function getFollowerImage(followerBody){
     for(follower in followerBody){
         let image_Element = document.getElementById(`${follower}-image`);
-        let url = `http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/user/image/${followerBody[follower]}`;
+        let url = `http://localhost:5000/user/image/${followerBody[follower]}`;
         console.log(url);
         let response = await fetch(url);
         if(response.status === 200){
@@ -188,7 +190,7 @@ async function getFollowerImage(followerBody){
 }
 
 async function getGroupsForUser(){
-    let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/group/user/10"
+    let url = "http://localhost:5000/group/user/"+userId
 
     let response = await fetch(url);
 
@@ -247,6 +249,11 @@ async function follow_user(){
     });
     console.log(followResponse);
     let followResponseBody = await followResponse.json();
+    if(followResponse.status == 200){
+        window.location.href = frontendUrl+"/profilepage/profile-page.html?userId="+loggedInUserId;
+    } else {
+        alert("Can only follow a user once.");
+    }
     console.log(followResponseBody);
 }
 submitFollow.addEventListener("click", follow_user);
@@ -262,6 +269,11 @@ async function unfollow_user(){
         body:unfollowJson
     });
     let unfollowResponseBody = await unfollowResponse.json();
+    if(unfollowResponse.status == 200){
+        window.location.href = frontendUrl+"/profilepage/profile-page.html?userId="+loggedInUserId;
+    } else {
+        alert("You have already unfollowed that User");
+    }
     console.log(unfollowResponseBody);
 }
 submitUnfollow.addEventListener("click", unfollow_user);
