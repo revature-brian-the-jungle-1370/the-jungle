@@ -8,6 +8,9 @@ async function create_div_from_post_response(post){
       if(response.status === 200){
           user_image_text = await response.text();
         }
+
+      //Get Username
+      let post_username = await get_username(post.user_id)
   
       //Check if liked
       let post_response = await get_relevant_liketable_post(post.post_id)
@@ -39,7 +42,7 @@ async function create_div_from_post_response(post){
         <div class="flex-row">
           <div class="overlap-group2">
             <div class="new-york-ny valign-text-middle">`+ date +`</div>
-            <div class="username-1 valign-text-middle poppins-bold-cape-cod-20px">JostSNL21</div>
+            <div class="username-1 valign-text-middle poppins-bold-cape-cod-20px">`+ post_username +`</div>
             <img class="feed-avatar-1" src="data:image/PNG;base64, `+ user_image_text + `" alt="img/ellipse-1@2x.png" />
           </div>
           <input type="image" class="three-dots-icon" src="img/trash-bin.svg"`+ 
@@ -66,7 +69,7 @@ async function create_div_from_post_response(post){
       <div class="flex-row">
         <div class="overlap-group2">
           <div class="new-york-ny valign-text-middle">`+ date +`</div>
-          <div class="username-1 valign-text-middle poppins-bold-cape-cod-20px">JostSNL21</div>
+          <div class="username-1 valign-text-middle poppins-bold-cape-cod-20px">`+ post_username +`</div>
           <img class="feed-avatar-1" src="data:image/PNG;base64, `+ user_image_text + `" alt="img/ellipse-1@2x.png" />
         </div>
         <input type="image" class="three-dots-icon-1" src="img/trash-bin.svg" id="deletePost${post.post_id}" onclick="deletePost(${post.post_id})"/>
@@ -88,6 +91,18 @@ async function create_div_from_post_response(post){
     }
   
     return postBox
+}
+
+//----------------------------------------------- USERNAME ------------------------------------------------------------------
+async function get_username(user_id){
+  user_url = python_url + `user/${user_id}`
+  let response = await fetch(user_url, {
+    method: "GET"
+  });
+  if(response.status === 200){
+    let body = await response.json()
+    return body["username"]
+  }
 }
 
 //----------------------------------------------- BOOKMARK POST FUNCTION-----------------------------------------------------

@@ -24,11 +24,7 @@ import java.time.Duration;
 @RunWith(Cucumber.class)
 @CucumberOptions(
     //features = "classpath:features", 
-<<<<<<< HEAD
     features = "src/test/resources/features/individualGroup/individualGroup.feature",
-=======
-    features = "src/test/resources/features/individualGroup/individualgroup.feature",
->>>>>>> ca7ce8a5bdd43910833725c50d596145752a0021
     glue = "E2E.steps", 
     plugin = { "pretty", "html:src/test/java/resources/reports/html-reports.html" })
 public class TestRunner {

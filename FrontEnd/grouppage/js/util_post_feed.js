@@ -15,6 +15,9 @@ async function create_div_from_post_response(post){
     if(response.status === 200){
         user_image_text = await response.text();}
 
+    //get Username
+    let post_username = await get_username(post.user_id)
+
     //get the post image
     url = python_url + "post/image/" + post.post_id;
     response = await fetch(url);
@@ -32,26 +35,13 @@ async function create_div_from_post_response(post){
     post_response = await get_relevant_liketable_post(post.post_id)
     let heart_icon_path = post_response["message"] != "Like not found" ? "../img/heart-icon@2x.svg" : "../img/heart-icon-empty.svg"
 
-  // <div class="overlap-group3-1" id="comment_div_${post.post_id} style="display:block" ">
-  //   <div class="feed-container">
-  //     <div class="feed valign-text-middle">
-  //       <textarea placeholder="What's on your mind?" id="commentInput_${post.post_id}"></textarea>
-  //     </div>
-  //     <img class="feed-button" src="img/feed-button@2x.svg" />
-  //     <button id="sendCommentButton_${post.post_id}" onclick="comment_post_as_user(${post.post_id})" `+
-  //          `type="button" class="btn btn-primary">Comment</button>
-  //   </div>
-  //   <p id="comment_info_${post.post_id}"></p>
-  //   <img class="line-under-feed" src="img/line-under-feed@2x.svg" />
-  // </div>
-
     if(response.status === 200){
         const image_text = await response.text();
         postBox.innerHTML =
       `<div class="flex-row">
         <div class="overlap-group">
           <div class="new-york-ny valign-text-middle poppins-bold-pink-swan-14px"> `+ date_2 +` </div>
-          <div class="username-1 valign-text-middle poppins-bold-cape-cod-20px">JostSNL21</div>
+          <div class="username-1 valign-text-middle poppins-bold-cape-cod-20px">`+ post_username +`</div>
           <img class="feed-avatar" src="data:image/PNG;base64,`+ user_image_text  + `" alt="user_image_text" />
         </div>
         <input type="image" class="three-dots-icon" src="img/trash-bin.svg"`+ 
@@ -76,7 +66,7 @@ async function create_div_from_post_response(post){
       `<div class="flex-row">
         <div class="overlap-group">
           <div class="new-york-ny valign-text-middle poppins-bold-pink-swan-14px"> `+ date_2 +` </div>
-          <div class="username-1 valign-text-middle poppins-bold-cape-cod-20px">JostSNL21</div>
+          <div class="username-1 valign-text-middle poppins-bold-cape-cod-20px">`+ post_username + `</div>
           <img class="feed-avatar" id="UserImage`+ post.post_id +`" src="data:image/PNG;base64,`+ user_image_text  + `" />
         </div>
         <input type="image" class="three-dots-icon" src="img/trash-bin.svg"`+
@@ -98,6 +88,18 @@ async function create_div_from_post_response(post){
       }
     
     return postBox
+}
+
+//----------------------------------------------- USERNAME ------------------------------------------------------------------
+async function get_username(user_id){
+  user_url = python_url + `user/${user_id}`
+  let response = await fetch(user_url, {
+    method: "GET"
+  });
+  if(response.status === 200){
+    let body = await response.json()
+    return body["username"]
+  }
 }
 
 //----------------------------------------------- BOOKMARK POST FUNCTION-----------------------------------------------------
