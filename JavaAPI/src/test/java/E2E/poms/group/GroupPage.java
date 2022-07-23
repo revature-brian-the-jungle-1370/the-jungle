@@ -44,7 +44,7 @@ public class GroupPage {
     @FindBy(id = "postInfo")
     public WebElement getPostInfoNotification;
 
-    @FindBy(xpath = "//p[@id='allpost']/div[1]/div/button")
+    @FindBy(xpath = "//p[@id='allpost']/div[1]/div[1]/input")
     public WebElement getDeleteGroupPostButton;
 
     @FindBy(xpath = "//div[@id='userGroups-div']/div[1]/div")

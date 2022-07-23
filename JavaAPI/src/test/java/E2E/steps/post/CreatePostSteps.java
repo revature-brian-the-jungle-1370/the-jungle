@@ -11,6 +11,7 @@ import java.util.Set;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.UnhandledAlertException;
@@ -38,7 +39,9 @@ public class CreatePostSteps {
     }
 
     public void logoutAfterTest(){
-        TestRunner.rlsPom.logoutButton.click();
+        //TestRunner.rlsPom.logoutButton.click();
+        JavascriptExecutor js = (JavascriptExecutor) TestRunner.driver;
+        js.executeScript("document.getElementById('logoutBtn').click();");
     }
 
     @Given("the user is on their dashboard page")
@@ -113,8 +116,8 @@ public class CreatePostSteps {
     public void the_user_will_see_an_error_message_in_the_post_feed() throws InterruptedException {
         try {
             TestRunner.driver.navigate().refresh();
-            TestRunner.explicitWait.until(ExpectedConditions.elementToBeClickable(TestRunner.rlsPom.logoutButton));
-            Thread.sleep(2000);
+            //TestRunner.explicitWait.until(ExpectedConditions.elementToBeClickable(TestRunner.rlsPom.logoutButton));
+            Thread.sleep(3000);
             Assert.assertEquals(TestRunner.driver.findElements(By.className("post")).size(),postCount);
             logoutAfterTest();
         }

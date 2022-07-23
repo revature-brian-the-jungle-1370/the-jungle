@@ -1,5 +1,5 @@
-let python_url =  "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/";
-let java_url =    "http://ec2-52-200-53-62.compute-1.amazonaws.com:8080/";
+//let python_url =  "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/";
+//let java_url =    "http://ec2-52-200-53-62.compute-1.amazonaws.com:8080/";
 // let python_url = "http://127.0.0.1:5000/"
 // let java_url =    "http://127.0.0.1:8080/";
 
@@ -22,7 +22,7 @@ async function create_div_from_post_response(post){
     let date_2 = date_time.toDateString();
 
     //Check if bookmarked
-    bm_url = python_url + "bookmark/" + localStorage.getItem("user_id") + "/" + post.post_id
+    bm_url = python_url + "bookmark/" + localStorage.getItem("userId") + "/" + post.post_id
     let bm_response = await fetch(bm_url);
     let post_response = await bm_response.json()
     let bm_icon_path = post_response["message"] != "Bookmark not found" ? "../img/bookmark_saved.svg" : "../img/bookmark_unsaved.svg"
@@ -103,7 +103,7 @@ async function create_div_from_post_response(post){
 //----------------------------------------------- BOOKMARK POST FUNCTION-----------------------------------------------------
 
 async function bookmark_post_as_user(post_id){
-  url = python_url + `bookmark/${localStorage.getItem("user_id")}/${post_id}`
+  url = python_url + `bookmark/${localStorage.getItem("userId")}/${post_id}`
   let response = await fetch(url, {
     method: "POST",
     headers: {

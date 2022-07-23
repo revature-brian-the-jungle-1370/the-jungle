@@ -5,6 +5,8 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+import java.util.Random;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
@@ -33,6 +35,14 @@ public class RegisterUserSteps {
    }
 
    // Needs to be changed every time you run end to end tests
+   @When("the user enters email into the new account form randomly")
+   public void the_user_enters_email_into_the_new_account_form_randomly() {
+        Random r = new Random();
+        String a = Integer.toString(r.nextInt());
+        String out = "E2E"+a+"@email.com";
+       TestRunner.rlsPom.signUpEmail.sendKeys(out);
+   }
+
    @When("the user enters email into the new account form")
    public void the_user_enters_email_into_the_new_account_form() {
        TestRunner.rlsPom.signUpEmail.sendKeys("E2E@test.comaoivnavoan2222234");
@@ -58,12 +68,25 @@ public class RegisterUserSteps {
    }
 
    // Needs to be changed every time you run end to end tests
-   @When("the user replaces a correct username into the new account form")
-   public void the_user_replaces_a_correct_username_into_the_new_account_form() {
-       TestRunner.rlsPom.signUpUsername.clear();
-       TestRunner.rlsPom.signUpUsername.sendKeys("goodusernamewavoin2222234");
-       TestRunner.rlsPom.signUpPassword.click();
+   @When("the user replaces a correct username into the new account form randomly")
+   public void the_user_replaces_a_correct_username_into_the_new_account_form_randomly() {
+
+        Random rand = new Random();
+        int d = rand.nextInt();
+        String username = "tun" + d;
+
+        TestRunner.rlsPom.signUpUsername.clear();
+        TestRunner.rlsPom.signUpUsername.sendKeys(username);
+        TestRunner.rlsPom.signUpPassword.click();
    }
+
+      // Needs to be changed every time you run end to end tests
+      @When("the user replaces a correct username into the new account form")
+      public void the_user_replaces_a_correct_username_into_the_new_account_form() {
+           TestRunner.rlsPom.signUpUsername.clear();
+           TestRunner.rlsPom.signUpUsername.sendKeys("goodusernamewavoin2222234");
+           TestRunner.rlsPom.signUpPassword.click();
+      }
 
    @When("the user clicks on the submit button in the new account form")
    public void the_user_clicks_on_the_submit_button_in_the_new_account_form() {

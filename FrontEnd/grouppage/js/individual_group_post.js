@@ -1,4 +1,5 @@
 let tableBody = document.getElementById("postBody");
+//let python_url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000";
 
 //--------------------------------------------------- CREATE GROUP POST FUNCTION-------------------------------------------------------
 
@@ -43,7 +44,7 @@ async function createGroupPost() {
 //--------------------------------------------------- LOAD GROUP POST FUNCTION-------------------------------------------------------
 async function getPost() {
   let group_id = Number(localStorage.getItem("groupId"));
-  let response = await fetch(python_url + "/group_post/group/" + group_id, { //replace with "/group_post/group/" + group_id
+  let response = await fetch(python_url + "group_post/group/" + group_id, { //replace with "/group_post/group/" + group_id
     method: "GET",
     mode: "cors",
   });
@@ -119,7 +120,7 @@ async function unlikePost(post_id) {
 }
 
 async function get_relevant_liketable_post(post_id){
-  let liketable_url = python_url + "likes/" + localStorage.getItem("user_id") + "/" + post_id
+  let liketable_url = python_url + "likes/" + localStorage.getItem("userId") + "/" + post_id
   let response = await fetch(liketable_url, {
     method: "GET",
     mode: "cors"
@@ -136,7 +137,7 @@ async function get_relevant_liketable_post(post_id){
 }
 
 async function update_relevant_liketable_post(post_id){
-  let liketable_url = python_url + "likes/" + localStorage.getItem("user_id") + "/" + post_id
+  let liketable_url = python_url + "likes/" + localStorage.getItem("userId") + "/" + post_id
   let response = await fetch(liketable_url, {
     method: "POST",
     headers: {

@@ -4,6 +4,8 @@ import E2E.runner.TestRunner;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 
@@ -61,7 +63,9 @@ public class LoginSteps {
     @When("user clicks on the logout button")
     public void user_clicks_on_the_log_out_button() throws InterruptedException {
         Thread.sleep(1000);
-        TestRunner.rlsPom.logoutButton.click();
+        JavascriptExecutor js = (JavascriptExecutor) TestRunner.driver;
+        js.executeScript("document.getElementById('logoutBtn').click();");
+        //TestRunner.rlsPom.logoutButton.click();
     }
 
     @Then("user will be redirected to the landing page")
