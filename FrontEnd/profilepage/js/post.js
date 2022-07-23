@@ -14,9 +14,11 @@ let java_url =    "http://localhost:8080/";
     userId=loggedInUserId;
   }
   if(createPostModal!=null && userId!=loggedInUserId){
+    // console.log("hjhfdbsjdbjsbdhb")
     createPostModal.remove();
     document.getElementById("createPostBtn").remove();
     document.getElementById("userImageFileInput").remove();
+    document.getElementById("updateProfileEditProfileBtn").remove();
     //currentUsername=JSON.parse(localStorage.getItem("visitedUser")).username; 
   }
 })();
