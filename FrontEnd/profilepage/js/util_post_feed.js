@@ -54,7 +54,7 @@ async function create_div_from_post_response(post){
           ` id="likePost_${post.post_id}" onclick="toggle_like_post(${post.post_id})" />
           <p id="post-like-count_${post.post_id}">` + post.likes + `</p>
           <input type="image" class="chat-bubble-icon" src="img/chat-bubble-icon@2x.svg"`+
-            ` id="commentPost${post.post_id}" onclick="toggle_comment_div(${post.post_id})"/>
+            ` id="commentPost${post.post_id}" onclick="getComments(`+post.post_id+`)"/>
           <img class="share-icon" src="img/share-icon@2x.svg" />
           <input type="image" class="bookmark-icon" src=`+ bm_icon_path +
             ` id="bookmarkPost${post.post_id}" onclick="bookmark_post_as_user(${post.post_id})"/>
@@ -79,7 +79,7 @@ async function create_div_from_post_response(post){
         ` id="likePost_${post.post_id}" onclick="toggle_like_post(${post.post_id})" />
         <p id="post-like-count_${post.post_id}">` + post.likes + `</p>
         <input type="image" class="chat-bubble-icon" src="img/chat-bubble-icon@2x.svg"`+
-            ` id="commentPost${post.post_id}" onclick="toggle_comment_div(${post.post_id})"/>
+            ` id="commentPost${post.post_id}" onclick="getComments(`+post.post_id+`)"/>
         <img class="share-icon" src="img/share-icon@2x.svg" />
         <input type="image" class="bookmark-icon" src=`+ bm_icon_path +
             ` id="bookmarkPost${post.post_id}" onclick="bookmark_post_as_user(${post.post_id})"/>
@@ -93,6 +93,19 @@ async function create_div_from_post_response(post){
     return postBox
 }
 
+//----------------------------------------------- USER IMAGE ---------------------------------------------------------------
+async function getPosterImage(user_id){
+  let url = "http://localhost:5000/user/image/" + user_id;
+  let response = await fetch(url);
+  let user_image_text;
+  if(response.status === 200){
+      user_image_text = await response.text();
+      if(!user_image_text.includes("data:image")){
+        user_image_text= "data:image/PNG;base64,"+user_image_text;
+      }
+      return user_image_text;
+    }
+}
 //----------------------------------------------- USERNAME ------------------------------------------------------------------
 async function get_username(user_id){
   user_url = python_url + `user/${user_id}`
@@ -270,25 +283,115 @@ async function toggle_like_comment(post_id){
   console.log("toggle_like_comment: " + post_url)
 }
 
-function toggle_comment_div(post_id){
-  // let comment_info_element = document.getElementById(`comment_info_${post_id}`)
-  // let comment_input_element = document.getElementById(`commentInput_${post_id}`)
-  // let div_element = document.getElementById(`comment_div_${post_id}`)
-  // //Clear out Error and Input area
-  // comment_info_element.innerHTML = ""
-  // comment_input_element.setAttribute("value", "")
-  // //Toggle Div
-  // if (div_element.style.display === "none") {
-  //   div_element.style.display = "block";
-  // } else {
-  //   div_element.style.display = "none";
-  // }
+async function getComments(post_id){
+  let commentData= await fetch("http://localhost:5000/postfeed/"+post_id);
+  if (commentData.status==200){
+    let comments= await commentData.json()
+    console.log(comments)
+    let commentDiv=document.getElementById("comment-section-post"+post_id); 
+    if(commentDiv!=null){
+      commentDiv.innerHTML="";
+    }
+    for(let comment of comments){
+      let image_text= await getPosterImage(comment.user_id);
+      displayComment(comment,post_id,image_text);
+    }
+    addCommentBox(post_id);
+  }
+ }
+
+function displayComment(commentJson,post_id,image_text){
+  let post= document.getElementById("post"+post_id);
+  let commentDiv=document.getElementById("comment-section-post"+post_id);
+  let comment=document.createElement("div");
+  if(commentDiv==null){
+    commentDiv=document.createElement("div");
+    commentDiv.setAttribute("id","comment-section-post"+post_id)
+    commentDiv.setAttribute("class","d-flex flex-column");
+  }
+  commentDiv.appendChild(comment);
+  comment.innerHTML=
+  `<div class="d-flex comment-row" >
+    <div class="overlap-group2 comment-avatar">
+      <div class="username-1 valign-text-middle poppins-bold-cape-cod-20px">${commentJson.user_name}</div>
+      <img class="feed-avatar-1" src="${image_text}" />
+    </div>
+    <div class="comments poppins-medium-black-18px" id=>
+    `
+    + commentJson.comment_text +
+    `
+    </div>
+  </div>
+  `;
+  post.appendChild(commentDiv);
 }
 
-async function comment_post_as_user(post_id){
-  // //Check input range
-  // //Make fetch to database
+function addCommentBox(post_id){
+  let commentDiv=document.getElementById("comment-section-post"+post_id); 
+  let commentBox=document.createElement("div");
+  let userImageFile=document.getElementById("userImageFile");
+  commentBox.innerHTML=
+  `<div class="d-flex comment-row" >
+  <div class="overlap-group2 comment-avatar">
+    <div class="username-1 valign-text-middle poppins-bold-cape-cod-20px">${JSON.parse(localStorage.getItem("userInfo")).username}</div>
+    <img class="feed-avatar-1" src="${userImageFile.src}" />
+  </div>
+  <div class="comments poppins-medium-black-18px" >
+    <input type="text" class="comment-box" id="comment-box-post`+post_id+`" placeholder="comment">
+  </div>
+  `;
+  if(commentDiv==null){
+    let post= document.getElementById("post"+post_id);
+    commentDiv=document.createElement("div");
+    commentDiv.setAttribute("id","comment-section-post"+post_id)
+    commentDiv.setAttribute("class","d-flex flex-column");
+    post.appendChild(commentDiv);
+  }
+  commentDiv.prepend(commentBox);
+  commentBox.addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') {
+      submitComments(post_id)
+    }
+});
 
-  // //Toggle Div on success
-  // toggle_comment_div(post_id)
+}
+
+async function submitComments(post_id){
+  let commentRow=document.getElementById("comment-box-post"+post_id).parentElement.parentElement;
+  let comment=document.getElementById("comment-box-post"+post_id);
+  let commentText=comment.value;
+  let url="http://127.0.0.1:5000/createComment";
+  let response= await fetch (url,{
+    method: 'POST',
+    headers:{
+      'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    "postId": post_id,
+    "userId": loggedInUserId,
+    "groupId": null,
+    "replyUser": userId,
+    "commentText": commentText
+    })
+  });
+
+  if(response.status==200){
+    let comment=document.createElement("div");
+    let userImageFile=document.getElementById("userImageFile");
+    comment.innerHTML=
+    `<div class="d-flex comment-row" >
+    <div class="overlap-group2 comment-avatar">
+      <div class="username-1 valign-text-middle poppins-bold-cape-cod-20px">${JSON.parse(localStorage.getItem("userInfo")).username}</div>
+      <img class="feed-avatar-1" src="${userImageFile.src}" />
+    </div>
+    <div class="comments poppins-medium-black-18px" >
+      `+
+      commentText
+      +
+      `
+    </div>
+    `;
+    comment.value="";
+    commentRow.parentNode.insertBefore(comment,commentRow.nextElementSibling);
+  }  
 }

@@ -1,9 +1,9 @@
 /** -----------------------------------------------------Join Group------------------------------------------------------------ */
 
 async function joinGroup() {
-    // const groupId = localStorage.getItem("groupId").value;
-    const userId = localStorage.getItem("userId");
     const groupId = localStorage.getItem("groupId");
+    const userId = localStorage.getItem("userId");
+    //const groupId = 7;
     //const userId = 9000;  //dont use it is hard coded
 
     let response = await fetch(url + `/group/join/${groupId}/${userId}`, {method: "POST", mode: "cors",
@@ -14,7 +14,7 @@ async function joinGroup() {
     if (response.status === 200) {
         const groupJoined = document.getElementById("groupJoined");
         groupJoined.style.display = "block";
-        setTimeout(fade_out, 5000);
+        setTimeout(fade_out, 15000);
         const hideJoinButton = document.getElementById("submitJoinGroup");
         hideJoinButton.style.display = "none";
     }

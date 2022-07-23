@@ -26,7 +26,8 @@ import java.time.Duration;
     //features = "classpath:features", 
     features = "src/test/resources/features/individualGroup/individualGroup.feature",
     glue = "E2E.steps", 
-    plugin = { "pretty", "html:src/test/java/resources/reports/html-reports.html" })
+    plugin = { "pretty", "html:src/test/java/resources/reports/html-reports.html" },
+    tags = "@chat_message")
 public class TestRunner {
 
    public static WebDriver driver;
@@ -63,7 +64,7 @@ public class TestRunner {
        individualGroupPOM = new IndividualGroupPOM(driver);
 
        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(6));
-       //explicitWait = new WebDriverWait(driver, Duration.ofSeconds(6));
+       explicitWait = new WebDriverWait(driver, Duration.ofSeconds(6));
        System.out.println("Set up complete!");
    }
 

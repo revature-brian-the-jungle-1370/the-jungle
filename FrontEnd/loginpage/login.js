@@ -8,17 +8,14 @@ const invalidIcon = document.querySelectorAll("[id='invalid-icon']");
 let invalidMessage = document.querySelectorAll("[id='signup-invalid-message']");
 let infoIcon = document.querySelectorAll(".info-icon");
 const url = "http://127.0.0.1:8080";
-// const frontendUrl="http://127.0.0.1:5500/FrontEnd";
-const frontendUrl="http://127.0.0.1:5500";
+const frontendUrl="http://127.0.0.1:5500/FrontEnd";
 let validateCounter = 0;
 
 const div = document.getElementById("errorMessageGoesHere");
 div.textContent = "";
 
 async function login() {
-
-  let response = await fetch(url + "/user/login", {
-
+  let response = await fetch(url+"/user/login", {
     method: "POST",
     mode: "cors",
     headers: { "Content-Type": "application/json" },
@@ -27,8 +24,9 @@ async function login() {
       passcode: passcodes.value,
     }),
   });
-
-  if (response.status === 200) {
+  console.log(response)
+  if (response.status == 200) {
+    console.log("received response")
     let body = await response.json();
     //  Storing information for later
     localStorage.setItem("userInfo", JSON.stringify(body));

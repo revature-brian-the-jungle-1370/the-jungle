@@ -5,6 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+
 public class UserProfile {
 
     private WebDriver driver;
@@ -22,7 +23,7 @@ public class UserProfile {
     public WebElement updateProfileUserBirthDateInput;
     @FindBy(id="updateProfileModalBtn")
     public WebElement saveChangesModalButton;
-    @FindBy(id="modalProfileSuccessMessage")
+    @FindBy(id="profileModalMsg")
     public WebElement profileSuccessMessage;
     @FindBy(id="profileCreateANewPost")
     public WebElement profileCreateANewPost;
@@ -42,6 +43,10 @@ public class UserProfile {
     public WebElement userFollower;
     @FindBy(id="follow-user-button")
     public WebElement followUserButton;
+    @FindBy(id="unfollow-user-button")
+    public WebElement unfollowUserButton;
+    @FindBy(xpath = "//div[@id=\"followers-div\"]/div/div/a")
+    public WebElement followersList;
 
 
 }

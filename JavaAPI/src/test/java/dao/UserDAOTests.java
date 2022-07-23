@@ -72,7 +72,7 @@ public class UserDAOTests {
         String testUsername = "test";
         ArrayList<User> results = userDAO.searchForUser(testUsername);
         for(User u: results){
-            Assert.assertTrue(u.getUsername().contains(testUsername));
+            Assert.assertTrue(u.getUsername().toLowerCase().contains(testUsername));
         }
     }
 
@@ -86,7 +86,7 @@ public class UserDAOTests {
     // TEST REQUEST LOGIN
     @Test
     public void testRequestLoginSuccess() {
-        User user = userDAO.requestLogin("username", "passcode");
+        User user = userDAO.requestLogin("username", "newpasscode");
         Assert.assertTrue(user.getUsername().equals("username"));
     }
 

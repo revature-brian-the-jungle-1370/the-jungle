@@ -39,7 +39,7 @@ class CommentDAOImp(CommentDAO):
         if not cursor.fetchone(): 
             raise PostNotFound('The post could not be found.')
 
-        sql = "select ct.comment_id, ct.post_id, ct.user_id , ct.group_id, ct.comment_text, ct.likes, " \
+        sql = "select ct.comment_id, ct.post_id, ct.user_id , ct.group_id, reply_user, ct.comment_text, ct.likes, " \
               "ct.date_time_of_creation, ut.username from comment_table as ct inner join user_table as ut " \
               "on ct.user_id = ut.user_id where post_id = %s;"
         cursor = connection.cursor()
@@ -47,6 +47,7 @@ class CommentDAOImp(CommentDAO):
         comment_record = cursor.fetchall()
         comment_list = []
         for comments in comment_record:
+            # print(ReturnedComment(*comments).make_dictionary())
             comment_list.append(ReturnedComment(*comments))
         return comment_list
 

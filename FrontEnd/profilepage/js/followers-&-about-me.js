@@ -4,6 +4,9 @@ const modalMessageDiv = document.getElementById("profileModalMsg");
 const followerSectionDiv = document.getElementById("followers-div");
 const groupSectionDiv = document.getElementById("groups-div");
 const submitFollow = document.getElementById("follow-user-button");
+const submitUnfollow = document.getElementById("unfollow-user-button");
+const frontendUrl="http://127.0.0.1:5500/Frontend";
+const pyUrl = "http://127.0.0.1:5000"
 
 /*
     Grabs the user profile information from the update profile modal and sends it through the layers
@@ -53,60 +56,6 @@ function setUpdatedProfileInfo(){
     bDay.innerText=userBirthDate.value;
 }
 
-function setProfileInfo(){
-    let name=document.getElementById("name-display");
-    let username=document.getElementById("username-display");
-    let bDay=document.getElementById("birthday-display");
-    let aboutMe=document.getElementById("about-me-display");
-  
-    let visitedUser;
-    if(userId!=loggedInUserId){
-        getProfileUser(userId,"visitedUser");
-       visitedUser=JSON.parse(localStorage.getItem("visitedUser"));
-    }
-    else{
-        getProfileUser(loggedInUserId,"userInfo");
-
-        visitedUser=JSON.parse(localStorage.getItem("userInfo"));
-    }
-    if(name && username && bDay && aboutMe){
-        name.innerText=visitedUser.firstName+" "+visitedUser.lastName
-        username.innerText="@"+visitedUser.username
-
-        let bd=new Date(visitedUser.birthday);
-        bDay.innerText=bd.getMonth()+"/"+bd.getDate()+"/"+bd.getFullYear();
-        aboutMe.innerText="about me:\n"+visitedUser.aboutMe 
-    }
-}
-/**
- * 
- * visitedUser	{"email":"email",
- * "first_name":"first name",
- * "last_name":"last name",
- * "passcode":"newpasscode",
- * "user_about":"smiley",
- * "user_birth_date":"Mon, 18 Jul 2022 00:00:00 GMT","
- * user_id":10000,
- * "user_image_format":"png",
- * "username":"username"}
- */
-
-async function getProfileUser(userId,key){
-    let response = await fetch("http://127.0.0.1:5000/user/"+userId);
-    if (response.status === 200) {
-      let body = await response.json();
-      //  Storing information for later
-      let convertedUser=JSON.stringify({//set to keys thats used by previous code or else exception
-        "userId":body.user_id,
-        "firstName":body.first_name,
-        "lastName":body.last_name,
-        "aboutMe":body.user_about,
-        "birthday":body.user_birth_date,
-        "username":body.username
-    })
-      localStorage.setItem(key, convertedUser);
-  }
-}
 /*
     Function to print error message for update profile modal
 */
@@ -130,10 +79,10 @@ function successMessageForProfileModal(){
 }
 
 async function getUserFollowers(){
-    let url = "http://127.0.0.1:5000/user/followers/"+userId
+    let url = "http://127.0.0.1:5000/user/followers/"+userId;
 
     let response = await fetch(url);
-
+    console.log(response);
     if(response.status === 200){
         let body = await response.json();
         // console.log(body);
@@ -141,7 +90,7 @@ async function getUserFollowers(){
         getFollowerImage(body);
     }
     else{
-        alert("Error with followers");
+        //alert("Error with followers");
     }
 }
 
@@ -174,19 +123,22 @@ function populateUserFollowers(followerBody){
 async function getFollowerImage(followerBody){
     for(follower in followerBody){
         let image_Element = document.getElementById(`${follower}-image`);
-        let url = `http://127.0.0.1:5000/user/image/${followerBody[follower]}`;
-        // console.log(url);
+        let url = `http://localhost:5000/user/image/${followerBody[follower]}`;
+        console.log(url);
         let response = await fetch(url);
         if(response.status === 200){
-            const image_text = await response.text();
-            image_Element.src = "data:image/PNG;base64,"+image_text;
+            let image_text = await response.text();
+            if(!image_text.includes("data:image")){
+                image_text="data:image/PNG;base64,"+image_text;
+            }
+            image_Element.src = image_text;
         }
 
 }
 }
 
 async function getGroupsForUser(){
-    let url = "http://127.0.0.1:5000/group/user/"+userId
+    let url = "http://localhost:5000/group/user/"+userId
 
     let response = await fetch(url);
 
@@ -234,23 +186,46 @@ async function getGroupImage(groupBody){
 function goToGroupPage(groupId){
     let groupLink = getElementById("groupLink-" + groupId);
     // groupLink.setAttribute("href", "")
-    localStorage.setItem("groupId") = groupId;
+    localStorage.setItem("groupId", groupId);
 }
 
 async function follow_user(){
-    let followJson = JSON.stringify({"user_follower_id": Number(loggedInUserID), "user_being_followed_id": Number(userId)});
-    let followResponse = await fetch("http://127.0.0.1:5000/user/" + loggedInUserID + "/followed/" + userId, {
+    let followJson = JSON.stringify({"user_follower_id": Number(loggedInUserId), "user_being_followed_id": Number(userId)});
+    let followResponse = await fetch("http://127.0.0.1:5000/user/" + loggedInUserId + "/followed/" + userId, {
         method: "POST",
         mode: "cors",
         headers: {"Content-Type": "application/json"},
         body:followJson
     });
-    // console.log(followResponse);
+    console.log(followResponse);
     let followResponseBody = await followResponse.json();
-
+    if(followResponse.status == 200){
+        window.location.href = frontendUrl+"/profilepage/profile-page.html?userId="+loggedInUserId;
+    } else {
+        alert("Can only follow a user once.");
+    }
+    console.log(followResponseBody);
 }
 submitFollow.addEventListener("click", follow_user);
 
+async function unfollow_user(){
+
+    let unfollowJson = JSON.stringify({"user_follower_id": loggedInUserId, "user_being_followed_id": userId});
+    let unfollowResponse = await fetch("http://127.0.0.1:5000/user/" + loggedInUserId + "/unfollowed/" + userId, {
+        method: "POST",
+        mode: "cors",
+        headers: {"Content-Type": "application/json"},
+        body:unfollowJson
+    });
+    let unfollowResponseBody = await unfollowResponse.json();
+    if(unfollowResponse.status == 200){
+        window.location.href = frontendUrl+"/profilepage/profile-page.html?userId="+loggedInUserId;
+    } else {
+        alert("You have already unfollowed that User");
+    }
+    console.log(unfollowResponseBody);
+}
+submitUnfollow.addEventListener("click", unfollow_user);
 
 setProfileInfo();
 getUserFollowers();

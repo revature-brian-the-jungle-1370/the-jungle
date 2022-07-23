@@ -1,6 +1,7 @@
+import json
 import logging
 
-from flask import Flask, request, jsonify,redirect,url_for,flash
+from flask import Flask, request, jsonify, flash
 from flask_cors import CORS
 
 from custom_exceptions.comment_not_found import CommentNotFound
@@ -20,6 +21,7 @@ from custom_exceptions.too_many_characters import TooManyCharacters
 from custom_exceptions.user_id_must_be_an_integer import UserIdMustBeAnInteger
 from custom_exceptions.user_image_not_found import UserImageNotFound
 from custom_exceptions.user_not_found import UserNotFound
+from custom_exceptions.follow_already_exists import FollowAlreadyExists
 from data_access_layer.implementation_classes.comment_dao import CommentDAOImp
 from data_access_layer.implementation_classes.create_post_dao import CreatePostDAOImp
 from data_access_layer.implementation_classes.group_dao import GroupDAOImp
@@ -203,36 +205,39 @@ def update_profile_info(user_id):
         exception_json = jsonify(exception_dictionary)
         return exception_json, 400
 
-@app.post("/user/<user_id>/new-password")
-def input_new_password(user_id):
-    try:
-        user_new_passcode = request.get_json()
-        print(user_new_passcode)
-        user = user_profile_service.service_get_user_profile_service(user_id)
-        user_profile_service.update_password_service(user.user_id,str(user_new_passcode["passcode"]))
-        user = user_profile_service.service_get_user_profile_service(user_id)
-        user_as_dictionary = user.make_dictionary()
-        return jsonify(user_as_dictionary), 200
-    except UserNotFound as e:
-        return str(e), 400
-
 @app.post("/user/reset-password")
 def reset_password():
     try:
         user_profile_email = request.get_json()
         if user_profile_dao.get_user_profile_by_email(user_profile_email["email"]) is not None:
-            print(user_profile_email["email"],flush=True)
             user_profile = user_profile_dao.get_user_profile_by_email(f"{user_profile_email['email']}")
-            print("GOT EMAIL STR" + str(user_profile))
             user_id = user_profile.user_id
-            return redirect(f"/user/{user_id}/new-password"), 200
+            #return redirect(f"/user/{user_id}/new-password"), 200
+            return json.dumps(user_id), 200
         else:
             flash('Invalid Email')
     except UserNotFound as e:
-        print("ERROR MESSAGE"+str(user_profile_email["email"]),flush=True)
+
         exception_dictionary = {"message":str(e)}
         exception_json = jsonify(exception_dictionary)
         return exception_json, 400
+
+@app.post("/user/<user_id>/new-password")
+def input_new_password(user_id):
+    try:
+        specialChars = "!@#$%^&*()-+?_=,<>/"
+        user_new_passcode = request.get_json()
+        if any(c in specialChars for c in user_new_passcode["passcode"]):
+            raise ValueError("Invalid Password Input")
+        user = user_profile_service.service_get_user_profile_service(user_id)
+        user_profile_service.update_password_service(user.user_id,str(user_new_passcode["passcode"]))
+        user = user_profile_service.service_get_user_profile_service(user_id)
+        user_as_dictionary = user.make_dictionary()
+        return jsonify(user_as_dictionary), 200
+    except ValueError as ve:
+        return str(ve),400
+    except UserNotFound as e:
+        return str(e), 400
 
 # -----------------------------------------------------------------------------------------------------
 
@@ -472,6 +477,7 @@ def get_comments_by_post_id(post_id: str):
         post_comments_as_dictionary = []
         for comments in results:
             dictionary_comment = comments.make_dictionary()
+            # print(dictionary_comment)
             post_comments_as_dictionary.append(dictionary_comment)
         return jsonify(post_comments_as_dictionary), 200
     except PostNotFound:
@@ -636,10 +642,16 @@ def follow_user(user_follower_id: int, user_being_followed_id: int):
         exception_dictionary = {"message": str(e)}
         exception_json = jsonify(exception_dictionary)
         return exception_json, 400
+    except FollowAlreadyExists as e:
+        exception_dictionary = {"message": str(e)}
+        exception_json = jsonify(exception_dictionary)
+        return exception_json, 400
 
 
 @app.post("/user/<user_follower_id>/unfollowed/<user_being_followed_id>")
 def unfollow_user(user_follower_id: int, user_being_followed_id: int):
+    user_being_followed_id = int(user_being_followed_id)
+    user_follower_id = int(user_follower_id)
     try:
         user_profile_service.unfollow_user_service(user_follower_id, user_being_followed_id)
         unfollow_dictionary = {"message": str(user_follower_id) + " has unfollowed " + str(user_being_followed_id)}
@@ -654,6 +666,10 @@ def unfollow_user(user_follower_id: int, user_being_followed_id: int):
         exception_json = jsonify(exception_dictionary)
         return exception_json, 400
     except UserNotFound as e:
+        exception_dictionary = {"message": str(e)}
+        exception_json = jsonify(exception_dictionary)
+        return exception_json, 400
+    except FollowAlreadyExists as e:
         exception_dictionary = {"message": str(e)}
         exception_json = jsonify(exception_dictionary)
         return exception_json, 400
@@ -711,6 +727,6 @@ def save_post_as_bookmark(user_id,post_id):
         exception_json = jsonify(exception_dictionary)
         return exception_json, 400
         
-app.run(host="0.0.0.0", port=5000,debug=True)
+app.run(port=5000,debug=True)
 
 # app.run()

@@ -70,11 +70,11 @@ async function creatorOf() {
     url = python_url + `creator/${groupId}`
     let response = await fetch(url)
     if(response.status === 200){
-        let body = await response.json()
-        console.log(body)
-        let newSect = document.getElementById("groupCreator")
-        newSect.innerHTML = ` <div id="groupCreator" class="creator valign-text-middle">${body[0][0]},${body[0][1]}</div>`
-        let username = document.getElementById("creatorUserName")
+        let body = await response.json();
+        console.log(body);
+        let newSect = document.getElementById("groupCreator");
+        newSect.innerHTML = ` <div id="groupCreator" class="creator valign-text-middle">${body[0][0]},${body[0][1]}</div>`;
+        let username = document.getElementById("creatorUserName");
         username.innerHTML = `<div id="creatorUserName"
         class="creator-username valign-text-middle poppins-medium-dove-gray-18px">
         @${body[0][2]}

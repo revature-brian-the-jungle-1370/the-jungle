@@ -2,6 +2,7 @@ from itsdangerous import base64_decode
 from custom_exceptions.follower_not_found import FollowerNotFound
 from custom_exceptions.user_image_not_found import UserImageNotFound
 from custom_exceptions.user_not_found import UserNotFound
+from custom_exceptions.follow_already_exists import FollowAlreadyExists
 from data_access_layer.abstract_classes.user_profile_dao_abs import UserProfileDAO
 from entities.user import User
 from util.database_connection import connection
@@ -189,14 +190,21 @@ class UserProfileDAOImp(UserProfileDAO):
         return following_dict
 
     def follow_user(self, user_follower_id: int, user_being_followed_id: int) -> bool:
-
+        #Check to see if user exists
         sql = "select * from user_table where user_id = %(user_id)s"
         cursor = connection.cursor()
         cursor.execute(sql, {"user_id": user_being_followed_id})
-
         if not cursor.fetchone() or user_follower_id<=0:
             raise UserNotFound(user_not_found_string)
         
+        #Check to see if user is already following
+        sql = "select * from user_follow_junction_table where user_id = %(user_id)s and user_follow_id = %(user_follow_id)s" 
+        cursor = connection.cursor()
+        cursor.execute(sql, {"user_id":  user_follower_id,"user_follow_id": user_being_followed_id})
+        if cursor.fetchone():
+            raise FollowAlreadyExists("User is already following that User.")
+
+        #Insert new following
         sql = "insert into user_follow_junction_table values(%(user_id)s, %(user_follow_id)s) RETURNING FALSE"
         cursor = connection.cursor()
         cursor.execute(sql, {"user_id":  user_follower_id,"user_follow_id": user_being_followed_id})
@@ -204,17 +212,27 @@ class UserProfileDAOImp(UserProfileDAO):
         return True
 
     def unfollow_user(self, user_follower_id: int, user_being_followed_id: int) -> bool:
+
         sql = "select * from user_follow_junction_table where user_follow_id = %(user_follow_id)s" \
               " and user_id = %(user_id)s"
-        cursor = connection.cursor()
+        cursor = connection.cursor()    
         cursor.execute(sql, {'user_follow_id': user_being_followed_id, "user_id": user_follower_id })
         if not cursor.fetchone():
             raise FollowerNotFound("The follower was not found.")
 
-        sql = "delete from user_follow_junction_table where user_follow_id = %(user_follow_id)s" \
-              " and user_id = %(user_id)s"
+        #Check to see if user has already unfollowed
+        sql = "select * from user_follow_junction_table where user_id = %(user_id)s and user_follow_id = %(user_follow_id)s"
         cursor = connection.cursor()
-        cursor.execute(sql, {"user_follow_id": user_follower_id, "user_id": user_being_followed_id})
+        cursor.execute(sql, {"user_id":  user_follower_id,"user_follow_id": user_being_followed_id})
+        if not cursor.fetchone():
+            raise FollowAlreadyExists("User has already unfollowed that User.")
+
+        sql = "delete from user_follow_junction_table where user_id = %(user_id)s" \
+              " and user_follow_id = %(user_follow_id)s"
+
+        cursor = connection.cursor()
+        cursor.execute(sql, {"user_id": user_follower_id, "user_follow_id": user_being_followed_id})
+        
         connection.commit()
         return True
 
