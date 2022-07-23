@@ -21,11 +21,13 @@
           </div>
           <div class="overlap-group1">
             <div class="flex-row">
-
               <!-- create post modal form -->
               <button id="updateProfileEditProfileBtn" type="button" class="btn edit-button" data-bs-toggle="modal" data-bs-target="#createPostModal">
                 <img src="img/Edit_Icon.png" alt="edit-icon" class="edit-icon"/> Create A New Post
               </button>
+            </div>
+            <br>
+            <div class="flex-row">
 
               <div class="modal fade" id="createPostModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -55,7 +57,6 @@
                 </div>
               </div>
               <!-- end create post modal form -->
-
               <!-- the post column -->
               <div class= "overlap-group1-1">
                 <div class = "col" id = "post column" >
@@ -114,6 +115,10 @@
 
           <div class="left-section"></div>
           <img class="line-left" src="img/line-left@1x.svg" />
+          <div class="toggle-feed">
+            <a href="javascript:void(0);"><img id="all_post_img_feed" src="./img/chat-icon@2x.svg" alt="All_Posts.png"></a>
+            <a href="javascript:void(0);"><img id="bkmk_post_img_feed" src="./img/bookmark_big.svg" alt="All_Posts.png" class="mt-2" style="filter: invert(17%) sepia(37%) saturate(2598%) hue-rotate(212deg) brightness(95%) contrast(93%);"></a>
+          </div>
           <!-- <div class="nav">
             <div class="chat-container">
               <div class="chat valign-text-middle poppins-semi-bold-astronaut-24px">Chat</div>
@@ -259,4 +264,5 @@
   <script src="js/SearchByUser.js"></script>
   <script src="js/followers-&-about-me.js"></script>
   <script src="js/userprofileimage-vfh.js"></script>
+  <script src="js/util_post_feed.js"></script>
 </html>

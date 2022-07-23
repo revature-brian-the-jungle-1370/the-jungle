@@ -16,12 +16,18 @@ def test_like_post_success():
 
 def test_get_user_profile_failure_not_int():
     try:
-        like_post_service.service_like_post(-5)
+        like_post_service.like_post_dao.like_comment = MagicMock(return_value=post_id)
+        assert like_post_service.service_like_comment(post_id)
     except ConnectionErrorr as e:
         assert str(e) == "post not found"
 
 def test_service_unlike_post():
-    like_post_service.LikePostDaoImp.unlike_post = MagicMock(return_value=3)
+    like_post_service.like_post_dao.unlike_post = MagicMock(return_value=post_id)
+    assert like_post_service.service_unlike_post(post_id)
 
 def test_service_unlike_comment():
-    like_post_service.LikePostDaoImp.unlike_comment = MagicMock(return_value=3)
+    try:
+        like_post_service.like_post_dao.unlike_comment = MagicMock(return_value=post_id)
+        assert like_post_service.service_unlike_comment(post_id)
+    except ConnectionErrorr as e:
+        assert str(e) == "post not found"

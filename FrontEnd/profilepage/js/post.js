@@ -1,6 +1,10 @@
 let params = new URLSearchParams(location.search);
 let userId=params.get('userId');
 let loggedInUserId = JSON.parse(localStorage.getItem("userInfo")).userId; 
+//let python_url =  "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/";
+//let java_url =    "http://ec2-52-200-53-62.compute-1.amazonaws.com:8080/";
+let python_url = "http://localhost:5000/"
+let java_url =    "http://localhost:8080/";
 
 (function () {
   console.log(document.getElementById("label-for-profil-img"));
@@ -106,10 +110,24 @@ async function createPostWithImage() {
   }
 
 
-  async function getPost() {
-    let response = await fetch("http://127.0.0.1:5000/user/post/" + userId, {
+  async function getBookMarkedPost() {
+    sessionStorage.setItem("curr_feed", "bkmk")
+    let response = await fetch(python_url + "bookmark/" + userId, {     //All bookmarked posts
       method: "GET",
-      mode: "cors",
+      mode: "cors"
+    });
+    if (response.status === 200) {
+      let body = await response.json();
+      populateData(body);
+    }
+  }
+  
+
+  async function getPost() {
+    sessionStorage.setItem("curr_feed", "all")
+    let response = await fetch(python_url + "user/post/" + userId, {    //All user Posts
+      method: "GET",
+      mode: "cors"
     });
     if (response.status === 200) {
       let body = await response.json();
@@ -119,98 +137,25 @@ async function createPostWithImage() {
   
   async function populateData(responseBody) {
     const allpost = document.getElementById("post column");
-    for (let post of responseBody) {
-      let postBox = document.createElement('div');
-      // postBox.innerHTML = `
-      // <div class="overlap-group1" id="newPost${post.post_id}">
-      // <p> ` + post.post_id + `</p>
-      // <p> ` + post.user_id + `</p>
-      // <p> ` + post.post_text + `</p> 
-      // <p> Likes: ` + post.likes + `</p>
-      // <p> ` + post.date_time_of_creation + `</p>
-      // <button id="deletePost${post.post_id}" onclick="deleteGroupPost(${post.post_id})">Delete</button>
-      // </div>`
-      
-      //add the poster image
-      let url = "http://127.0.0.1:5000/user/image/" + post.user_id;
-      let response = await fetch(url);
-      let user_image_text;
-      if(response.status === 200){
-          user_image_text = await response.text();
-        }
-  
-      //get the post image
-      url = "http://127.0.0.1:5000/post/image/" + post.post_id;
-      console.log(url);
-      response = await fetch(url);
-      console.log(response);
-      let date_time = new Date(post.date_time_of_creation)
-      let date = date_time.toDateString();
-  
-      if(response.status === 200){//if there is an image then this one, else the other one
-        const image_text = await response.text();
-        // let testString= `fvfcbvbnsbvncvncbnvbcnvbcnbncbvbbv,xcmbvljfnsf;v
-        // vfbvxbcn,vbjxnvjndfjnvjlnfdljnvljdnfljvnldjfnvljndflnbdlvndfv
-        // vnfjvjfnvjndfjnvljnfljnv
-        // fnvf,mvn,
-        // vn,m,nfv,nv,mv
-        // vsnv,nn,fv
-        // v,nbv,n,nf v'fbvnfbvmn 
-        // bf,bv,nf,nv,fv
-        // bvnfbv,n,nfv nf`;
-
-        if(!user_image_text.includes("data:image")){
-          user_image_text= "data:image/PNG;base64,"+user_image_text;
-        }
-        postBox.innerHTML =
-        `<div class = "post" id = "post`+ post.post_id + `">
-        <div class="flex-row">
-          <div class="overlap-group2">
-            <div class="new-york-ny valign-text-middle">`+ date +`</div>
-            <div class="username-1 valign-text-middle poppins-bold-cape-cod-20px">JostSNL21</div>
-            <img class="feed-avatar-1" src="`+ user_image_text + `" alt="img/ellipse-1@2x.png" />
-          </div>
-          <input type="image" class="three-dots-icon-1" src="img/bi-three-dots@2x.svg" id="deletePost${post.post_id}" onclick="deletePost(${post.post_id})"/>
-        </div>
-        <img class="feed-picture" src="`+ image_text +`" />
-        <div class="icon-container">
-          <input type="image" class="heart-icon" src="img/heart-icon@2x.svg" />
-          <p>` + post.likes + `</p>
-          <input type="image" class="chat-bubble-icon" src="img/chat-bubble-icon@2x.svg"/>
-          <img class="share-icon" src="img/share-icon@2x.svg" />
-        </div>
-        <div class="overlap-group-1">
-        <div class="feed-text-2 valign-text-middle poppins-medium-black-18px">`+ post.post_text + `</div>
-      </div>
-      </div>`
-      }else{
-        postBox.innerHTML = 
-      `<div class = "post" id = "post`+ post.post_id + `">
-      <div class="flex-row">
-        <div class="overlap-group2">
-          <div class="new-york-ny valign-text-middle">`+ date +`</div>
-          <div class="username-1 valign-text-middle poppins-bold-cape-cod-20px">JostSNL21</div>
-          <img class="feed-avatar-1" src="`+ user_image_text + `" alt="img/ellipse-1@2x.png" />
-        </div>
-        <input type="image" class="three-dots-icon-1" src="img/bi-three-dots@2x.svg" id="deletePost${post.post_id}" onclick="deletePost(${post.post_id})"/>
-      </div>
-      <div class="icon-container">
-        <input type="image" class="heart-icon" src="img/heart-icon@2x.svg" />
-        <p>` + post.likes + `</p>
-        <input type="image" class="chat-bubble-icon" src="img/chat-bubble-icon@2x.svg"/>
-        <img class="share-icon" src="img/share-icon@2x.svg" />
-      </div>
-      <div class="overlap-group-1">
-      <div class="feed-text-2 valign-text-middle poppins-medium-black-18px">`+ post.post_text + `</div>
-    </div>
-    </div>`
-      }
-  
+    allpost.innerHTML = ''
+    for (let post of responseBody){
+      let postBox = await create_div_from_post_response(post)
       allpost.appendChild(postBox)
     }
   }
   
-  getPost()
+  function setFeed(curr_feed){
+    sessionStorage.setItem("curr_feed", curr_feed)
+    window.location.href = "./profile-page.html?userId="+userId;
+  }
+
+  function setAllFeed(){
+    setFeed("all")
+  } 
+  
+  function setBookmarkFeed(){
+    setFeed("bkmk")
+  }
 
   async function deletePost(post_id) {
     let deleteResponse = await fetch("http://127.0.0.1:5000/group_post/" + post_id, {
@@ -221,3 +166,17 @@ async function createPostWithImage() {
       document.getElementById("post" + post_id).remove();
     }
   }
+
+  async function setup_profile_page_first_time(){
+    document.getElementById("all_post_img_feed").addEventListener("click", setAllFeed)
+    document.getElementById("bkmk_post_img_feed").addEventListener("click", setBookmarkFeed)
+    // Setup Feed on first loading
+    let curr_feed = sessionStorage.getItem("curr_feed")
+    if(curr_feed !== "all" && curr_feed !== "bkmk"){
+      sessionStorage.setItem("curr_feed", "all")
+    }
+    curr_feed = sessionStorage.getItem("curr_feed")
+    sessionStorage.getItem("curr_feed") === "all" ? await getPost() : await getBookMarkedPost()
+  }
+
+  setup_profile_page_first_time()

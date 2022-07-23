@@ -2,11 +2,11 @@
 //let java_url =    "http://ec2-52-200-53-62.compute-1.amazonaws.com:8080/";
 let python_url = "http://localhost:5000/"
 let java_url =    "http://localhost:8080/";
-localStorage.setItem("user_id", 13)
-localStorage.setItem("group_id", 10000) //Comment this out later. This is to test functionality
+//localStorage.setItem("user_id", 13)
+//localStorage.setItem("group_id", 10000) //Comment this out later. This is to test functionality
 
 async function getUserInGroups() {
-    groupId = localStorage.getItem("group_id")
+    groupId = localStorage.getItem("groupId")
     url = python_url + `GroupJunction/UserList/${groupId}`
 
     let response = await fetch(url)
@@ -52,7 +52,7 @@ function goToProfilePage(user_id){
 
 async function deleteRequest() {
     userId = 9000
-    groupId = localStorage.getItem("group_id")
+    groupId = localStorage.getItem("groupId")
     url = python_url + `group/leave/${userId}/${groupId}`
     let response = await fetch(url, { method: "DELETE", headers: { "Content-Type": "application/json" }});
     if(response.status === 200){
@@ -66,7 +66,7 @@ async function deleteRequest() {
 }
 
 async function creatorOf() {
-    groupId = localStorage.getItem("group_id")
+    groupId = localStorage.getItem("groupId")
     url = python_url + `creator/${groupId}`
     let response = await fetch(url)
     if(response.status === 200){
@@ -85,7 +85,7 @@ async function creatorOf() {
 }
 
 async function getGroup() {
-    groupId = window.localStorage.getItem("group_id")
+    groupId = window.localStorage.getItem("groupId")
 
     let url =  python_url + `group/${groupId}`
 

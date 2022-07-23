@@ -128,3 +128,11 @@ function toggle_bookmark_icon(post_id, msg){
   cur_icon = msg === "Bookmark added" ? "../img/bookmark_saved.svg" : "../img/bookmark_unsaved.svg"
   element.setAttribute("src", cur_icon)
 }
+
+function toggle_hide_div(div_element){
+  if (div_element.style.display === "none"){
+    div_element.style.display = "block";
+  } else {
+    div_element.style.display = "none";
+  }
+}

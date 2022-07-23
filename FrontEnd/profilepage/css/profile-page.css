@@ -878,6 +878,18 @@
   width: 592px;
 }
 
+/* Toggle Feed */
+.toggle-feed{
+  align-items: flex-start;
+  display: flex;
+  flex-direction: row;
+  left: 378px;
+  min-height: 96px;
+  position: absolute;
+  top: 100px;
+  width: 592px;
+}
+
 #searchInputBox {
   border-style: hidden;
   border-width: 0px;

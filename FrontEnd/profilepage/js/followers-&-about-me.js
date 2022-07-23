@@ -212,7 +212,10 @@ function populateGroupsForUsers(groupBody){
 
         let groupNameDiv = document.createElement("div");
         groupNameDiv.setAttribute("class", "name valign-text-middle poppins-bold-astronaut-22px");
-        groupNameDiv.innerHTML = `<a id="groupLink-${groupBody[group].groupId}" class="name valign-text-middle poppins-bold-astronaut-22px" onclick=goToGroupPage(${groupBody[group].groupId}) href="../individualgrouppage/individual-group-page.html">${groupBody[group].groupName}</a>`;
+        groupNameDiv.innerHTML = `<a id="groupLink-${groupBody[group].groupId}"`+
+            ` class="name valign-text-middle poppins-bold-astronaut-22px"`+
+            ` onclick=goToGroupPage(${groupBody[group].groupId})`+
+            ` href="../individualgrouppage/individual-group-page.html">${groupBody[group].groupName}</a>`;
         groupSectionDiv.appendChild(groupsDiv);
         groupsDiv.appendChild(groupImage);
         groupsDiv.appendChild(groupNameDiv);
@@ -232,7 +235,6 @@ function goToGroupPage(groupId){
     let groupLink = getElementById("groupLink-" + groupId);
     // groupLink.setAttribute("href", "")
     localStorage.setItem("groupId") = groupId;
-    localStorage.getItem("groupId");
 }
 
 async function follow_user(){
