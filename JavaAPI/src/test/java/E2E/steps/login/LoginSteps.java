@@ -21,6 +21,7 @@ public class LoginSteps {
         TestRunner.rlsPom.unfocus_text_box(TestRunner.rlsPom.passcodeInput);
         TestRunner.explicitWait.until(ExpectedConditions.elementSelectionStateToBe(TestRunner.rlsPom.submitPasscode, false));
         TestRunner.rlsPom.submitPasscode.click();
+        TestRunner.explicitWait.until(ExpectedConditions.titleContains("Login"));
     }
     
     @Given("the user is on the log-in page")
@@ -115,7 +116,7 @@ public class LoginSteps {
     public void enters_their_email_address(){
         TestRunner.rlsPom.emailInput.sendKeys("email");
         TestRunner.rlsPom.unfocus_text_box(TestRunner.rlsPom.emailInput);
-        }
+    }
 
     @When("clicks the reset password button")
     public void clicks_reset_password_button() throws InterruptedException{

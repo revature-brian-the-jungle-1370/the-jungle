@@ -37,7 +37,7 @@ public class UserProfile {
     @FindBy(id= "newPostText")
     public WebElement newPostText;
 
-    @FindBy(className= "three-dots-icon")
+    @FindBy(className= "three-dots-icon-1")
     public WebElement deleteButton;
 
     @FindBy(id="postErrorMessage")

@@ -13,7 +13,7 @@ const div = document.getElementById("errorMessageGoesHere")
 div.textContent = ""
 
 async function checkEmailForResetPassword() {
-    let response = fetch(url+"/user/reset-password", {
+    let response = await fetch(url+"/user/reset-password", {
         method: "POST",
         mode: "cors",
         headers: {"Content-Type": "application/json",
