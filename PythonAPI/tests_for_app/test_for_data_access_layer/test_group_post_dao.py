@@ -80,7 +80,7 @@ def test_get_all_posts_by_group_id_fails():
 # ------------------------------ TEST DELETE POST BY ID ------------------------------
 # Test delete post
 def test_delete_post_by_id():
-    delete_post = post_dao.delete_post_by_post_id(505)
+    delete_post = post_dao.delete_post_by_post_id(506)
     assert delete_post
 
 
