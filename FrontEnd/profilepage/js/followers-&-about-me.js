@@ -80,7 +80,7 @@ function successMessageForProfileModal(){
 }
 
 async function getUserFollowers(){
-    let userId= localStorage("userId");
+    let userId= localStorage.getItem("userId");
     let url = "http://localhost:5000/user/followers/"+userId;
 
     let response = await fetch(url);
