@@ -13,11 +13,11 @@ const div = document.getElementById("errorMessageGoesHere")
 div.textContent = ""
 
 async function checkEmailForResetPassword() {
-    let response = fetch(url+"/user/reset-password", {
+    let response = await fetch(url+"/user/reset-password", {
         method: "POST",
         mode: "cors",
         headers: {"Content-Type": "application/json",
-                      "Accept" : "application/json"},
+                    "Accept" : "application/json"},
         body: JSON.stringify({
         email: email.value
         }),
@@ -29,7 +29,7 @@ async function checkEmailForResetPassword() {
         console.log(body)
         window.localStorage.setItem("user_id", body)
         console.log("Successful transaction")
-        window.location.href = "../loginpage/newpassword.html" //  Redirect to Here????
+        window.location.href = "../loginpage/newpassword.html" //  Redirect to Here
     } else {
         div.textContent = "Invalid email";
     }
