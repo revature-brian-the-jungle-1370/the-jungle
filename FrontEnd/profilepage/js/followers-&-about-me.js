@@ -5,8 +5,8 @@ const followerSectionDiv = document.getElementById("followers-div");
 const groupSectionDiv = document.getElementById("groups-div");
 const submitFollow = document.getElementById("follow-user-button");
 const submitUnfollow = document.getElementById("unfollow-user-button");
-const frontendUrl="http://dans-code.net.s3-website-us-east-1.amazonaws.com/Frontend";
-const pyUrl = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000"
+const frontendUrl="http://localhost:5500/Frontend";
+const pyUrl = "http://localhost:5000"
 
 /*
     Grabs the user profile information from the update profile modal and sends it through the layers
@@ -14,7 +14,7 @@ const pyUrl = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000"
 async function updateUserProfileData(){
     // Will need to update this to use the current user's ID
     let loggedInUserId = localStorage.getItem("userId");
-    let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/user/profile/update/"+loggedInUserId;
+    let url = "http://localhost:5000/user/profile/update/"+loggedInUserId;
     let updateUserProfileJSON = JSON.stringify({
     "firstName": "Shouldn't change",
     "lastName": "Shouldn't change",
@@ -81,7 +81,7 @@ function successMessageForProfileModal(){
 
 async function getUserFollowers(){
     let userId= localStorage("userId");
-    let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/user/followers/"+userId;
+    let url = "http://localhost:5000/user/followers/"+userId;
 
     let response = await fetch(url);
     console.log(response);
@@ -125,7 +125,7 @@ function populateUserFollowers(followerBody){
 async function getFollowerImage(followerBody){
     for(follower in followerBody){
         let image_Element = document.getElementById(`${follower}-image`);
-        let url = `http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/user/image/${followerBody[follower]}`;
+        let url = `http://localhost:5000/user/image/${followerBody[follower]}`;
         // console.log(url);
         let response = await fetch(url);
         if(response.status === 200){
@@ -141,7 +141,7 @@ async function getFollowerImage(followerBody){
 
 async function getGroupsForUser(){
     let userId= localStorage.getItem("userId");
-    let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/group/user/"+userId;
+    let url = "http://localhost:5000/group/user/"+userId;
 
     let response = await fetch(url);
 
@@ -194,7 +194,7 @@ function goToGroupPage(groupId){
 
 async function follow_user(){
     let followJson = JSON.stringify({"user_follower_id": Number(loggedInUserId), "user_being_followed_id": Number(userId)});
-    let followResponse = await fetch("http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/user/" + loggedInUserId + "/followed/" + userId, {
+    let followResponse = await fetch("http://localhost:5000/user/" + loggedInUserId + "/followed/" + userId, {
         method: "POST",
         mode: "cors",
         headers: {"Content-Type": "application/json"},
@@ -214,7 +214,7 @@ submitFollow.addEventListener("click", follow_user);
 async function unfollow_user(){
 
     let unfollowJson = JSON.stringify({"user_follower_id": loggedInUserId, "user_being_followed_id": userId});
-    let unfollowResponse = await fetch("http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/user/" + loggedInUserId + "/unfollowed/" + userId, {
+    let unfollowResponse = await fetch("http://localhost:5000/user/" + loggedInUserId + "/unfollowed/" + userId, {
         method: "POST",
         mode: "cors",
         headers: {"Content-Type": "application/json"},

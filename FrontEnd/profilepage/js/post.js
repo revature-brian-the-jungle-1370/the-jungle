@@ -1,10 +1,8 @@
 let params = new URLSearchParams(location.search);
 let userId=params.get('userId');
 let loggedInUserId = JSON.parse(localStorage.getItem("userInfo")).userId; 
-let python_url =  "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/";
-let java_url =    "http://ec2-52-200-53-62.compute-1.amazonaws.com:8080/";
-//let python_url = "http://localhost:5000/"
-//let java_url =    "http://localhost:8080/";
+let python_url =  "http://localhost:5000/";
+let java_url =    "http://localhost:8080/";
 
 //et currentUsername=JSON.parse(localStorage.getItem("userInfo")).username; 
 (function () {
@@ -63,7 +61,7 @@ function setProfileInfo(){
 */
 
 async function getProfileUser(userId,key){
-  let response = await fetch("http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/user/"+userId);
+  let response = await fetch("http://localhost:5000/user/"+userId);
   if (response.status === 200) {
     let body = await response.json();
     //  Storing information for later
@@ -85,7 +83,7 @@ async function getProfileUser(userId,key){
 //rough method to get the post image from database, needs to be updated to get the image format
 //please refactor and modify as needed
 async function getPostImage(){// the postId and imageFormat will probably have to be passed as parameters
-  let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/post/image/" + postId;//post_id parameter
+  let url = "http://localhost:5000/post/image/" + postId;//post_id parameter
   console.log(url);
   let response = await fetch(url);
   console.log(response);
@@ -111,7 +109,7 @@ async function createPost(){
       alert('Post can only contain 1-500 characters')
     }
     let postJson = JSON.stringify({"user_id":userId, "post_text": postText.value, "image_format": "false"});
-    let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/post"
+    let url = "http://localhost:5000/post"
     let thePost = await fetch(url, {
         method:"POST",
         headers:{'Content-Type': 'application/json'}, 
@@ -139,7 +137,7 @@ async function createPostWithImage() {
       if (base64gif.length < 1_000_000 && base64gif.startsWith("data:image/")){
         let postText = document.getElementById("postText");
         let postJson = JSON.stringify({"user_id":userId, "post_text": postText.value, "image_format": "true"});
-        let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/post"
+        let url = "http://localhost:5000/post"
         
         //Inserts the post into the post table
         let thePost = await fetch(url, {
@@ -150,7 +148,7 @@ async function createPostWithImage() {
         //Inserts the image into the post_image_table
         console.log(thePost["post_id"]);
         let response = await fetch(
-            "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/post/image/" + thePost["post_id"], {
+            "http://localhost:5000/post/image/" + thePost["post_id"], {
               method: "POST",
               headers: {"Content-Type": "application/json"},
               body: String(base64gif)
@@ -224,7 +222,7 @@ async function createPostWithImage() {
   }
 
   async function deletePost(post_id) {
-    let deleteResponse = await fetch("http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/group_post/" + post_id, {
+    let deleteResponse = await fetch("http://localhost:5000/group_post/" + post_id, {
       method: "DELETE"
     })
     console.log(deleteResponse)

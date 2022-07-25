@@ -6,8 +6,8 @@ const specialChar2 = /[ `^*()+=\[\]{};':"\\|,<>\/~]/;
 const invalidIcon = document.querySelectorAll("[id='invalid-icon']");
 let invalidMessage = document.querySelectorAll("[id='passcode-invalid-message']");
 let infoIcon = document.querySelectorAll(".info-icon");
-const frontendUrl = "http://s3.amazonaws.com/dans-code.net"
-const url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000";
+const frontendUrl = "http://localhost:5500"
+const url = "http://localhost:5000";
 // const frontendUrl = "http://127.0.0.1:5500"
 // const url = "http://127.0.0.1:5000";
 let validateCounter = 0;

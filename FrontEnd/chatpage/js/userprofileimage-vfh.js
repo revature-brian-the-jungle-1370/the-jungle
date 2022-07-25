@@ -2,7 +2,7 @@
 // let userId = 9000;
 
 async function getUserImage(){
-  let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/user/image/" + loggedInUserId;
+  let url = "http://localhost:5000/user/image/" + loggedInUserId;
   console.log(url);
   let response = await fetch(url);
   console.log(response);
@@ -42,7 +42,7 @@ async function createUserWithImage() {
         // console.log(theUser["user_id"]);
         let response = await fetch(
             //"http://127.0.0.1:5000/user/image/" + theUser["user_id"], 
-            "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/user/image/" + loggedInUserId, { 
+            "http://localhost:5000/user/image/" + loggedInUserId, { 
               method: "POST",
               headers: {"Content-Type": "application/json"},
               body: String(base64gif)

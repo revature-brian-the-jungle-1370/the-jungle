@@ -1,5 +1,4 @@
-const url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/";
-//const url = "http://localhost:5000/"
+const url = "http://localhost:5000/"
 
 /** -----------------------------------------------------Create Group------------------------------------------------------------ */
 async function createGroup() {

@@ -1,4 +1,4 @@
-let java_url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:8080";
+let java_url = "http://localhost:8080";
 // let userId = 9000;
 
 async function getUserImage(){
@@ -38,7 +38,7 @@ async function createUserWithImage() {
         //ADJUSTING
         // console.log(theUser["user_id"]);
         let response = await fetch(
-         //"http://ec2-52-200-53-62.compute-1.amazonaws.com:8080/user/image/" + theUser["user_id"], 
+         //"http://localhost:8080/user/image/" + theUser["user_id"], 
           python_url + "/user/image/" + userId, { 
               method: "POST",
               headers: {"Content-Type": "application/json"},

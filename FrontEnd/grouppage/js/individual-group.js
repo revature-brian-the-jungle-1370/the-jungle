@@ -5,7 +5,7 @@ async function joinGroup() {
     const userId = localStorage.getItem("userId");
     //const groupId = 7;
     //const userId = 9000;  //dont use it is hard coded
-    const url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000";
+    const url = "http://localhost:5000";
 
     let response = await fetch(url + `/group/join/${groupId}/${userId}`, {method: "POST", mode: "cors",
         headers: {"Content-Type": "application/json"}});

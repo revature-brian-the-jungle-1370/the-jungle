@@ -1,5 +1,4 @@
 let tableBody = document.getElementById("postBody");
-//let python_url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000";
 
 //--------------------------------------------------- CREATE GROUP POST FUNCTION-------------------------------------------------------
 

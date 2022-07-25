@@ -174,8 +174,7 @@ async function registerUser(event) {
   let userUsername = jsonUserObject.username;
   let userPasscode = jsonUserObject.passcode;
   let userBirthdate = jsonUserObject.userBirthdate;
-  const registerRoute = "http://ec2-52-200-53-62.compute-1.amazonaws.com:8080/user/registration";
-  //const registerRoute = "http://localhost:8080/user/registration"
+  const registerRoute = "http://localhost:8080/user/registration";
   let response = await fetch(registerRoute, {
     headers: { "Content-Type": "application/json" },
     method: ["POST"],
