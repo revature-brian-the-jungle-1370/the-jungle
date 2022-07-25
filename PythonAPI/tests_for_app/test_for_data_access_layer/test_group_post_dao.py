@@ -44,8 +44,8 @@ def test_get_post_by_id():
 
 # Test get another post by ID
 def test_get_another_post_by_id():
-    get_post = post_dao.get_post_by_id(7)
-    assert get_post.post_id == 7
+    get_post = post_dao.get_post_by_id(517)
+    assert get_post.post_id == 517
 
 
 # Test get post by ID failed
@@ -79,14 +79,15 @@ def test_get_all_posts_by_group_id_fails():
 
 # ------------------------------ TEST DELETE POST BY ID ------------------------------
 # Test delete post
-def test_delete_post_by_id():
-    delete_post = post_dao.delete_post_by_post_id(9004)
-    assert delete_post
+# def test_delete_post_by_id():
+#     delete_post = post_dao.delete_post_by_post_id(505)
+#     assert delete_post
 
 
 # Test delete post failed
 def test_delete_post_by_id_fail_post_not_found():
     try:
         post_dao.delete_post_by_post_id(9000)
+        assert False
     except PostNotFound as e:
         assert str(e) == "Post Not Found!"

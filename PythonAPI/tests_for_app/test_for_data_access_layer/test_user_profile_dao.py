@@ -33,8 +33,11 @@ def create_fake_user():
     yield
     sql = "delete from user_table where user_id >= 100000000;"
     cursor = connection.cursor()
-    cursor.execute(sql)
-    connection.commit()
+    try:
+        cursor.execute(sql)
+        connection.commit()
+    except:
+        connection.rollback()
 
 
 @fixture
@@ -216,15 +219,15 @@ def test_follow_user_failure_user_follower_id_failure(create_fake_user):
     try:
         user_profile_dao.follow_user(-1, 100000000)
         assert False
-    except UserNotFound as e:
-        assert str(e) == user_not_found_message
+    except UserIdMustBeAnInteger as e:
+        assert str(e) == "The user id must be an integer."
 
 def test_follow_user_failure_user_follower_string_failure(create_fake_user):
     try:
         user_profile_dao.follow_user(100000000, "apple")
         assert False
     except UserIdMustBeAnInteger as e:
-        assert str(e) == user_not_found_message
+        assert str(e) == "The user id must be an integer."
 
 
 def test_follow_user_failure_user_being_followed_id_failure(create_fake_user):

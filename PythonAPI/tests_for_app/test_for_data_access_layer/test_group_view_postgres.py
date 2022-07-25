@@ -6,7 +6,7 @@ group_view_postgres_dao = GroupViewPostgresDao()
 # test retrieving group by group id
 def test_check_group_info_valid_by_id():
     groups = group_view_postgres_dao.get_group_by_id(10000)
-    assert groups.group_name == "group name"
+    assert groups.group_name == "Testing Group"
 
 
 # test grabbing groups by there id
