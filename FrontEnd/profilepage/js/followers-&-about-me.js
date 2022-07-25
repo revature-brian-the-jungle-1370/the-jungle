@@ -5,7 +5,7 @@ const followerSectionDiv = document.getElementById("followers-div");
 const groupSectionDiv = document.getElementById("groups-div");
 const submitFollow = document.getElementById("follow-user-button");
 const submitUnfollow = document.getElementById("unfollow-user-button");
-const frontendUrl="http://dans-code.net.s3-website-us-east-1.amazonaws.com/Frontend";
+const frontendUrl="http://dans-code.net.s3-website-us-east-1.amazonaws.com/FrontEnd";
 const pyUrl = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000"
 
 /*
