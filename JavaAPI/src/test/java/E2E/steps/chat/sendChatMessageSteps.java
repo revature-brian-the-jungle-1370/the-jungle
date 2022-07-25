@@ -19,7 +19,7 @@ public class sendChatMessageSteps {
 
     @Given("I am on the login page")
     public void i_am_on_the_login_page() {
-        TestRunner.driver.get("http://127.0.0.1:5000/FrontEnd/loginpage/login.html");
+        TestRunner.driver.get("http://dans-code.net.s3-website-us-east-1.amazonaws.com/FrontEnd/loginpage/login.html");
     }
     @When("I login as username username")
     public void i_login_as_username_username() {

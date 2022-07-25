@@ -96,7 +96,7 @@ public class IndividualGroupSteps {
 
     @Then("the post gets liked")
     public void the_post_gets_liked() throws InterruptedException{
-        Assert.assertEquals(TestRunner.driver.getCurrentUrl(), "http://127.0.0.1:5500/FrontEnd/grouppage/individualgrouppage/individual-group-page.html");
+        Assert.assertEquals(TestRunner.driver.getCurrentUrl(), "http://dans-code.net.s3-website-us-east-1.amazonaws.com/FrontEnd/grouppage/individualgrouppage/individual-group-page.html");
         Thread.sleep(2000);
     }
 
@@ -108,7 +108,7 @@ public class IndividualGroupSteps {
 
     @Then("the post gets unliked")
     public void the_post_gets_unliked() throws InterruptedException{
-        Assert.assertEquals(TestRunner.driver.getCurrentUrl(), "http://127.0.0.1:5500/FrontEnd/grouppage/individualgrouppage/individual-group-page.html");
+        Assert.assertEquals(TestRunner.driver.getCurrentUrl(), "http://dans-code.net.s3-website-us-east-1.amazonaws.com/FrontEnd/grouppage/individualgrouppage/individual-group-page.html");
         Thread.sleep(2000);
     }
 
@@ -119,7 +119,7 @@ public class IndividualGroupSteps {
     }
     @Then("the post is saved and the icon is changed")
     public void the_post_is_saved_and_the_icon_is_changed() throws InterruptedException{
-        Assert.assertEquals(TestRunner.driver.getCurrentUrl(), "http://127.0.0.1:5500/FrontEnd/grouppage/individualgrouppage/individual-group-page.html");
+        Assert.assertEquals(TestRunner.driver.getCurrentUrl(), "http://dans-code.net.s3-website-us-east-1.amazonaws.com/FrontEnd/grouppage/individualgrouppage/individual-group-page.html");
         Thread.sleep(2000);
     }
 
@@ -130,7 +130,7 @@ public class IndividualGroupSteps {
     }
     @Then("the post is unsaved and the icon is changed")
     public void the_post_is_unsaved_and_the_icon_is_changed() throws InterruptedException{
-        Assert.assertEquals(TestRunner.driver.getCurrentUrl(), "http://127.0.0.1:5500/FrontEnd/grouppage/individualgrouppage/individual-group-page.html");
+        Assert.assertEquals(TestRunner.driver.getCurrentUrl(), "http://dans-code.net.s3-website-us-east-1.amazonaws.com/FrontEnd/grouppage/individualgrouppage/individual-group-page.html");
         Thread.sleep(2000);
     }
 
