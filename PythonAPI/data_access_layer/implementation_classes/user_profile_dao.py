@@ -191,8 +191,8 @@ class UserProfileDAOImp(UserProfileDAO):
         return following_dict
 
     def follow_user(self, user_follower_id: int, user_being_followed_id: int) -> bool:
-        if not str(user_follower_id).isnumeric() and not str(user_being_followed_id).isnumeric:
-            raise UserIdMustBeAnInteger("The user id must be an integer.")
+        if not (isinstance(user_follower_id, int) and isinstance(user_being_followed_id, int)):
+            raise UserIdMustBeAnInteger('The user id must be an integer.')
         #Check to see if user exists
         sql = "select * from user_table where user_id = %(user_id)s"
         cursor = connection.cursor()
@@ -215,8 +215,8 @@ class UserProfileDAOImp(UserProfileDAO):
         return True
 
     def unfollow_user(self, user_follower_id: int, user_being_followed_id: int) -> bool:
-        if not str(user_follower_id).isnumeric() and not str(user_being_followed_id).isnumeric:
-            raise UserIdMustBeAnInteger("The user id must be an integer.")
+        if not (isinstance(user_follower_id, int) and isinstance(user_being_followed_id, int)):
+            raise UserIdMustBeAnInteger('The user id must be an integer.')
         sql = "select * from user_follow_junction_table where user_follow_id = %(user_follow_id)s" \
               " and user_id = %(user_id)s"
         cursor = connection.cursor()    

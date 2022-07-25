@@ -219,15 +219,15 @@ def test_follow_user_failure_user_follower_id_failure(create_fake_user):
     try:
         user_profile_dao.follow_user(-1, 100000000)
         assert False
-    except UserIdMustBeAnInteger as e:
-        assert str(e) == "The user id must be an integer."
+    except UserNotFound as e:
+        assert str(e) == 'The user could not be found.'
 
 def test_follow_user_failure_user_follower_string_failure(create_fake_user):
     try:
         user_profile_dao.follow_user(100000000, "apple")
         assert False
     except UserIdMustBeAnInteger as e:
-        assert str(e) == "The user id must be an integer."
+        assert str(e) == 'The user id must be an integer.'
 
 
 def test_follow_user_failure_user_being_followed_id_failure(create_fake_user):
