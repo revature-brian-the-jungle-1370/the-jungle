@@ -129,17 +129,6 @@ async function createPostWithImage() {
     const allpost = document.getElementById("post column");
     for (let post of responseBody) {
       let postBox = document.createElement('div');
-      // postBox.innerHTML = `
-      // <div class="overlap-group1" id="newPost${post.post_id}">
-      // <p> ` + post.post_id + `</p>
-      // <p> ` + post.user_id + `</p>
-      // <p> ` + post.post_text + `</p> 
-      // <p> Likes: ` + post.likes + `</p>
-      // <p> ` + post.date_time_of_creation + `</p>
-      // <button id="deletePost${post.post_id}" onclick="deleteGroupPost(${post.post_id})">Delete</button>
-      // </div>`
-      
-      //add the poster image
       let url = "http://127.0.0.1:5000/user/image/" + post.user_id;
       let response = await fetch(url);
       let user_image_text;

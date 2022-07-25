@@ -10,7 +10,6 @@ let infoIcon = document.querySelectorAll(".info-icon");
 // const url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:8080";
 // const frontendUrl="http://dans-code.net.s3-website-us-east-1.amazonaws.com";
 const url = "http://127.0.0.1:8080";
-// const frontendUrl="http://127.0.0.1:5500/FrontEnd";
 const frontendUrl="http://127.0.0.1:5500";
 let validateCounter = 0;
 
@@ -34,9 +33,7 @@ async function login() {
     //  Storing information for later
     localStorage.setItem("userInfo", JSON.stringify(body));
     localStorage.setItem("userId", body.userId);
-    //window.location.href = "http://127.0.0.1:5500/profilepage/profile-page.html"
     window.location.href = "../profilepage/profile-page.html?user_id="+body.userId
-    //?userId="+body.userId; //  Redirect to Here????
   } else {
     div.textContent = "Incorrect Username or Password";
   }
