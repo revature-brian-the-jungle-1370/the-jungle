@@ -1,7 +1,7 @@
 // small helper function for selecting element by id
 let id = (id) => document.getElementById(id);
 
-let linkstring = "http://ec2-52-200-53-62.compute-1.amazonaws.com";
+let linkstring = "ec2-52-200-53-62.compute-1.amazonaws.com";
 
 storage = JSON.parse(localStorage.getItem("userInfo"));
 
