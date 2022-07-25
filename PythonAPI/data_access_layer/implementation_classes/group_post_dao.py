@@ -80,12 +80,13 @@ class GroupPostDAO(GroupPostDAOAbs):
         return post_list
 
     def delete_post_by_post_id(self, post_id: int) -> bool:
-        sql = "delete from post_table where post_id = %s"
-        cursor = connection.cursor()
-        cursor.execute(sql, [post_id])
-        if cursor.rowcount == 0:
+        try:
+            sql = "delete from post_table where post_id = %s"
+            cursor = connection.cursor()
+            cursor.execute(sql, [post_id])
+        except PostNotFound as e:
             connection.rollback()
-            raise PostNotFound("Post Not Found!")
+            raise str(e) == "Post Not Found!"
         
         connection.commit()
         return True

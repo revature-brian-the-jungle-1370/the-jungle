@@ -8,7 +8,7 @@ commentObj= CommentDAOImp()
 
 
 def test_like_comment_success():
-    comments=commentObj.get_comment_by_post_id(230)
+    comments=commentObj.get_comment_by_post_id(228)
     # for comment in comments:
     likes=comments[0].likes
     liked_comment=like_post_dao.like_comment(comments[0].comment_id)
