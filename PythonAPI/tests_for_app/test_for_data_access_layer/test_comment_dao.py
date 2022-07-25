@@ -1,7 +1,6 @@
-from xml.etree.ElementTree import Comment
 from pytest import fixture
 from util.database_connection import connection
-from custom_exceptions.post_image_not_found import PostImageNotFound
+from custom_exceptions.comment_not_found import CommentNotFound
 from custom_exceptions.post_not_found import PostNotFound
 from custom_exceptions.user_not_found import UserNotFound
 from entities.post import Post
@@ -42,14 +41,50 @@ def create_fake_post(create_fake_user):  # notice that the other fixture has bee
 @fixture
 def create_fake_comment(create_fake_post):
     """For putting a fake post into the database for testing then removing the fake user."""
-    sql = "insert into comment_table values(100000000, 100000000, 100000000, 100000000, NULL, 'unit test', 0, default);"
+    sql = "insert into comment_table values(10000, 10000, 10000, 10000, NULL, 'unit test', 0, default);"
+    cursor = connection.cursor()
+    cursor.execute(sql)
+    connection.commit()
+    yield  # everything after the yield is the teardown and called after each test
+    sql = "delete from comment_table where user_id = 10000;"
     cursor = connection.cursor()
     cursor.execute(sql)
     connection.commit()
 
 
 
-def test_create_comment_success(create_fake_user):
+def test_create_comment_success():
     new_comment = create_comment_dao.create_comment(post_id=10_000, user_id=10_000, comment_text="success", group_id=10_000, reply_user=10_000)
     print(new_comment.make_dictionary())
     assert new_comment
+
+def test_create_comment_failure():
+    try:
+        create_comment_dao.create_comment(post_id=100_000, user_id=10_000, comment_text="failure", group_id=10_000, reply_user=10_000)
+        assert False
+    except PostNotFound as e:
+        assert str(e) == 'The post could not be found.'    
+
+def test_get_comment_by_post_id_success():
+    assert create_comment_dao.get_comment_by_post_id(post_id=10_000)
+
+def test_get_comment_by_post_id_failure():
+    try:
+        create_comment_dao.get_comment_by_post_id(post_id=100_000)
+        assert False
+    except PostNotFound as e:
+        assert str(e) == 'The post could not be found.'
+
+def test_delete_comment_success(create_fake_comment):
+    try:
+        create_comment_dao.delete_comment(10000)
+        assert True
+    except CommentNotFound as e:
+        assert str(e) == 'Comment Not Found.'
+
+def test_delete_comment_failure(create_fake_comment):
+    try:
+        create_comment_dao.delete_comment(10001)
+        assert True
+    except CommentNotFound as e:
+        assert str(e) == 'Comment Not Found'
