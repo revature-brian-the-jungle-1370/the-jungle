@@ -120,6 +120,17 @@
     </dependencies>
     <build>
         <plugins>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.4</version>
+                <configuration>
+                   <mainClass>dev.com.thejungle.app.app.App</mainClass>
+                </configuration>
+             </plugin>
+
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
