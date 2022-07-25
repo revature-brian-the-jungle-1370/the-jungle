@@ -16,7 +16,7 @@ public class EditProfileSteps {
 
     @Given("the user is on the homepage")
     public void the_user_is_on_the_homepage() {
-        TestRunner.driver.get("http://127.0.0.1:5000/FrontEnd/loginpage/login.html");
+        TestRunner.driver.get("http://127.0.0.1:5500/FrontEnd/loginpage/login.html");
         TestRunner.rlsPom.usernameInput.sendKeys("username");
         TestRunner.rlsPom.passcodeInput.sendKeys("passcode");
         TestRunner.driver.findElement(By.xpath("/html/body")).click();

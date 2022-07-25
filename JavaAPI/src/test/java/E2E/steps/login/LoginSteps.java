@@ -25,7 +25,7 @@ public class LoginSteps {
     
     @Given("the user is on the log-in page")
     public void the_user_is_on_the_log_in_page() {
-        TestRunner.driver.get("https://s3.amazonaws.com/dans-code.net/FrontEnd/loginpage/login.html");
+        TestRunner.driver.get("http://localhost:5500/FrontEnd/loginpage/login.html");
     }
 
     @When("the user enters correct username")
@@ -80,7 +80,7 @@ public class LoginSteps {
     @Given("user is on the log-in page")
     public void user_is_on_the_log_in_page() {
         //TestRunner.driver.get("http://dans-code.net.s3-website-us-east-1.amazonaws.com/FrontEnd/loginpage/login.html");
-        TestRunner.driver.get("https://s3.amazonaws.com/dans-code.net/FrontEnd/loginpage/login.html");
+        TestRunner.driver.get("https://localhost:5500/FrontEnd/loginpage/login.html");
     }
 
     @When("the user enters wrong username")
