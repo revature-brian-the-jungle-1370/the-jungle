@@ -5,8 +5,8 @@ const followerSectionDiv = document.getElementById("followers-div");
 const groupSectionDiv = document.getElementById("groups-div");
 const submitFollow = document.getElementById("follow-user-button");
 const submitUnfollow = document.getElementById("unfollow-user-button");
-const frontendUrl="http://127.0.0.1:5500/Frontend";
-const pyUrl = "http://127.0.0.1:5000"
+const frontendUrl="http://dans-code.net.s3-website-us-east-1.amazonaws.com/Frontend";
+const pyUrl = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000"
 
 /*
     Grabs the user profile information from the update profile modal and sends it through the layers
@@ -214,7 +214,7 @@ submitFollow.addEventListener("click", follow_user);
 async function unfollow_user(){
 
     let unfollowJson = JSON.stringify({"user_follower_id": loggedInUserId, "user_being_followed_id": userId});
-    let unfollowResponse = await fetch("http://127.0.0.1:5000/user/" + loggedInUserId + "/unfollowed/" + userId, {
+    let unfollowResponse = await fetch("http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/user/" + loggedInUserId + "/unfollowed/" + userId, {
         method: "POST",
         mode: "cors",
         headers: {"Content-Type": "application/json"},

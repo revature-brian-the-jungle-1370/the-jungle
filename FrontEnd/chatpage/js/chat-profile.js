@@ -61,7 +61,7 @@ function errorMessageForProfileModal(){
  */
 
 async function getProfileUser(userId,key){
-    let response = await fetch("http://localhost:5000/user/"+userId);
+    let response = await fetch("http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/user/"+userId);
     if (response.status === 200) {
       let body = await response.json();
       //  Storing information for later
@@ -79,7 +79,7 @@ async function getProfileUser(userId,key){
 
 async function updateUserProfileData(){
   // Will need to update this to use the current user's ID
-  let url = "http://localhost:5000/user/profile/update/"+loggedInUserId;
+  let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/user/profile/update/"+loggedInUserId;
   let updateUserProfileJSON = JSON.stringify({
   "firstName": "Shouldn't change",
   "lastName": "Shouldn't change",

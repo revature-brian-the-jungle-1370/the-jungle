@@ -94,7 +94,7 @@ async function create_div_from_post_response(post){
 
 //----------------------------------------------- USER IMAGE ---------------------------------------------------------------
 async function getPosterImage(user_id){
-  let url = "http://localhost:5000/user/image/" + user_id;
+  let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/user/image/" + user_id;
   let response = await fetch(url);
   let user_image_text;
   if(response.status === 200){
@@ -283,7 +283,7 @@ async function toggle_like_comment(post_id){
 }
 
 async function getComments(post_id){
-  let commentData= await fetch("http://localhost:5000/postfeed/"+post_id);
+  let commentData= await fetch("http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/postfeed/"+post_id);
   if (commentData.status==200){
     let comments= await commentData.json()
     console.log(comments)
@@ -359,7 +359,7 @@ async function submitComments(post_id){
   let commentRow=document.getElementById("comment-box-post"+post_id).parentElement.parentElement;
   let comment=document.getElementById("comment-box-post"+post_id);
   let commentText=comment.value;
-  let url="http://127.0.0.1:5000/createComment";
+  let url="http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/createComment";
   let response= await fetch (url,{
     method: 'POST',
     headers:{
