@@ -16,7 +16,8 @@ async function checkEmailForResetPassword() {
     let response = fetch(url+"/user/reset-password", {
         method: "POST",
         mode: "cors",
-        headers: { "Content-Type": "application/json"},
+        headers: {"Content-Type": "application/json",
+                      "Accept" : "application/json"},
         body: JSON.stringify({
         email: email.value
         }),
@@ -32,6 +33,7 @@ async function checkEmailForResetPassword() {
     } else {
         div.textContent = "Invalid email";
     }
+    
 }
 
 let jsonEmailObject = {

@@ -216,7 +216,7 @@ async function createPostWithImage() {
   }
 
   async function deletePost(post_id) {
-    let deleteResponse = await fetch("http://127.0.0.1:5000/group_post/" + post_id, {
+    let deleteResponse = await fetch("http://localhost:5000/group_post/" + post_id, {
       method: "DELETE"
     })
     console.log(deleteResponse)

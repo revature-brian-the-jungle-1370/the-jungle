@@ -69,7 +69,7 @@ public class FollowSteps {
     //Scenario 3 As a User I want to see my followers on the feed page
     //MAY CHANGE DEPENDING ON FUNCTIONALITY
     @Given("the user is logged in on homepage")
-    public void the_user_is_logged_in_on_homepage(){
+    public void the_user_is_logged_in_on_homepage() {
 
     }
 

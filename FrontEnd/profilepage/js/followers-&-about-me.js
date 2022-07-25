@@ -13,7 +13,7 @@ const pyUrl = "http://127.0.0.1:5000"
 */
 async function updateUserProfileData(){
     // Will need to update this to use the current user's ID
-    let url = "http://127.0.0.1:5000/user/profile/update/"+loggedInUserId;
+    let url = "http://localhost:5000/user/profile/update/"+loggedInUserId;
     let updateUserProfileJSON = JSON.stringify({
     "firstName": "Shouldn't change",
     "lastName": "Shouldn't change",
@@ -41,7 +41,7 @@ async function updateUserProfileData(){
         }
 }
 
-/* 
+/*
     Reset the modal data when you close it
 */
 function resetProfileModalData(){
@@ -124,7 +124,7 @@ async function getFollowerImage(followerBody){
     for(follower in followerBody){
         let image_Element = document.getElementById(`${follower}-image`);
         let url = `http://localhost:5000/user/image/${followerBody[follower]}`;
-        console.log(url);
+        // console.log(url);
         let response = await fetch(url);
         if(response.status === 200){
             let image_text = await response.text();
@@ -191,7 +191,7 @@ function goToGroupPage(groupId){
 
 async function follow_user(){
     let followJson = JSON.stringify({"user_follower_id": Number(loggedInUserId), "user_being_followed_id": Number(userId)});
-    let followResponse = await fetch("http://127.0.0.1:5000/user/" + loggedInUserId + "/followed/" + userId, {
+    let followResponse = await fetch("http://localhost:5000/user/" + loggedInUserId + "/followed/" + userId, {
         method: "POST",
         mode: "cors",
         headers: {"Content-Type": "application/json"},

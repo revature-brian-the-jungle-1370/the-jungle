@@ -11,7 +11,7 @@ Feature: Sending chat message
         Given I am on the chat page
         When I input a chat message
         Then I should see the message
-
+    
     Scenario: Send Too Long Message
         Given I am on the chat page
         When I input a very long chat message

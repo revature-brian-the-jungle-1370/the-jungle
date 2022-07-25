@@ -48,4 +48,7 @@ public class UserHomePage {
 
     @FindBy(xpath = "//div[@id='groups-div']/div[2]/div")
     public WebElement selectGroup;
+
+    @FindBy(xpath = "/html/body/div/div/div[5]/div[1]/a")
+    public WebElement selectChat;
 }

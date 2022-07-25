@@ -36,7 +36,7 @@ async function resetPassword() {
         //  Storing information for later
         //localStorage.setItem("user_id", JSON.stringify(body));
         window.localStorage.clear()
-        window.location.href = "../user/login.html"; //  Redirect to Here????
+        window.location.href = "../loginpage/login.html"; //  Redirect to Here????
     } else {
         div.textContent = "Invalid Password";
     }

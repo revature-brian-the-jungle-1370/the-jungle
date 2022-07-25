@@ -2,7 +2,11 @@
   --astronaut: #223172;
   --black: #000000;
   --white: #ffffff;
+  --atomic-orange: #F47736;
+  --gray: #6c757d;
+  --sub-text-gray: #6f6f6f;
  
+  --font-size-s: 14px;
   --font-size-l: 22px;
   --font-size-m: 18px;
   --font-size-xl: 24px;
@@ -41,4 +45,19 @@
   font-size: var(--font-size-m);
   font-style: normal;
   font-weight: 500;
+}
+
+.poppins-bold-cape-cod-18px {
+  color: var(--cape-cod);
+  font-family: var(--font-family-poppins);
+  font-size: var(--font-size-m);
+  font-style: normal;
+  font-weight: 700;
+}
+
+.poppins-cape-cod-sub-18px {
+  color: var(--sub-text-gray);
+  font-family: var(--font-family-poppins);
+  font-size: var(--font-size-s);
+  font-style: normal;
 }

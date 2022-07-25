@@ -7,6 +7,7 @@ import E2E.poms.homepage.UserHomePage;
 import E2E.poms.IndividualGroupPOM;
 import E2E.poms.RegLoginSearchPOM;
 import E2E.poms.UserProfile;
+import E2E.poms.RegLoginSearchPOM;
 import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
 import org.junit.AfterClass;
@@ -22,12 +23,8 @@ import java.io.File;
 import java.time.Duration;
 
 @RunWith(Cucumber.class)
-@CucumberOptions(
-    //features = "classpath:features", 
-    features = "src/test/resources/features/individualGroup/individualGroup.feature",
-    glue = "E2E.steps", 
-    plugin = { "pretty", "html:src/test/java/resources/reports/html-reports.html" },
-    tags = "@chat_message")
+@CucumberOptions(features = "classpath:features", glue = "E2E.steps", plugin = { "pretty",
+       "html:src/test/java/resources/reports/html-reports.html" }, tags = "@chat_message")
 public class TestRunner {
 
    public static WebDriver driver;
