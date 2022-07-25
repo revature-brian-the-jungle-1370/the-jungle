@@ -58,9 +58,9 @@ public class GroupJunctionSteps {
 
     @Then("the user will be redirected to the group homepage")
     public void theUserWillBeRedirectedToTheGroupHomepage() {
-        TestRunner.explicitWait.until(ExpectedConditions.titleIs("Group Page"));
+        TestRunner.explicitWait.until(ExpectedConditions.titleIs("Individual Group Page"));
         String title = TestRunner.driver.getTitle();
-        Assert.assertEquals(title,"Group Page");
+        Assert.assertEquals(title,"Individual Group Page");
     }
 
     @Then("the leave group button should not be visible")

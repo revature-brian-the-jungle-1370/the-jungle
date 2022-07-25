@@ -31,6 +31,7 @@ public class CreateGroupSteps {
 
     @Given("the user is on the login group page")
     public void the_user_is_on_the_login_group_page() {
+        TestRunner.driver.navigate().refresh();
         login();
         TestRunner.driver.get("https://s3.amazonaws.com/dans-code.net/FrontEnd/grouppage/group-page.html");
     }
