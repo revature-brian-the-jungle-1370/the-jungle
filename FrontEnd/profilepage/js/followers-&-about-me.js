@@ -13,7 +13,8 @@ const pyUrl = "http://127.0.0.1:5000"
 */
 async function updateUserProfileData(){
     // Will need to update this to use the current user's ID
-    let url = "http://localhost:5000/user/profile/update/"+loggedInUserId;
+    let loggedInUserId = localStorage.getItem("userId");
+    let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/user/profile/update/"+loggedInUserId;
     let updateUserProfileJSON = JSON.stringify({
     "firstName": "Shouldn't change",
     "lastName": "Shouldn't change",
@@ -79,7 +80,8 @@ function successMessageForProfileModal(){
 }
 
 async function getUserFollowers(){
-    let url = "http://127.0.0.1:5000/user/followers/"+userId;
+    let userId= localStorage("userId");
+    let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/user/followers/"+userId;
 
     let response = await fetch(url);
     console.log(response);
@@ -110,7 +112,7 @@ function populateUserFollowers(followerBody){
         // Created the username div and set the class name and username
         let followerUsernameDiv = document.createElement("div");
         followerUsernameDiv.setAttribute("class", "name valign-text-middle poppins-bold-astronaut-22px");
-        followerUsernameDiv.innerHTML = `<a class="name valign-text-middle poppins-bold-astronaut-22px" href="profile-page.html?userId=${followerBody[follower]}">${follower}</a>`;
+        followerUsernameDiv.innerHTML = `<a class="name valign-text-middle poppins-bold-astronaut-22px" href="http://dans-code.net.s3-website-us-east-1.amazonaws.com/FrontEnd/profilepage/profile-page.html?userId=${followerBody[follower]}">${follower}</a>`;
 
         // Append the created elements to the page
         followerSectionDiv.appendChild(followerDiv);
@@ -123,7 +125,7 @@ function populateUserFollowers(followerBody){
 async function getFollowerImage(followerBody){
     for(follower in followerBody){
         let image_Element = document.getElementById(`${follower}-image`);
-        let url = `http://localhost:5000/user/image/${followerBody[follower]}`;
+        let url = `http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/user/image/${followerBody[follower]}`;
         // console.log(url);
         let response = await fetch(url);
         if(response.status === 200){
@@ -138,7 +140,8 @@ async function getFollowerImage(followerBody){
 }
 
 async function getGroupsForUser(){
-    let url = "http://localhost:5000/group/user/"+userId
+    let userId= localStorage.getItem("userId");
+    let url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/group/user/"+userId;
 
     let response = await fetch(url);
 
@@ -191,7 +194,7 @@ function goToGroupPage(groupId){
 
 async function follow_user(){
     let followJson = JSON.stringify({"user_follower_id": Number(loggedInUserId), "user_being_followed_id": Number(userId)});
-    let followResponse = await fetch("http://localhost:5000/user/" + loggedInUserId + "/followed/" + userId, {
+    let followResponse = await fetch("http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/user/" + loggedInUserId + "/followed/" + userId, {
         method: "POST",
         mode: "cors",
         headers: {"Content-Type": "application/json"},

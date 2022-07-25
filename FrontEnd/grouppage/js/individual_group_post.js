@@ -1,11 +1,12 @@
 let tableBody = document.getElementById("postBody");
+//let python_url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000";
 
 //--------------------------------------------------- CREATE GROUP POST FUNCTION-------------------------------------------------------
 
 document.getElementById("sendGroupPostButton").addEventListener("click", createGroupPost);
 
 async function createGroupPost() {
-  
+
   let post_text = document.getElementById("postInput").value;
   let data = {
     "post_id": "0",
@@ -42,7 +43,8 @@ async function createGroupPost() {
 
 //--------------------------------------------------- LOAD GROUP POST FUNCTION-------------------------------------------------------
 async function getPost() {
-  let response = await fetch(python_url + "/group_post/group/" + localStorage.getItem("groupId"), { //replace with "/group_post/group/" + group_id
+  let group_id = Number(localStorage.getItem("groupId"));
+  let response = await fetch(python_url + "group_post/group/" + group_id, { //replace with "/group_post/group/" + group_id
     method: "GET",
     mode: "cors",
   });

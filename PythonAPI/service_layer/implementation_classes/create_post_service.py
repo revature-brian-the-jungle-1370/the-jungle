@@ -1,3 +1,4 @@
+from custom_exceptions.post_exceptions import InputTooLong
 from custom_exceptions.image_format_must_be_a_string import ImageFormatMustBeAString
 from custom_exceptions.image_must_be_a_string import ImageMustBeAString
 from custom_exceptions.post_id_must_be_an_integer import PostIdMustBeAnInteger
@@ -30,6 +31,9 @@ class CreatePostServiceImp(CreatePostService):
         # Check to make sure the text is a string.
         if not type(post.post_text) == str:
             raise PostTextMustBeAString("The post text must be a string.")
+
+        if len(post.post_text) > 500 or len(post.post_text) == 0:
+            raise InputTooLong("The post must be 500 characters or less")
 
         return self.create_post_dao.create_post(post)
 

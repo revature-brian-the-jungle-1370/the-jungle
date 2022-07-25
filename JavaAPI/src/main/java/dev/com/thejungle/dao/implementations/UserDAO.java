@@ -138,7 +138,7 @@ public class UserDAO implements UserDAOInt {
     @Override
     public ArrayList<User> searchForUser(String username) {
         try (Connection connection = ConnectionDB.createConnection()) {
-            String sql = "select * from user_table where username ilike ?";
+            String sql = "select * from user_table where username like ?";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, "%" + username + "%");
             ResultSet resultSet = preparedStatement.executeQuery();

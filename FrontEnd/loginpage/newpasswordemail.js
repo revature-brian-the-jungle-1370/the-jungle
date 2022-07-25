@@ -27,9 +27,9 @@ async function checkEmailForResetPassword() {
         console.log("200")
         let body = await response.json();
         console.log(body)
-        //  Storing information for later
-        localStorage.setItem("emailInput", JSON.stringify(body));
-        window.location.href = "../loginpage/newpassword.html"; //  Redirect to Here????
+        window.localStorage.setItem("user_id", body)
+        console.log("Successful transaction")
+        window.location.href = "../loginpage/newpassword.html" //  Redirect to Here????
     } else {
         div.textContent = "Invalid email";
     }

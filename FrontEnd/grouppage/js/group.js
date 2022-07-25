@@ -1,5 +1,5 @@
-//const url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/";
-const url = "http://localhost:5000/"
+const url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/";
+//const url = "http://localhost:5000/"
 
 /** -----------------------------------------------------Create Group------------------------------------------------------------ */
 async function createGroup() {
@@ -52,7 +52,7 @@ async function createGroup() {
 
     if (groupObject.message) {
         let groupNameException = document.getElementById("duplicateGroupNameMessage");
-        groupNameException.textContent = groupObject.message; //wrong message for testing
+        groupNameException.textContent = groupObject.message;
         duplicateGroupNameMessage.style.display = "block";
     }
     else {

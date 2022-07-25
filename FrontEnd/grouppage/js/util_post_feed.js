@@ -90,7 +90,7 @@ async function create_div_from_post_response(post){
         <div class="feed-text-2 valign-text-middle poppins-medium-black-18px"><p>`+ post.post_text +`</p></div>
       </div>`
       }
-    
+
     return postBox
 }
 

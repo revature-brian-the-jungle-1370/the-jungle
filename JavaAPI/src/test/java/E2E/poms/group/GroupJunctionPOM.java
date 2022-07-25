@@ -26,6 +26,6 @@ public class GroupJunctionPOM {
     @FindBy(xpath = "#groupName")
     public WebElement groupName;
 
-    @FindBy(xpath = "//div[@id='groupCreator']/div")
+    @FindBy(xpath = "//div[@id='groupCreator']")
     public WebElement creator;
 }

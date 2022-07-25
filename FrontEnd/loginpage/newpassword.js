@@ -6,9 +6,12 @@ const specialChar2 = /[ `^*()+=\[\]{};':"\\|,<>\/~]/;
 const invalidIcon = document.querySelectorAll("[id='invalid-icon']");
 let invalidMessage = document.querySelectorAll("[id='passcode-invalid-message']");
 let infoIcon = document.querySelectorAll(".info-icon");
-const url = "http://127.0.0.1:5000"
-//const url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000";
-let validateCounter = 0
+const frontendUrl = "http://s3.amazonaws.com/dans-code.net"
+const url = "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000";
+// const frontendUrl = "http://127.0.0.1:5500"
+// const url = "http://127.0.0.1:5000";
+let validateCounter = 0;
+
 const div = document.getElementById("errorMessageGoesHere");
 div.textContent = "";
 
@@ -27,17 +30,12 @@ async function resetPassword() {
     console.log(response)
     let validatePassword = specialChar2.test(response.passcode)
     console.log(validatePassword)
-    if (response.passcode.includes(specialChar2)){
-        throw error;
-    }
-    else if (response.status == 200) {
+    if (response.status == 200) {
         let body = await response.json();
-        console.log(response)
-        //  Storing information for later
-        //localStorage.setItem("user_id", JSON.stringify(body));
+        console.log(body)
         window.localStorage.clear()
-        window.location.href = "../loginpage/login.html"; //  Redirect to Here????
-    } else {
+        window.location.href = frontendUrl+"/FrontEnd/loginpage/login.html"; //  Redirect to Here????
+    } else if(validatePassword == false){
         div.textContent = "Invalid Password";
     }
 }

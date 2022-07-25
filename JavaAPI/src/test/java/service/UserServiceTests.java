@@ -32,11 +32,6 @@ public class UserServiceTests {
     static User blankSpaces;
     static User duplicateEmailUser;
 
- public static void main(String[] args) {
-     UserServiceTests obj = new UserServiceTests();
-     obj.testSearchForUserByProperUsername();
-    }
-
     @BeforeClass
     public void setup() {
         userDAO = Mockito.mock(UserDAO.class);
@@ -113,12 +108,12 @@ public class UserServiceTests {
     }
 
     // Get All
-    @Test
-    public void getAllUsersMockito() {
-        Mockito.when(userDAO.getAllUsers()).thenReturn(newList);
-        List<User> result = userService.getAllUsersService();
-        Assert.assertEquals(result, newList);
-    }
+    // @Test
+    // public void getAllUsersMockito() {
+    //     Mockito.when(userDAO.getAllUsers()).thenReturn(newList);
+    //     List<User> result = userService.getAllUsersService();
+    //     Assert.assertEquals(result, newList);
+    // }
 
     // REQUEST LOGIN
     @Test(expectedExceptions = NoValuePasscode.class, expectedExceptionsMessageRegExp = "You must enter username and password")

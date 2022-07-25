@@ -48,8 +48,4 @@ public class viewGroupSteps {
        String title = TestRunner.driver.getTitle();
        Assert.assertEquals(title, "Individual Group Page");
    }
-
-
-
-
 }

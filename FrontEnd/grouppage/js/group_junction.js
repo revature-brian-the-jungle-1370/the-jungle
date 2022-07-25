@@ -51,7 +51,7 @@ function goToProfilePage(user_id){
 }
 
 async function deleteRequest() {
-    userId = 9000
+    userId = localStorage.getItem("userId")
     groupId = localStorage.getItem("groupId")
     url = python_url + `group/leave/${userId}/${groupId}`
     let response = await fetch(url, { method: "DELETE", headers: { "Content-Type": "application/json" }});
@@ -85,7 +85,7 @@ async function creatorOf() {
 }
 
 async function getGroup() {
-    groupId = window.localStorage.getItem("groupId")
+    groupId = localStorage.getItem("groupId")
 
     let url =  python_url + `group/${groupId}`
 

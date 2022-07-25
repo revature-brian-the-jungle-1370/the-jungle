@@ -1,39 +1,28 @@
-Feature: Test Create Individual Group Functionality
+#NOTE: all of these scenarios overlap significantly with existing ones
 
 
-Scenario: A user wants to create an individual group
-Given a user is on group page
-When a user enters group name and description
-When a user clicks on add group button
-Then the group is displayed under Groups
+# Feature: Test Create Individual Group Functionality
 
 
-Scenario: A user wants to visit individual group page
-When a user clicks on group name under Groups
-Then a user gets navigated to individual group page
-
-Scenario: A user wants to post
-When a user writes a post
-When a user clicks on post button
-Then the post is displayed below
-
-Scenario: A user wants to delete a post
-When a user clicks on delete button
-Then the post gets deleted
-
-Scenario: A user wants to like a post
-When a user clicks on like button
-Then the post gets liked
-
-Scenario: A user wants to unlike a post
-When a user clicks on like button twice
-Then the post gets unliked
-
-Scenario: A user wants to bookmark a post
-When user clicks on bookmark icon of a post
-Then the post is saved and the icon is changed
+# Scenario: A user wants to create an individual group
+# Given a user is on group page
+# When a user enters group name and description
+# When a user clicks on add group button
+# Then the group is displayed under Groups
 
 
-Scenario: A user wants to remove bookmarked post
-When user clicks on bookmark icon of a post that is bookmarked
-Then the post is unsaved and the icon is changed
+# Scenario: A user wants to visit individual group page
+# Given the user is on the login group page
+# When a user clicks on group name under Groups
+# Then a user gets navigated to individual group page
+
+# Scenario: A user wants to post
+# Given the user is on the login group page
+# When a user writes a post
+# When a user clicks on post button
+# Then the post is displayed below
+
+# Scenario: A user wants to delete a post
+# Given the user is on the login group page
+# When a user clicks on delete button
+# Then the post gets deleted

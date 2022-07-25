@@ -17,30 +17,38 @@ public class UserProfile {
 
     @FindBy(id = "updateProfileEditProfileBtn")
     public WebElement updateProfileEditButton;
+
     @FindBy(id="userAboutMeInput")
     public WebElement updateProfileAboutMeInput;
+
     @FindBy(id="userBirthdateInput")
     public WebElement updateProfileUserBirthDateInput;
+
     @FindBy(id="updateProfileModalBtn")
     public WebElement saveChangesModalButton;
     @FindBy(id="profileModalMsg")
     public WebElement profileSuccessMessage;
-    @FindBy(id="profileCreateANewPost")
-    public WebElement profileCreateANewPost;
+    @FindBy(id="createPostBtn")
+    public WebElement createNewPostBtn;
     @FindBy(id="postText")
     public WebElement postText;
-    @FindBy(id="submitNewPostButton")
-    public WebElement submitNewPostButton;
+    @FindBy(id="submitNewPostBtn")
+    public WebElement submitNewPostBtn;
     @FindBy(id= "newPostText")
     public WebElement newPostText;
+
     @FindBy(className= "three-dots-icon-1")
     public WebElement deleteButton;
+
     @FindBy(id="postErrorMessage")
     public WebElement postErrorMessage;
+
     @FindBy(id="modalProfileErrorMessage")
     public WebElement profileErrorMessage;
+
     @FindBy(xpath="/html/body/div/div/div/div[10]/div[2]/div/div")
     public WebElement userFollower;
+
     @FindBy(id="follow-user-button")
     public WebElement followUserButton;
     @FindBy(id="unfollow-user-button")
