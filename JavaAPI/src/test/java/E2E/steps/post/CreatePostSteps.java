@@ -22,10 +22,10 @@ import org.testng.Assert;
 
 public class CreatePostSteps {
     private int postCount;
-    private String alertText;
+    private String alertText = "";
 
     public void login(){
-        TestRunner.driver.get("https://s3.amazonaws.com/dans-code.net/FrontEnd/loginpage/login.html");
+        TestRunner.driver.get("http://localhost:5500/FrontEnd/loginpage/login.html");
         TestRunner.rlsPom.usernameInput.sendKeys("test");
         TestRunner.rlsPom.passwordInput.sendKeys("createpost");
         TestRunner.rlsPom.usernameInput.sendKeys(Keys.TAB);
@@ -70,19 +70,15 @@ public class CreatePostSteps {
     public void the_user_clicks_on_the_post_button() throws InterruptedException,UnhandledAlertException {
         try{    
             TestRunner.userProfile.submitNewPostBtn.click();
-            TestRunner.driver.navigate().refresh();
-            Thread.sleep(3000);
+            Thread.sleep(1000);
+            Alert alert = TestRunner.driver.switchTo().alert();
+            alertText = alert.getText();    
+            TestRunner.driver.switchTo().alert().accept();
+            Thread.sleep(1000);
             postCount = TestRunner.driver.findElements(By.className("post")).size();
 
-        }
-        catch(UnhandledAlertException ua){
-            try{
-                Thread.sleep(1000);
-                Alert alert = TestRunner.driver.switchTo().alert();
-                alertText = alert.getText();
-            }catch (NoAlertPresentException e) {
-                System.out.println("No Alert Found");
-            }     
+        }catch (NoAlertPresentException e) {
+            System.out.println("No Alert Found");
         }
         
     }
@@ -104,11 +100,20 @@ public class CreatePostSteps {
     }
 
     @Then("the user will see the created post")
-    public void the_user_will_see_the_created_post(){
-        Assert.assertEquals(postCount,TestRunner.driver.findElements(By.className("post")).size());
-        //to delete the testing post so that it does not mess up further tests
-        TestRunner.userProfile.deleteButton.click();
-        logoutAfterTest();
+    public void the_user_will_see_the_created_post() throws InterruptedException {
+        try{
+            TestRunner.driver.navigate().refresh();
+            Thread.sleep(2000);
+            //Assert.assertEquals(postCount,TestRunner.driver.findElements(By.className("post")).size());
+            Assert.assertEquals(alertText, "");
+            //to delete the testing post so that it does not mess up further tests
+            TestRunner.userProfile.deleteButton.click();
+            logoutAfterTest();
+        }
+        finally{
+            
+        }    
+        
     }
 
 
@@ -117,11 +122,11 @@ public class CreatePostSteps {
         try {
             TestRunner.driver.navigate().refresh();
             //TestRunner.explicitWait.until(ExpectedConditions.elementToBeClickable(TestRunner.rlsPom.logoutButton));
-            Thread.sleep(3000);
-            Assert.assertEquals(TestRunner.driver.findElements(By.className("post")).size(),postCount);
+            Thread.sleep(2000);
+            //Assert.assertEquals(TestRunner.driver.findElements(By.className("post")).size(),postCount);
+            Assert.assertNotEquals(alertText, "");
             logoutAfterTest();
         }
-
         finally{
             
         }    

@@ -3,8 +3,6 @@ let userId=params.get('userId');
 let loggedInUserId = JSON.parse(localStorage.getItem("userInfo")).userId; 
 let python_url =  "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/";
 let java_url =    "http://ec2-52-200-53-62.compute-1.amazonaws.com:8080/";
-//let python_url = "http://localhost:5000/"
-//let java_url =    "http://localhost:8080/";
 
 //et currentUsername=JSON.parse(localStorage.getItem("userInfo")).username; 
 (function () {

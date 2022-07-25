@@ -1,9 +1,5 @@
 let python_url =  "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/";
 let java_url =    "http://ec2-52-200-53-62.compute-1.amazonaws.com:8080/";
-//let python_url = "http://localhost:5000/"
-//let java_url =    "http://localhost:8080/";
-//localStorage.setItem("user_id", 13)
-//localStorage.setItem("group_id", 10000) //Comment this out later. This is to test functionality
 
 async function getUserInGroups() {
     groupId = localStorage.getItem("groupId")

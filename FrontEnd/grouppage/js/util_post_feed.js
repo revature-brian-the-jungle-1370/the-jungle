@@ -1,8 +1,3 @@
-//let python_url =  "http://ec2-52-200-53-62.compute-1.amazonaws.com:5000/";
-//let java_url =    "http://ec2-52-200-53-62.compute-1.amazonaws.com:8080/";
-// let python_url = "http://127.0.0.1:5000/"
-// let java_url =    "http://127.0.0.1:8080/";
-
 async function create_div_from_post_response(post){
     //Create Div
     let postBox = document.createElement('div');

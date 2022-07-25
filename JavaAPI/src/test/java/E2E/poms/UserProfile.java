@@ -43,7 +43,7 @@ public class UserProfile {
     @FindBy(id="postErrorMessage")
     public WebElement postErrorMessage;
 
-    @FindBy(id="modalProfileErrorMessage")
+    @FindBy(id="profileModalMsg")
     public WebElement profileErrorMessage;
 
     @FindBy(xpath="/html/body/div/div/div/div[10]/div[2]/div/div")
